@@ -70,4 +70,25 @@ Choosing between supabase and firebase, we decided to use firebase as we forsee 
 ### Map API
 
 ## Development Plan
+| Tasks  | Description | Date |
+| ------ | ----------- | ---- |
+| Preliminary Research to navigation application implementation | Familiarise with all the Tech Stack we are using and reference to examples of existing navigation applications | 13 - 28 May |
+| User Authentication | Design and implementation of login page, setting up of firebase to store users registered to our application | 21 - 28 May |
+| Map Direction Feature | Implementation of Map API, acquiring data related to NUS shuttle bus services| 29 - 31 May |
+| Map Direction Feature | Integration of data related to NUS shuttle bus services | 1 - 4 June |
+| Sheltered Walkways Feature | Gather information of sheltered paths, in particular, the specific levels connecting between 2 NUS buildings | 5 - 6 June |
+| Sheltered Walkways Feature | Integration of data related to sheltered paths | 7 - 10 June |
+| Nearest Bus Stops Feature | Gather information about all bus stops within NUS campus, both public bus stops and internal bus stops | 11 - 12 June |
+| Nearest Bus Stops Feature | Implementing and integration of NUS NextBus API | 13 - 14 June |
+| Nearest Bus Stops Feature | Implementation of markers of nearest bus stops from current location | 15 - 18 June |
+| Favourites Feature | Implementation of save and delete functions | 19 - 25 June |
+| Gather feedback | Asking our peers their personal opinion of our application | 26 June - 30 June |
+| All Features | Improving user interface and asthetics of application | 1 - 9 July |
+| Overall | Improving on feedback provided by peers | 10 - 12 July |
+| Sheltered Walkways Feature | Going to school and taking photos of connected pathways between 2 NUS buildings | 13 - 14 July |
+| Sheltered Walkways Feature | Integrating the photos taken into database and implementation of visual aids for users | 15 - 19 July |
+| Favourites Feature | Implementation of allowing users to name their saved routes | 20 - 22 July |
+| Overall | Documentation and tidying up code | 23 - 24 July |
+
+
 
