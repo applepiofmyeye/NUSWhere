@@ -89,3 +89,4 @@ Choosing between supabase and firebase, we decided to use firebase as we forsee 
 | Sheltered Walkways Feature | Integrating the photos taken into database and implementation of visual aids for users | 15 - 19 July |
 | Favourites Feature | Implementation of allowing users to name their saved routes | 20 - 22 July |
 | Overall | Documentation and tidying up code | 23 - 24 July |
+
