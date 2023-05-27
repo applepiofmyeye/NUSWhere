@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, SafeAreaView, View } from "react-native";
+import React, { KeyboardAvoidingView, SafeAreaView, View } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
 import { COLORS } from "../constants";
