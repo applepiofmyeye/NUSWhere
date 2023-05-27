@@ -90,5 +90,3 @@ Choosing between supabase and firebase, we decided to use firebase as we forsee 
 | Favourites Feature | Implementation of allowing users to name their saved routes | 20 - 22 July |
 | Overall | Documentation and tidying up code | 23 - 24 July |
 
-
-

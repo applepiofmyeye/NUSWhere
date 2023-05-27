@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import React, { View, Text, Image } from "react-native";
 import { logo } from "../../constants";
 
 import styles from "./welcome.style";

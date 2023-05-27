@@ -14,23 +14,15 @@ const styles = StyleSheet.create({
         fontSize: SIZES.xLarge,
         color: COLORS.text
     },
-
-    registerBtn: (match) => ({
-        width: 250,
-        backgroundColor: COLORS.pressedBtn,
-        padding: 15,
-        borderRadius: SIZES.xLarge,
-        alignItems: "center",
-    }),
-
-    registerBtnLabel: {
-        fontFamily: FONT.iSemiB,
-        fontSize: SIZES.large,
-        color: COLORS.text
+    input: {
+        backgroundColor: 'white',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 10,
+        marginTop: 5,
     },
-    registerBtnContainer: {
-        alignItems: "center",
-        justifyContent: "flex-end",
+    error: {
+        color: "#dc3545"
     }
 })
 

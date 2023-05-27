@@ -1,4 +1,4 @@
-import { SafeAreaView, View, ScrollView } from "react-native";
+import React, { SafeAreaView, View, ScrollView } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
 import { COLORS } from "../constants";
