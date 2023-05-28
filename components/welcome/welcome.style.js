@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     
     welcomeContainer: {
+        paddingBottom: 1,
         alignItems: "center",
         justifyContent: "center",
     },
@@ -21,11 +22,10 @@ const styles = StyleSheet.create({
     },
 
     logo: {
-        width:"60%",
-        height: "60%",
-        alignItems: "center",
-        justifyContent: "center"
-
+        width: '70%',
+        maxHeight: 200,
+        maxWidth: 220,
+        resizeMode: 'contain', 
     }
 })
 
