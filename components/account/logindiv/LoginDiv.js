@@ -35,13 +35,11 @@ export default function LoginDiv() {
             placeholder="Email"
             value={email}
             setValue={setEmail}
-            style={styles.input}
           />
           <InputBox
             placeholder="Password"
             value={password}
             setValue={setPassword}
-            style={styles.input}
             secureTextEntry
           />
       </View>

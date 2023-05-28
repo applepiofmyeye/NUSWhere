@@ -23,9 +23,10 @@ const styles = StyleSheet.create({
         
         borderColor: '#e8e8e8',
         borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 18,
 
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         marginVertical: 5,
     },
 });

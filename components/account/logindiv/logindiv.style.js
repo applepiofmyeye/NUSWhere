@@ -11,8 +11,9 @@ const styles = StyleSheet.create({
     },
     pageTitle: {
         fontFamily: FONT.iSemiB,
-        fontSize: SIZES.xLarge,
-        color: COLORS.text
+        fontSize: SIZES.xxLarge,
+        color: COLORS.text,
+        paddingBottom: 18
     },
     registerContainer: {
         padding: 20, 

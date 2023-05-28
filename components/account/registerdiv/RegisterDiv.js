@@ -97,12 +97,17 @@ export default function RegisterDiv() {
             .createUserWithEmailAndPassword(email, password)
             .then(userCredentials => {
               const user = userCredentials.user;
+              user.updateProfile({
+                displayName: {username}
+              })
               console.log('Registered with:', user.email);
             }).catch(error => {
               setErrorMsg(error.message);
             })
           setLoading(false);
+
         }
+
   }
 
   return (      
@@ -114,21 +119,18 @@ export default function RegisterDiv() {
             placeholder="Username"
             value={username}
             setValue={setUsername}
-            style={styles.input}
             />
           {usernameErrorMsg !== "" && <Text style={styles.error}>{usernameErrorMsg}</Text>}
           <InputBox
             placeholder="Email"
             value={email}
             setValue={setEmail}
-            style={styles.input}
           />
           {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
           <InputBox
             placeholder="Enter Password"
             value={password}
             setValue={setPassword}
-            style={styles.input}
             secureTextEntry
           />
           {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
@@ -136,7 +138,6 @@ export default function RegisterDiv() {
             placeholder="Re-enter Password"
             value={passwordRepeat}
             setValue={setPasswordRepeat}
-            style={styles.input}
             secureTextEntry
           />
           {passwordRepeatErrorMsg !== "" && <Text style={styles.error}>{passwordRepeatErrorMsg}</Text>}
