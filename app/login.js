@@ -1,5 +1,5 @@
-import React, { KeyboardAvoidingView, SafeAreaView, View } from "react-native";
-import { Stack, useRouter } from "expo-router";
+import React, { SafeAreaView, View } from "react-native";
+import { Stack } from "expo-router";
 
 import { COLORS } from "../constants";
 import {
@@ -11,7 +11,7 @@ import {
 export default function Login() {
     
     return (
-        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: COLORS.background }} behavior="padding">
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }} behavior="padding">
             <Stack.Screen
                 options={{
                 headerStyle: { backgroundColor: COLORS.background },
@@ -20,12 +20,12 @@ export default function Login() {
                 }}
             />
             
-            <View style={[{flex: 1, backgroundColor: COLORS.background}, {flexDirection: 'column'}]}>
+            <View style={[{ flex: 1, backgroundColor: COLORS.background}, {flexDirection: 'column'}]}>
                 <Welcome />
                 <LoginDiv />
             </View>
 
-        </KeyboardAvoidingView>
+        </SafeAreaView>
     )
 }
 
