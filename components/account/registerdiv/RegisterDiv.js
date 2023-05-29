@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, Alert, ActivityIndicator} from "react-native";
+import { View, Text, ActivityIndicator, Modal, Pressable, /* RefreshControl, ScrollView */} from "react-native";
 import InputBox from "../InputBox/InputBox"
 import CustomButton from "../CustomButton/CustomButton";
 import styles from "./registerdiv.style";
 import { auth } from '../../../app/firebase';
+import { useRouter } from "expo-router";
+import { FirebaseError } from '../Error/FirebaseError';
+
 
 export default function RegisterDiv() {  
   const [username, setUsername] = useState('')
@@ -16,33 +19,21 @@ export default function RegisterDiv() {
   const [passwordErrorMsg, setPasswordErrorMsg] = useState('')
   const [passwordRepeatErrorMsg, setPasswordRepeatErrorMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
+  const [modalSuccessVisible, setModalSuccessVisible] = useState(false)
+  const [modalErrorVisible, setModalErrorVisible] = useState(false)
+  /* const [refreshing, setRefreshing] = React.useState(false) */
 
-  /* const apiKey = '81aba29089864480a6e5b7bec0c83a45';
-  const apiURL = 'https://emailvalidation.abstractapi.com/v1/' + apiKey
+  const router = useRouter()
+  const login = () => {
+    router.push("./login");
+  }
 
-  const sendEmailValidationRequest = async (email) => {
-    try {
-        const response = await fetch.get(apiURL + '&email=' + email);
-        const data = response.json();
-        return data.is_valid_format.value;
-    } catch (error) {
-        throw error;
-    }
-  } */
-
-  /* const validate = (text) => {
-    console.log(text);
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (reg.test(text) === false) {
-      console.log("Email is Not Correct");
-      setEmail(text);
-      return false;
-    }
-    else {
-      setEmail(text);
-      console.log("Email is Correct");
-    }
-  } */
+  /* const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []); */
 
   const validator = require('validator');
 
@@ -54,7 +45,6 @@ export default function RegisterDiv() {
         setPasswordRepeatErrorMsg('');
         setErrorMsg('');
         
-        console.log(email);
         // input validation
         if (username.length == 0) {
           errorFlag = true;
@@ -78,7 +68,7 @@ export default function RegisterDiv() {
           setPasswordErrorMsg("Password should be min 8 char and max 20 char");
         } else if (password !==  passwordRepeat) {
           errorFlag = true;
-          setErrorMsg("Passwoad and confirm password should be same.");
+          setErrorMsg("Password and confirm password should be same");
         }
         
         if (passwordRepeat.length == 0) {
@@ -97,20 +87,19 @@ export default function RegisterDiv() {
             .createUserWithEmailAndPassword(email, password)
             .then(userCredentials => {
               const user = userCredentials.user;
-              user.updateProfile({
-                displayName: {username}
-              })
               console.log('Registered with:', user.email);
+              setModalSuccessVisible(true);
             }).catch(error => {
-              setErrorMsg(error.message);
+              setModalErrorVisible(true);
+              setErrorMsg(FirebaseError(error));
             })
           setLoading(false);
-
         }
-
   }
 
-  return (      
+  return (    
+    /* {<ScrollView refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />  }> } */
     <View style={{flex: 8}}>
       
       <View style={styles.registerContainer}>
@@ -119,18 +108,21 @@ export default function RegisterDiv() {
             placeholder="Username"
             value={username}
             setValue={setUsername}
+            style={styles.input}
             />
           {usernameErrorMsg !== "" && <Text style={styles.error}>{usernameErrorMsg}</Text>}
           <InputBox
             placeholder="Email"
             value={email}
             setValue={setEmail}
+            style={styles.input}
           />
           {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
           <InputBox
             placeholder="Enter Password"
             value={password}
             setValue={setPassword}
+            style={styles.input}
             secureTextEntry
           />
           {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
@@ -138,14 +130,47 @@ export default function RegisterDiv() {
             placeholder="Re-enter Password"
             value={passwordRepeat}
             setValue={setPasswordRepeat}
+            style={styles.input}
             secureTextEntry
           />
           {passwordRepeatErrorMsg !== "" && <Text style={styles.error}>{passwordRepeatErrorMsg}</Text>}
       </View>
 
+      <Modal
+        transparent={true}
+        visible={modalSuccessVisible}
+        >
+        <View style={styles.centeredView}>
+          <View style={styles.modalSuccessView}>
+            <Text style={styles.modalText}>You have successfully registered an account with us!</Text>
+            <Pressable
+              style={styles.modalButton}
+              onPress={login}>
+              <Text style={styles.buttonTextStyle}>Return to login page</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        transparent={true}
+        visible={modalErrorVisible}
+        >
+        <View style={styles.centeredView}>
+          <View style={styles.modalErrorView}>
+          {errorMsg !== "" && <Text style={styles.modalText}>{errorMsg}</Text>}
+            <Pressable
+              style={styles.modalButton}
+              onPress={() => setModalErrorVisible(!modalErrorVisible)}>
+              <Text style={styles.buttonTextStyle}>Go back</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
       <CustomButton text="REGISTER" onPress={handleSignUp} />
-      {errorMsg !== "" && <Text style={styles.error}>{errorMsg}</Text>}
       {loading && <ActivityIndicator />}
     </View>
+    /* </ScrollView> */
   );
 }
