@@ -5,24 +5,18 @@ import {
     Greeting,
     FavouriteRoutesDiv
 } from "../components";
-//import { auth } from "./firebase";
+import { auth } from "./firebase";
 
 
 export default function Profile() {
-    //const user = auth.currentUser;
-    //const displayName = user.displayName;
+    const user = auth.currentUser;
+    const displayName = user.displayName;
     
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
             <Stack.Screen
                 options={{
-                    //headerTitle: {displayName},
-                    headerTitle: "applepiofmyeye",
-                    headerStyle: {
-                        backgroundColor: COLORS.secondary,
-                    },
-                    headerTintColor: COLORS.text,
-                    
+                    headerShown: false                 
                         
                     }}
             />

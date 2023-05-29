@@ -11,7 +11,7 @@ import {
 export default function Login() {
     
     return (
-        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: COLORS.background }} behavior="padding">
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }} behavior="padding">
             <Stack.Screen
                 options={{
                 headerShown: false
@@ -23,7 +23,7 @@ export default function Login() {
                 <LoginDiv />
             </View>
 
-        </KeyboardAvoidingView>
+        </SafeAreaView>
     )
 }
 
