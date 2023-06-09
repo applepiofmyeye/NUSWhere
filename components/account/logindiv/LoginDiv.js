@@ -3,7 +3,7 @@ import { View, Text, Modal, Pressable} from "react-native";
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../CustomButton/CustomButton";
 import { useRouter } from "expo-router";
-import { FONT } from "../../../constants";
+import { COLORS, FONT } from "../../../constants";
 import styles from "./logindiv.style";
 import { auth } from '../../../app/firebase';
 import { FirebaseError } from '../Error/FirebaseError';
@@ -11,6 +11,7 @@ import { FirebaseError } from '../Error/FirebaseError';
 
 export default function LoginDiv() {  
   const router = useRouter()
+  const aftLoginPushTo = "./maincontainer"
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
@@ -44,7 +45,7 @@ export default function LoginDiv() {
       .then(userCredentials => {
         const user = userCredentials.user;
         console.log('Logged in with:', user.email);
-        router.push("./profile");
+        router.push(aftLoginPushTo);
       })
       .catch(error => {
         setModalVisible(true);
@@ -102,8 +103,11 @@ export default function LoginDiv() {
       </Modal>
 
       <View style={styles.registerContainer}>
-          <Text>New to NUSWhere? </Text>
-          <Text onPress={register} style={{fontFamily: FONT.iSemiB}}>Register</Text>
+          <Text style={{color: COLORS.text}}>New to NUSWhere? </Text>
+          <Text
+          onPress={register} 
+          style={{fontFamily: FONT.iSemiB, color: COLORS.text}}
+          >Register</Text>
       </View>
     </View>
   )

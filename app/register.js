@@ -1,3 +1,8 @@
+/*
+Registering page for new users.
+Contains 2 components, the Welcome and the RegisterDiv component.
+*/
+
 import React, { SafeAreaView, View, ScrollView } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
