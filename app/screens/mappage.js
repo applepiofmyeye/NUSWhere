@@ -1,20 +1,24 @@
 /*
 Map page where users will key in their go-tos.
 
-TODO:
-make this page.
+TODO: 
+autocomplete feature
+
 */
 import { useState, useEffect } from "react";
 import React, { View, ScrollView, StyleSheet, Dimensions, Button, Platform, TextInput } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 import { COLORS, SIZES } from "../../constants";
 
 
 export default function MapPage() {
+    // UI-related constants
+    const icon = (name) => <Ionicons name={name} color={COLORS.pressedBtn} size="20%"/>
     // Map-related constants
     const [mapRegion, setMapRegion] = useState({
         latitude: 1.3521,
@@ -54,15 +58,24 @@ export default function MapPage() {
             <MapView style={styles.map} region={mapRegion}>
             </MapView>
 
-            <View style={styles.searchBox}>
+            <View style={styles.searchContainer}>
+
+                <View>
+                    <TextInput 
+                    placeholder="Starting location"
+                    autoCapitalize="none"
+                    style={{flex: 1, padding: 2, fontSize: SIZES.medium}}></TextInput>
+                </View>
+
+                <View>
                 <TextInput 
-                placeholder="Where do you wanna go?"
-                autoCapitalize="none"
-                style={{flex: 1, padding: 2, fontSize: SIZES.medium}}></TextInput>
+                    placeholder="Destination location"
+                    autoCapitalize="none"
+                    style={{flex: 1, padding: 2, fontSize: SIZES.medium}}></TextInput>
+                </View>
 
             </View>
             
-            <Button title="Refresh" onPress={userLocation}/>
         </View>
     )
 };
@@ -78,11 +91,12 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
     },
-    searchBox: {
+        
+    searchContainer: {
         position: "absolute",
-        marginTop: Platform.OS === "ios" ? 40 : 20,
-        flexDirection: "row",
-        backgroundColor: COLORS.background,
+        marginTop: 40,
+        flexDirection: "column",
+        backgroundColor: "white",
         width: "90%",
         alignSelf: "center",
         borderRadius: 9,
@@ -92,9 +106,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 5,
         elevation: 10,
-        justifyContent: "flex-start"
-        
+        justifyContent: "flex-start",
+        borderColor: "black"
+
     }
 });
+
 
 
