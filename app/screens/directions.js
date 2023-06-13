@@ -5,11 +5,6 @@ Directions page
 import React, { SafeAreaView, View, ScrollView } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { COLORS, FONT } from "../../constants";
-import {
-    Greeting,
-    FavouriteRoutesDiv
-} from "../../components";
-import { auth } from "../firebase";
 
 
 export default function Directions() {
@@ -18,9 +13,13 @@ export default function Directions() {
     
     return (
         <View style={{ flex: 1, backgroundColor: COLORS.background,}}>
+            <Stack.Screen 
+                name="screens/directions"
+                options={{ headerShown: false, }}/>
+
             
         </View>
-    )
+    );
 }
 
 
