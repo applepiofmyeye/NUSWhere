@@ -7,22 +7,24 @@ autocomplete feature
 */
 import { useState, useEffect } from "react";
 import React, { View, ScrollView, StyleSheet, Dimensions, Button, Platform, TextInput } from "react-native";
+import Autocomplete from "../../components/Autocomplete";
 import { Stack, useRouter } from "expo-router";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { roomCodes } from "../../data/venues";
 
 
 import { COLORS, SIZES } from "../../constants";
 
 
 export default function MapPage() {
-    // UI-related constants
-    const icon = (name) => <Ionicons name={name} color={COLORS.pressedBtn} size="20%"/>
+    
+    const [inputText, setInputText] = useState('');
     // Map-related constants
     const [mapRegion, setMapRegion] = useState({
-        latitude: 1.3521,
-        longitude: 103.8198,
+        latitude: 1.2966,
+        longitude: 103.7764,
         latitudeDelta: 0.09,
         longitudeDelta: 0.09,
     });
@@ -45,8 +47,6 @@ export default function MapPage() {
     useEffect(() => {
         userLocation();
     },[])
-
-    // Autocomplete related constants
     
 
 
@@ -55,26 +55,28 @@ export default function MapPage() {
         <View style={styles.container}>
             <Stack.Screen options={{ headerShown: false, }}/>
 
-            <MapView style={styles.map} region={mapRegion}>
+
+            <Autocomplete
+                value=""
+                containerStyle={styles.searchContainer}
+                style={{
+                    backgroundColor: COLORS.background,
+                }}
+                label="Where do you wanna go?"
+                data={roomCodes} // Set to the json
+                menuStyle={{backgroundColor: COLORS.background}}
+                onChange={() => {}}
+                usage='mappage'
+                menuThenGoTo="./directions"
+                selectedMarker={selectedMarker}
+                onSelectMarker={handleSelectMarker}
+            />
+            <MapView style={styles.map} region = {mapRegion}>
+                {selectedMarker && <Marker coordinate={selectedMarker} />}
             </MapView>
+                
 
-            <View style={styles.searchContainer}>
 
-                <View>
-                    <TextInput 
-                    placeholder="Starting location"
-                    autoCapitalize="none"
-                    style={{flex: 1, padding: 2, fontSize: SIZES.medium}}></TextInput>
-                </View>
-
-                <View>
-                <TextInput 
-                    placeholder="Destination location"
-                    autoCapitalize="none"
-                    style={{flex: 1, padding: 2, fontSize: SIZES.medium}}></TextInput>
-                </View>
-
-            </View>
             
         </View>
     )
@@ -94,13 +96,13 @@ const styles = StyleSheet.create({
         
     searchContainer: {
         position: "absolute",
-        marginTop: 40,
+        marginTop: Platform.OS === 'ios' ? 40 : 20,
         flexDirection: "column",
-        backgroundColor: "white",
+        backgroundColor: COLORS.background,
         width: "90%",
         alignSelf: "center",
         borderRadius: 9,
-        padding: 15,
+        padding: 10,
         shadowColor: "#ccc",
         shadowOffset: {width: 0, height: 3},
         shadowOpacity: 0.5,
