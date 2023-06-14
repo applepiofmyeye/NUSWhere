@@ -12,6 +12,8 @@ import { Stack, useRouter } from "expo-router";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
 import { roomCodes } from "../../data/venues";
+import MapViewDirections from 'react-native-maps-directions';
+import { GOOGLE_API } from "../../keys";
 
 
 
@@ -25,11 +27,17 @@ import { CustomButton } from "../../components";
 export default function MapPage() {
     const router = useRouter();
     const [selectedMarker, setSelectedMarker] = useState(null);
-    const directions =  () => router.push('./directions')
+    const [origin, setOrigin] = useState(null);
+    const [destination, setDestination] = useState(null)
+    const [showRoute, setShowRoute] = useState(false);
+    const [showButton, setShowButton] = useState(true);
+    const directions =  () => router.push('screens/routespage')
 
     const handleSelectMarker = (markerLocation) => {
         setSelectedMarker(markerLocation);
-        setMapRegion(markerLocation)
+        setMapRegion(markerLocation);
+        setDestination(markerLocation);
+
     };    
     // Map-related constants
     const [mapRegion, setMapRegion] = useState({
@@ -49,6 +57,11 @@ export default function MapPage() {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude
         });
+        setOrigin({
+            latitude: 1.2966,
+            longitude: 103.7732
+        });
+
         console.log({location})
     }
 
@@ -67,7 +80,17 @@ export default function MapPage() {
 
 
                 <MapView style={styles.map} region = {mapRegion}>
+                    {origin && <Marker coordinate={origin}></Marker>}
+
                     {selectedMarker && <Marker coordinate={selectedMarker} />}
+                    {showRoute && <MapViewDirections
+                        origin={origin}
+                        destination={destination}
+                        apikey={GOOGLE_API}
+                        strokeColor="#6644ff"
+                        strokeWidth={4}
+                        mode="WALKING"
+                    />}
                 </MapView>
 
                 <Autocomplete
@@ -87,9 +110,12 @@ export default function MapPage() {
                 />
 
                 <View style={{position: "absolute", bottom: 20}}>
-                    {selectedMarker && (
-                        <CustomButton text="DIRECTIONS" onPress={directions}/>
+                    {selectedMarker && showButton && (
+                        <CustomButton text="DIRECTIONS" onPress={() => {
+                            setShowRoute(true);
+                            setShowButton(false)}}/>
                     )}
+                    
                 </View>
                 
             </View>

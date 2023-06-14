@@ -25,7 +25,6 @@ export default function MainContainer() {
             options={{
                 headerShown: false
             }}/>
-        <NavigationContainer independent={true}>
             <Tab.Navigator
             initialRouteName={profileName}
             screenOptions={({route}) => ({
@@ -72,7 +71,6 @@ export default function MainContainer() {
 
 
 
-        </NavigationContainer>
         </View>
     )
 }
