@@ -5,24 +5,44 @@ TODO:
 autocomplete feature
 
 */
-import { useState, useEffect } from "react";
-import React, { View, ScrollView, StyleSheet, Dimensions, Button, Platform, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, ScrollView, StyleSheet, Dimensions, Button, Platform, TextInput } from "react-native";
+import Autocomplete from "../../components/Autocomplete";
 import { Stack, useRouter } from "expo-router";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { roomCodes } from "../../data/venues";
+import MapViewDirections from 'react-native-maps-directions';
+import { GOOGLE_API } from "../../keys";
+
+
 
 
 import { COLORS, SIZES } from "../../constants";
+import { CustomButton } from "../../components";
+
+
 
 
 export default function MapPage() {
-    // UI-related constants
-    const icon = (name) => <Ionicons name={name} color={COLORS.pressedBtn} size="20%"/>
+    const router = useRouter();
+    const [selectedMarker, setSelectedMarker] = useState(null);
+    const [origin, setOrigin] = useState(null);
+    const [destination, setDestination] = useState(null)
+    const [showRoute, setShowRoute] = useState(false);
+    const [showButton, setShowButton] = useState(true);
+    const directions =  () => router.push('screens/routespage')
+
+    const handleSelectMarker = (markerLocation) => {
+        setSelectedMarker(markerLocation);
+        setMapRegion(markerLocation);
+        setDestination(markerLocation);
+
+    };    
     // Map-related constants
     const [mapRegion, setMapRegion] = useState({
-        latitude: 1.3521,
-        longitude: 103.8198,
+        latitude: 1.2966,
+        longitude: 103.7764,
         latitudeDelta: 0.09,
         longitudeDelta: 0.09,
     });
@@ -33,12 +53,15 @@ export default function MapPage() {
             setErrorMsg('Permission to access location was denied.')
         }
         let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
-        setMapRegion({
+        selectedMarker && setMapRegion({
             latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.04,
-            longitudeDelta: 0.05,
+            longitude: location.coords.longitude
         });
+        setOrigin({
+            latitude: 1.2966,
+            longitude: 103.7732
+        });
+
         console.log({location})
     }
 
@@ -46,37 +69,56 @@ export default function MapPage() {
         userLocation();
     },[])
 
-    // Autocomplete related constants
     
 
 
 
     return (
-        <View style={styles.container}>
-            <Stack.Screen options={{ headerShown: false, }}/>
 
-            <MapView style={styles.map} region={mapRegion}>
-            </MapView>
+            <View style={styles.container}>
+                <Stack.Screen options={{ headerShown: false, }}/>
 
-            <View style={styles.searchContainer}>
 
-                <View>
-                    <TextInput 
-                    placeholder="Starting location"
-                    autoCapitalize="none"
-                    style={{flex: 1, padding: 2, fontSize: SIZES.medium}}></TextInput>
+                <MapView style={styles.map} region = {mapRegion}>
+                    {origin && <Marker coordinate={origin}></Marker>}
+
+                    {selectedMarker && <Marker coordinate={selectedMarker} />}
+                    {showRoute && <MapViewDirections
+                        origin={origin}
+                        destination={destination}
+                        apikey={GOOGLE_API}
+                        strokeColor="#6644ff"
+                        strokeWidth={4}
+                        mode="WALKING"
+                    />}
+                </MapView>
+
+                <Autocomplete
+                    value=""
+                    containerStyle={styles.searchContainer}
+                    style={{
+                        backgroundColor: COLORS.background,
+                    }}
+                    label="Where do you wanna go?"
+                    data={roomCodes} // Set to the json
+                    menuStyle={{backgroundColor: COLORS.background}}
+                    onChange={() => {setShowRoute(false)}}
+                    usage='mappage'
+                    menuThenGoTo="./directions"
+                    selectedMarker={selectedMarker}
+                    onSelectMarker={handleSelectMarker}
+                />
+
+                <View style={{position: "absolute", bottom: 20}}>
+                    {selectedMarker && showButton && (
+                        <CustomButton text="DIRECTIONS" onPress={() => {
+                            setShowRoute(true);
+                            setShowButton(false)}}/>
+                    )}
+                    
                 </View>
-
-                <View>
-                <TextInput 
-                    placeholder="Destination location"
-                    autoCapitalize="none"
-                    style={{flex: 1, padding: 2, fontSize: SIZES.medium}}></TextInput>
-                </View>
-
+                
             </View>
-            
-        </View>
     )
 };
 
@@ -94,13 +136,13 @@ const styles = StyleSheet.create({
         
     searchContainer: {
         position: "absolute",
-        marginTop: 40,
+        marginTop: Platform.OS === 'ios' ? 40 : 20,
         flexDirection: "column",
-        backgroundColor: "white",
+        backgroundColor: COLORS.background,
         width: "90%",
         alignSelf: "center",
         borderRadius: 9,
-        padding: 15,
+        padding: 10,
         shadowColor: "#ccc",
         shadowOffset: {width: 0, height: 3},
         shadowOpacity: 0.5,
