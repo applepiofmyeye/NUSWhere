@@ -102,7 +102,7 @@ export default function MapPage() {
                     label="Where do you wanna go?"
                     data={roomCodes} // Set to the json
                     menuStyle={{backgroundColor: COLORS.background}}
-                    onChange={() => {}}
+                    onChange={() => {setShowRoute(false)}}
                     usage='mappage'
                     menuThenGoTo="./directions"
                     selectedMarker={selectedMarker}

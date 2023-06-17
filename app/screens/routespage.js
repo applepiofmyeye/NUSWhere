@@ -17,8 +17,6 @@ export default function RoutesPage() {
             <Stack.Screen 
                 options={{ headerShown: false, }}/>
                 <Text>Routes</Text>
-
-            
         </View>
     );
 }

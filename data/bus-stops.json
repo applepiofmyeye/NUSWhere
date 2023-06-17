@@ -8,10 +8,14 @@
       "code": "AS7",
       "routes": [
         "A1",
-        "B1",
-        "BTC1",
+        "BTC",
         "D1"
-      ]
+      ],
+      "neighbors": {
+        "A1": "COM2",
+        "D1": "BIZ 2",
+        "BTC": "BIZ 2"
+      }
     },
     {
       "name": "BIZ 2",
@@ -22,11 +26,14 @@
       "code": "BIZ2",
       "routes": [
         "A1",
-        "B1",
-        "BTC1",
-        "D1",
-        "D2"
-      ]
+        "BTC",
+        "D1"
+      ],
+      "neighbors": {
+        "A1": "Opp TCOMS",
+        "D1": "COM3",
+        "BTC": "Opp PGP"
+      }
     },
     {
       "name": "Botanic Gardens MRT",
@@ -37,18 +44,10 @@
       "code": "BG-MRT",
       "routes": [
         "BTC2"
-      ]
-    },
-    {
-      "name": "Car Park 11 (BIZ)",
-      "location": [
-        1.2946511164318655,
-        103.77472579479218
       ],
-      "code": "BIZ2-E",
-      "routes": [
-        "D2"
-      ]
+      "neighbors": {
+        "BTC": "Kent Ridge MRT"
+      }
     },
     {
       "name": "Central Library",
@@ -59,10 +58,16 @@
       "code": "CENLIB",
       "routes": [
         "A1",
-        "B1",
-        "BTC1",
+        "K",
+        "BTC",
         "D1"
-      ]
+      ],
+      "neighbors": {
+        "A1": "Kent Ridge Bus Terminal",
+        "K": "Opp SDE3",
+        "BTC": "LT13",
+        "D1": "LT13"
+      }
     },
     {
       "name": "College Green",
@@ -72,8 +77,11 @@
       ],
       "code": "CGH",
       "routes": [
-        "BTC1"
-      ]
+        "BTC"
+      ],
+      "neighbors": {
+        "BTC": "Oei Tiong Ham Building"
+      }
     },
     {
       "name": "COM2",
@@ -84,9 +92,12 @@
       "code": "COM2",
       "routes": [
         "A1",
-        "A2",
-        "D1"
-      ]
+        "A2"
+      ],
+      "neighbors": {
+        "A1": "BIZ 2",
+        "A2": "Ventus"
+      }
     },
     {
       "name": "EA",
@@ -96,10 +107,11 @@
       ],
       "code": "BLK-EA-OPP",
       "routes": [
-        "B2",
-        "C",
-        "BTC2"
-      ]
+        "E"
+      ],
+      "neighbors": {
+        "E": "SDE3"
+      }
     },
     {
       "name": "Information Technology",
@@ -110,11 +122,15 @@
       "code": "COMCEN",
       "routes": [
         "A2",
-        "B1",
-        "B2",
+        "E",
         "D1"
-      ]
-    },
+      ],
+      "neighbors":{
+        "A2": "Opp YIH",
+        "E": "Opp YIH",
+        "D1": "Opp YIH"
+      }  
+      },
     {
       "name": "Kent Ridge Bus Terminal",
       "location": [
@@ -123,11 +139,13 @@
       ],
       "code": "KR-BT",
       "routes": [
-        "B1",
-        "C",
-        "BTC1",
-        "BTC2"
-      ]
+        "A1",
+        "A2"
+      ],
+      "neighbors": {
+        "A1": "LT13",
+        "A2": "Information Technology"
+      }
     },
     {
       "name": "Kent Ridge MRT",
@@ -138,8 +156,16 @@
       "code": "KR-MRT",
       "routes": [
         "A1",
-        "D2"
-      ]
+        "D2",
+        "K",
+        "BTC"
+      ],
+      "neighbors": {
+        "A1": "LT27",
+        "D2": "LT27",
+        "K": "LT27",
+        "BTC": "LT27"
+      }
     },
     {
       "name": "Kent Vale",
@@ -149,9 +175,15 @@
       ],
       "code": "KV",
       "routes": [
-        "C",
-        "BTC1"
-      ]
+        "K",
+        "E",
+        "BTC"
+      ],
+      "neighbors": {
+        "K": "Museum",
+        "E": "EA",
+        "BTC": "Museum"
+      }
     },
     {
       "name": "LT13",
@@ -162,10 +194,14 @@
       "code": "LT13",
       "routes": [
         "A1",
-        "B1",
-        "BTC1",
+        "BTC",
         "D1"
-      ]
+      ],
+      "neighbors": {
+        "A1": "AS5",
+        "BTC": "AS5",
+        "D1": "AS5"
+      }
     },
     {
       "name": "LT27",
@@ -176,9 +212,16 @@
       "code": "LT27",
       "routes": [
         "A1",
-        "C",
-        "D2"
-      ]
+        "D2",
+        "K",
+        "BTC"
+      ],
+      "neighbors": {
+        "A1": "University Hall",
+        "D2": "University Hall",
+        "K": "University Hall",
+        "BTC": "University Hall"
+      }
     },
     {
       "name": "Museum",
@@ -189,12 +232,18 @@
       "code": "MUSEUM",
       "routes": [
         "A2",
-        "C",
-        "BTC1",
-        "BTC2",
+        "K",
+        "BTC",
         "D1",
         "D2"
-      ]
+      ],
+      "neighbors": {
+        "A2": "University Health Centre",
+        "K": "University Health Centre",
+        "BTC": "YIH",
+        "D1": "University Town",
+        "D2": "University Town"
+      }
     },
     {
       "name": "Oei Tiong Ham Building",
@@ -204,9 +253,11 @@
       ],
       "code": "BUKITTIMAH-BTC2",
       "routes": [
-        "BTC1",
-        "BTC2"
-      ]
+        "BTC"
+      ],
+      "neighbors": {
+        "BTC": "Botanic Gardens MRT"
+      }
     },
     {
       "name": "Opp HSSML",
@@ -217,9 +268,12 @@
       "code": "HSSML-OPP",
       "routes": [
         "A2",
-        "B2",
         "D1"
-      ]
+      ],
+      "neighbors": {
+        "A2": "Opp NUSS",
+        "D1": "Opp NUSS"
+      }
     },
     {
       "name": "Opp Kent Ridge MRT",
@@ -230,8 +284,14 @@
       "code": "KR-MRT-OPP",
       "routes": [
         "A2",
-        "D2"
-      ]
+        "D2",
+        "K"
+      ],
+      "neighbors": {
+        "A2": "Opp PGP",
+        "D2": "Opp PGP",
+        "K": "Opp PGP"
+      }
     },
     {
       "name": "Opp NUSS",
@@ -242,9 +302,12 @@
       "code": "NUSS-OPP",
       "routes": [
         "A2",
-        "B2",
         "D1"
-      ]
+      ],
+      "neighbors": {
+        "A2": "COM2",
+        "D1": "Ventus"
+      }
     },
     {
       "name": "Opp TCOMS",
@@ -255,7 +318,10 @@
       "code": "PGP12-OPP",
       "routes": [
         "A1"
-      ]
+      ],
+      "neighbors": {
+        "A1": "PGP Residences"
+      }
     },
     {
       "name": "Opp University Hall",
@@ -266,9 +332,14 @@
       "code": "UHALL-OPP",
       "routes": [
         "A2",
-        "C",
-        "D2"
-      ]
+        "D2",
+        "K"
+      ],
+      "neighbors": {
+        "A2": "S17",
+        "D2": "S17",
+        "K": "S17"
+      }
     },
     {
       "name": "Opp University Health Centre",
@@ -279,9 +350,16 @@
       "code": "STAFFCLUB-OPP",
       "routes": [
         "A1",
-        "C",
-        "D2"
-      ]
+        "D2",
+        "K",
+        "BTC"
+      ], 
+      "neighbors": {
+        "A1": "YIH",
+        "D2": "Museum",
+        "K": "YIH",
+        "BTC": "University Town"
+      }
     },
     {
       "name": "Opp YIH",
@@ -292,59 +370,64 @@
       "code": "YIH-OPP",
       "routes": [
         "A2",
-        "B1",
-        "B2",
-        "D1"
+        "D1",
+        "E"
       ],
-      "displayRoutesLeft": true
+      "neighbors": {
+        "A2": "Museum",
+        "D1": "Museum",
+        "E": "University Town"
+      }
     },
     {
-      "name": "PGP Hse 15",
+      "name": "Opp PGP",
       "location": [
-        1.2929939338678234,
-        103.77791225910187
+        1.29181942518183,
+        103.78042280673982
       ],
-      "code": "PGP14-15",
+      "code": "OppPGP",
       "routes": [
-        "A2"
+        "A1",
+        "K",
+        "D2",
+        "BTC"
       ],
-      "displayRoutesLeft": true
+      "neighbors": {
+        "A1": "Kent Ridge MRT",
+        "K": "Kent Ridge MRT",
+        "D2": "Kent Ridge MRT",
+        "BTC": "College Green"
+      }
     },
     {
-      "name": "PGP Hse 7",
+      "name": "Opp SDE3",
       "location": [
-        1.2931119210117246,
-        103.77807319164278
+        1.2979213287983704, 
+        103.76956748798277
       ],
-      "code": "PGP7",
+      "code": "OppSDE3",
       "routes": [
-        "A1"
-      ]
+        "K"
+      ],
+      "neighbors": {
+        "K":"The Japanese Primary School"
+      }
     },
     {
-      "name": "PGPR",
+      "name": "PGP Residences",
       "location": [
         1.2909506101880284,
         103.78111481666566
       ],
       "code": "PGP",
       "routes": [
-        "D2"
-      ]
-    },
-    {
-      "name": "Prince George's Park",
-      "location": [
-        1.29181942518183,
-        103.78042280673982
-      ],
-      "code": "PGPT",
-      "routes": [
-        "A1",
+        "D2",
         "A2",
-        "BTC1",
-        "D2"
-      ]
+        "K"
+      ],
+      "neighbors": {
+        "A2": "TCOMS"
+      }
     },
     {
       "name": "Raffles Hall",
@@ -354,9 +437,13 @@
       ],
       "code": "RAFFLES",
       "routes": [
-        "B2",
-        "C"
-      ]
+        "BTC",
+        "E"
+      ],
+      "neighbors": {
+        "BTC": "Kent Vale",
+        "E": "Kent Vale"
+      }
     },
     {
       "name": "S17",
@@ -367,10 +454,30 @@
       "code": "S17",
       "routes": [
         "A2",
-        "C",
-        "D2"
-      ]
+        "D2",
+        "K"
+      ],
+      "neighbors": {
+        "A2": "Opp Kent Ridge MRT",
+        "D2": "Opp Kent Ridge MRT",
+        "K": "Opp Kent Ridge MRT"
+      }
     },
+    {
+      "name": "SDE3",
+      "location": [
+        1.2978623353402328, 
+        103.76993495058117
+      ],
+      "code": "SDE3",
+      "routes": [
+        "E"
+      ],
+      "neighbors": {
+        "E": "Information Technology"
+      }
+    },
+    
     {
       "name": "TCOMS",
       "location": [
@@ -380,7 +487,10 @@
       "code": "PGP12",
       "routes": [
         "A2"
-      ]
+      ],
+      "neighbors": {
+        "A2": "Opp HSSMl"
+      }
     },
     {
       "name": "The Japanese Primary School",
@@ -390,8 +500,11 @@
       ],
       "code": "JP-SCH-16151",
       "routes": [
-        "C"
-      ]
+        "K"
+      ],
+      "neighbors": {
+        "K": "Kent Vale"
+      }
     },
     {
       "name": "University Hall",
@@ -402,9 +515,16 @@
       "code": "UHALL",
       "routes": [
         "A1",
-        "C",
-        "D2"
-      ]
+        "D2",
+        "K",
+        "BTC"
+      ],
+      "neighbors": {
+        "A1": "Opp University Health Centre",
+        "D2": "Opp University Health Centre",
+        "K": "Opp University Health Centre",
+        "BTC": "Opp University Health Centre"
+      }
     },
     {
       "name": "University Health Centre",
@@ -415,9 +535,14 @@
       "code": "STAFFCLUB",
       "routes": [
         "A2",
-        "C",
-        "D2"
-      ]
+        "D2",
+        "K"
+      ],
+      "neighbors": {
+        "A2": "Opp University Hall",
+        "D2": "Opp University Hall",
+        "K": "Opp University Hall"
+      }
     },
     {
       "name": "University Town",
@@ -427,15 +552,20 @@
       ],
       "code": "UTown",
       "routes": [
-        "B1",
-        "B2",
-        "C",
         "D1",
-        "D2"
-      ]
+        "D2",
+        "E",
+        "BTC"
+      ],
+      "neighbors": {
+        "D1": "YIH",
+        "D2": "University Health Centre",
+        "E": "Raffles Hall",
+        "BTC": "Raffles Hall"
+      }
     },
     {
-      "name": "Ventus (Opp LT13)",
+      "name": "Ventus",
       "location": [
         1.2953590387504565,
         103.77057909965517
@@ -443,9 +573,12 @@
       "code": "LT13-OPP",
       "routes": [
         "A2",
-        "B2",
         "D1"
-      ]
+      ],
+      "neighbors": {
+        "A2": "Kent Ridge Bus Terminal",
+        "D1": "Information Technology"
+      }
     },
     {
       "name": "YIH",
@@ -456,9 +589,15 @@
       "code": "YIH",
       "routes": [
         "A1",
-        "B1",
-        "BTC1",
-        "D1"
-      ]
+        "BTC",
+        "D1",
+        "K"
+      ],
+      "neighbors": {
+        "A1": "Central Library",
+        "BTC": "Central Library",
+        "D1": "Central Library",
+        "K": "Central Library"
+      }
     }
   ]
