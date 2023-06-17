@@ -19,7 +19,7 @@ export default function Register() {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
             <Stack.Screen
                 options={{
-                    headerShown: false,
+                    headerShown: true,
                     }}
             />
             
