@@ -69,14 +69,12 @@ export default function LoginDiv() {
             placeholder="Email"
             value={email}
             setValue={setEmail}
-            style={styles.input}
           />
           {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
           <InputBox
             placeholder="Password"
             value={password}
             setValue={setPassword}
-            style={styles.input}
             secureTextEntry
           />
           {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}

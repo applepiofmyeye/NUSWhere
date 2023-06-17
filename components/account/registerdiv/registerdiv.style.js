@@ -11,15 +11,9 @@ const styles = StyleSheet.create({
     },
     pageTitle: {
         fontFamily: FONT.iSemiB,
-        fontSize: SIZES.xLarge,
-        color: COLORS.text
-    },
-    input: {
-        backgroundColor: 'white',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 10,
-        marginTop: 5,
+        fontSize: SIZES.xxLarge,
+        color: COLORS.text,
+        paddingBottom: 18
     },
     error: {
         color: "#dc3545"

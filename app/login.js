@@ -14,9 +14,7 @@ export default function Login() {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }} behavior="padding">
             <Stack.Screen
                 options={{
-                headerStyle: { backgroundColor: COLORS.background },
-                headerShadowVisible: false,
-                headerTitle: "",
+                headerShown: false
                 }}
             />
             

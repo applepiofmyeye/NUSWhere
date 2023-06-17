@@ -31,7 +31,7 @@ const FONT = {
 
   pBold: "PoppinsBold",
   pMedium: "PoppinsMedium",
-  pSemiB: "PoppingsSemiB"
+  pSemiB: "PoppinsSemiB"
 };
 
 const SIZES = {

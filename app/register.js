@@ -14,13 +14,13 @@ export default function Register() {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
             <Stack.Screen
                 options={{
-                headerShow: false,
-                }}
+                    headerShown: false,
+                    }}
             />
             
             <View style={[{flex: 1, backgroundColor: COLORS.background}]}>
-                <Welcome />
-                <RegisterDiv />
+                <Welcome/>
+                <RegisterDiv/>
             </View>
 
         </SafeAreaView>
