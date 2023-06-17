@@ -131,3 +131,15 @@ Thus, Google Maps's Routes API was chosen over MapBox's Directions API.
 | Sheltered Walkways Feature                                    | Integrating the photos taken into database and implementation of visual aids for users                         | 15 - 19 July      |
 | Favourites Feature                                            | Implementation of allowing users to name their saved routes                                                    | 20 - 22 July      |
 | Overall                                                       | Documentation and tidying up code                                                                              | 23 - 24 July      |
+
+## Project Log
+
+Link to Google Sheet: https://docs.google.com/spreadsheets/d/1xNcEmQ-bGhHR0JGNROMSurCtqNVmWlwtwFRD8oUsf24/edit?usp=sharing
+
+## Project Video Demo (as of Monday, 29th May)
+
+Link to Video: https://drive.google.com/file/d/1ilaiN7KODQuTDb3tYLOKlybQSuLWxNhv/view?usp=sharing
+
+## Project Poster
+
+Link to Poster: https://drive.google.com/file/d/1V1dRfd5NcKphSVJ65ZZetvk6-4OHJaPa/view?usp=sharing

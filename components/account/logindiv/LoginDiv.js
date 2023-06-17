@@ -3,7 +3,7 @@ import { View, Text, Modal, Pressable} from "react-native";
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../CustomButton/CustomButton";
 import { useRouter } from "expo-router";
-import { FONT } from "../../../constants";
+import { COLORS, FONT } from "../../../constants";
 import styles from "./logindiv.style";
 import { auth } from '../../../app/firebase';
 import { FirebaseError } from '../Error/FirebaseError';
@@ -11,6 +11,7 @@ import { FirebaseError } from '../Error/FirebaseError';
 
 export default function LoginDiv() {  
   const router = useRouter()
+  const aftLoginPushTo = "./maincontainer"
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
@@ -18,6 +19,10 @@ export default function LoginDiv() {
   const [errorMsg, setErrorMsg] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
 
   const handleLogin = () => {
     setEmailErrorMsg('');
@@ -43,7 +48,11 @@ export default function LoginDiv() {
       .then(userCredentials => {
         const user = userCredentials.user;
         console.log('Logged in with:', user.email);
+<<<<<<< HEAD
         router.push("./home");
+=======
+        router.push(aftLoginPushTo);
+>>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
       })
       .catch(error => {
         setModalVisible(true);
@@ -69,12 +78,14 @@ export default function LoginDiv() {
             placeholder="Email"
             value={email}
             setValue={setEmail}
+            style={styles.input}
           />
           {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
           <InputBox
             placeholder="Password"
             value={password}
             setValue={setPassword}
+            style={styles.input}
             secureTextEntry
           />
           {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
@@ -99,8 +110,16 @@ export default function LoginDiv() {
       </Modal>
 
       <View style={styles.registerContainer}>
+<<<<<<< HEAD
           <Text>New to NUSWhere? </Text>
           <Text onPress={register} style={{fontFamily: FONT.iSemiB}}>Register</Text>
+=======
+          <Text style={{color: COLORS.text}}>New to NUSWhere? </Text>
+          <Text
+          onPress={register} 
+          style={{fontFamily: FONT.iSemiB, color: COLORS.text}}
+          >Register</Text>
+>>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
       </View>
     </View>
   )

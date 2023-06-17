@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
         paddingBottom: 1,
         alignItems: "center",
         justifyContent: "center",
+        paddingBottom: 1
     },
 
     welcomeTitle: {
@@ -25,7 +26,12 @@ const styles = StyleSheet.create({
         width: '70%',
         maxHeight: 200,
         maxWidth: 220,
+<<<<<<< HEAD
         resizeMode: 'contain', 
+=======
+        resizeMode: 'contain',
+        paddingVertical: 20
+>>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
     }
 })
 

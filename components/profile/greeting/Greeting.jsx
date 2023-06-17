@@ -3,10 +3,10 @@ import { auth } from "../../../app/firebase"
 import styles from "./greeting.style";
 
 export default function Greeting() {
-    //const user = auth.currentUser;
-    //const name = user.displayName;
+    const user = auth.currentUser;
+    const name = user.displayName;
 
-    const name = "joey"
+    //const name = "joey"
     const nameComponent = <Text style={styles.name}>{name}</Text>
   return (
     <View style={[styles.greetingContainer, {flex: 2}]}>

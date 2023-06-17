@@ -68,7 +68,11 @@ export default function RegisterDiv() {
           setPasswordErrorMsg("Password should be min 8 char and max 20 char");
         } else if (password !==  passwordRepeat) {
           errorFlag = true;
+<<<<<<< HEAD
           setErrorMsg("Password and confirm password should be same");
+=======
+          setPasswordErrorMsg("Password and confirm password should be same");
+>>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
         }
         
         if (passwordRepeat.length == 0) {
@@ -87,19 +91,20 @@ export default function RegisterDiv() {
             .createUserWithEmailAndPassword(email, password)
             .then(userCredentials => {
               const user = userCredentials.user;
-              user.updateProfile({
-                displayName: {username}
-              })
               console.log('Registered with:', user.email);
+<<<<<<< HEAD
+=======
+              user.updateProfile({
+                displayName: username
+              })
+>>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
               setModalSuccessVisible(true);
             }).catch(error => {
               setModalErrorVisible(true);
               setErrorMsg(FirebaseError(error));
             })
           setLoading(false);
-
         }
-
   }
 
   return (    
@@ -113,18 +118,21 @@ export default function RegisterDiv() {
             placeholder="Username"
             value={username}
             setValue={setUsername}
+            style={styles.input}
             />
           {usernameErrorMsg !== "" && <Text style={styles.error}>{usernameErrorMsg}</Text>}
           <InputBox
             placeholder="Email"
             value={email}
             setValue={setEmail}
+            style={styles.input}
           />
           {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
           <InputBox
             placeholder="Enter Password"
             value={password}
             setValue={setPassword}
+            style={styles.input}
             secureTextEntry
           />
           {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
@@ -132,6 +140,7 @@ export default function RegisterDiv() {
             placeholder="Re-enter Password"
             value={passwordRepeat}
             setValue={setPasswordRepeat}
+            style={styles.input}
             secureTextEntry
           />
           {passwordRepeatErrorMsg !== "" && <Text style={styles.error}>{passwordRepeatErrorMsg}</Text>}

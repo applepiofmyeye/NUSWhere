@@ -1,5 +1,15 @@
+<<<<<<< HEAD
 import React, { SafeAreaView, View } from "react-native";
 import { Stack } from "expo-router";
+=======
+/*
+Login page. It contains mainly 2 components: LoginDiv and Welcome.
+*/
+
+
+import React, { KeyboardAvoidingView, SafeAreaView, View } from "react-native";
+import { Stack, useRouter } from "expo-router";
+>>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
 
 import { COLORS } from "../constants";
 import {
@@ -26,35 +36,3 @@ export default function Login() {
         </SafeAreaView>
     )
 }
-
-
-
-//     welcomeTitle: {
-//         fontFamily: FONT.pBold,
-//         fontSize: SIZES.title,
-//         color: COLORS.text
-//     },
-
-//     slogan: {
-//         fontFamily: FONT.iRegular,
-//         fontSize: SIZES.large,
-//         color: COLORS.text
-//     },
-
-//     pageTitle: {
-//         fontFamily: FONT.iSemiB,
-//         fontSize:SIZES.xLarge,
-//         color: COLORS.text
-//     },
-
-//     welcomeContainer: {
-//         alignItems: "center",
-//         justifyContent: "flex-end"
-//     },
-
-//     loginContainer: {
-//         alignItems: "center",
-//         marginTop: 40
-//     }
-
-// })
