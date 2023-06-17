@@ -33,38 +33,22 @@ const styles = StyleSheet.create({
       modalView: {
         justifyContent: 'center',  
         alignItems: 'center',   
-<<<<<<< HEAD
-        backgroundColor : "#EE4B2B",   
-        height: 200 ,  
-        width: '80%',  
-        borderRadius: 50,  
-        borderWidth: 10,  
-        borderColor: '#fff',   
-=======
         backgroundColor : COLORS.secondary,   
         height: 200 ,  
         width: '80%',  
         borderRadius: 50,  
         borderWidth: 5,  
         borderColor: COLORS.accent,   
->>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
       },
       modalText: {
         marginBottom: 15,
         textAlign: 'center',
-<<<<<<< HEAD
-        fontFamily: FONT.pBold,
-      },
-      buttonTextStyle: {
-        color: 'white',
-=======
         fontFamily: FONT.pMedium,
         fontSize: SIZES.large,
         color: COLORS.text,
       },
       buttonTextStyle: {
         color: COLORS.pressedBtn,
->>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
         fontWeight: 'bold',
         textAlign: 'center',
       },
