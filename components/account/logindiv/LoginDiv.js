@@ -19,10 +19,6 @@ export default function LoginDiv() {
   const [errorMsg, setErrorMsg] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
 
   const handleLogin = () => {
     setEmailErrorMsg('');
@@ -48,11 +44,7 @@ export default function LoginDiv() {
       .then(userCredentials => {
         const user = userCredentials.user;
         console.log('Logged in with:', user.email);
-<<<<<<< HEAD
-        router.push("./home");
-=======
         router.push(aftLoginPushTo);
->>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
       })
       .catch(error => {
         setModalVisible(true);
@@ -110,16 +102,11 @@ export default function LoginDiv() {
       </Modal>
 
       <View style={styles.registerContainer}>
-<<<<<<< HEAD
-          <Text>New to NUSWhere? </Text>
-          <Text onPress={register} style={{fontFamily: FONT.iSemiB}}>Register</Text>
-=======
           <Text style={{color: COLORS.text}}>New to NUSWhere? </Text>
           <Text
           onPress={register} 
           style={{fontFamily: FONT.iSemiB, color: COLORS.text}}
           >Register</Text>
->>>>>>> f42e8917fb612e2f44c41a80ba7dab7e86924ee2
       </View>
     </View>
   )
