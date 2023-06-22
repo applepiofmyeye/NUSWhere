@@ -43,38 +43,36 @@ const auth = firebase.auth()
 // Firestore data collection and adding data
 const db = getFirestore();
 const colRef = collection(db, "busStopNeighbors")
-//const q = query(colRef, where("stopId", "===",)) // TODO
 
-// getDocs(colRef)
-//     .then((snapshot) => {
-//         let neighbors
-//     })
+const jsonData = require('../data/bus-stops.json');
 
-
-// for ()
+const neighborSet = {};
+const routesSet = {};
   
-//   const neighborSet = {};
-//   const routesSet = {};
+for (let i = 0; i < jsonData.length; i++) {
   
-//   const { name, neighbors } = jsonData;
   
-//   neighborSet[name] = Object.values(neighbors);
+  const name = jsonData[i]["name"];
+  const neighbors = jsonData[i]["neighbors"]
   
-//   routesSet[name] = {};
-//   Object.entries(neighbors).forEach(([key, value]) => {
-//     if (!routesSet[name][value]) {
-//       routesSet[name][value] = [];
-//     }
-//     routesSet[name][value].push(key);
-//   });
+  neighborSet[name] = Object.values(neighbors);
   
-//   console.log(neighborSet);
-//   console.log(routesSet);
+  routesSet[name] = {};
+  Object.entries(neighbors).forEach(([key, value]) => {
+    if (!routesSet[name][value]) {
+      routesSet[name][value] = [];
+    }
+    routesSet[name][value].push(key);
+  });
+}
+//console.log(neighborSet);
+//console.log(routesSet);
+  
+ 
   
 
 
 // Bus stops 
-const busStopJson = require('../data/bus-stops.json');
 
 const loadBusStopData = async () => {
     try {
@@ -114,7 +112,11 @@ const loadBusStopData = async () => {
 
   
 
-  function findBestRoute(start, destination, neighbors, routes) {
+  // For finding shortest path -- to read algo 
+  //const q = query(colRef, where("stopId", "===",)) // TODO
+  // findBestRoute(origin, dest, neighbors, routes)
+  function findBestRoute(start, destination) {
+    console.log(start, destination)
     const queue = [];
     const visited = new Set();
     const parent = {};
@@ -131,17 +133,29 @@ const loadBusStopData = async () => {
         return constructRoute(parent, parentRoute, start, destination);
       }
   
-      const currentNeighbors = neighbors[currentNode];
+      const currentNeighbors = neighborSet[currentNode];
+      //console.log("------------------------------------")
+      //console.log("currentNode: ", JSON.stringify(currentNode));
+      //console.log("currentNeighbors: ", currentNeighbors);
+      //console.log("------------------------------------")
+
+
+      if (currentNeighbors == undefined) {
+        console.log("No valid route found.")
+        return null;
+      }
   
-      for (const neighbor of currentNeighbors) {
-        if (!visited.has(neighbor)) {
-          queue.push(neighbor);
-          visited.add(neighbor);
-          parent[neighbor] = currentNode;
-          parentRoute[neighbor] = routes[currentNode][neighbor];
+      for (const n of currentNeighbors) {
+        if (!visited.has(n)) {
+          queue.push(n);
+          visited.add(n);
+          parent[n] = currentNode;
+          parentRoute[n] = routesSet[currentNode] || {};
+          parentRoute[n][currentNode] = routesSet[currentNode][n];
         }
       }
     }
+    console.log("parentRoute: ", parentRoute)
   
     // No valid route found
     return null;
@@ -163,6 +177,8 @@ const loadBusStopData = async () => {
       const from = route[i];
       const to = route[i + 1];
       busRoutes.push(parentRoute[to][from]);
+      //console.log("route: ", route)
+      //console.log("parentRoute: ", parentRoute)
     }
   
     return {
@@ -172,35 +188,38 @@ const loadBusStopData = async () => {
   }
   
   // Example usage:
-  const start = 'AS5';
-  const destination = 'COM2';
-  const neighbors = {
-    A1: ['COM2'],
-    D1: ['BIZ 2'],
-    BTC: ['BIZ 2'],
-    COM2: ['A1', 'D1', 'BTC'],
-    BIZ2: ['D1', 'BTC'],
-  };
-  const routes = {
-    A1: {
-      COM2: 'Bus 1',
-    },
-    COM2: {
-      A1: 'Bus 1',
-      D1: 'Bus 2',
-      BTC: 'Bus 3',
-    },
-    D1: {
-      'BIZ 2': 'Bus 2',
-    },
-    BTC: {
-      'BIZ 2': 'Bus 3',
-    },
-  };
+  // const start = 'AS5';
+  // const destination = 'COM2';
+  // const neighbors = {
+  //   A1: ['COM2'],
+  //   D1: ['BIZ 2'],
+  //   BTC: ['BIZ 2'],
+  //   COM2: ['A1', 'D1', 'BTC'],
+  //   BIZ2: ['D1', 'BTC'],
+  // };
+  // const routes = {
+  //   A1: {
+  //     COM2: 'Bus 1',
+  //   },
+  //   COM2: {
+  //     A1: 'Bus 1',
+  //     D1: 'Bus 2',
+  //     BTC: 'Bus 3',
+  //   },
+  //   D1: {
+  //     'BIZ 2': 'Bus 2',
+  //   },
+  //   BTC: {
+  //     'BIZ 2': 'Bus 3',
+  //   },
+  // };
   
-  //const bestRoute = findBestRoute(start, destination, neighbors, routes);
-  //console.log(bestRoute.route);      // Output: ['A1', 'COM2']
+  const start = "S17";
+  const destination = "Opp Kent Ridge MRT";
+  const bestRoute = findBestRoute(start, destination);
+  // console.log("-----------------------------")
+  // console.log("BESTROUTE: ", bestRoute);      // Output: ['A1', 'COM2']
   //console.log(bestRoute.busRoutes);  // Output: ['Bus 1']
   
 
-export { auth, db };
+export { auth, findBestRoute };
