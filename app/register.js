@@ -3,8 +3,9 @@ Registering page for new users.
 Contains 2 components, the Welcome and the RegisterDiv component.
 */
 
-import React, { SafeAreaView, View, ScrollView } from "react-native";
-import { Stack, useRouter } from "expo-router";
+import React, { SafeAreaView, StyleSheet, Platform } from "react-native";
+import { Stack } from "expo-router";
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import { COLORS } from "../constants";
 import {
@@ -16,21 +17,33 @@ import {
 export default function Register() {
     
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
+        <SafeAreaView style={Platform.OS === 'ios' ? styles.ioscontainer : styles.androidcontainer}>
             <Stack.Screen
                 options={{
                     headerShown: false,
                     }}
             />
             
-            <View style={[{flex: 1, backgroundColor: COLORS.background}]}>
+            <KeyboardAwareScrollView style={[{flex: 1, backgroundColor: COLORS.background}]}>
                 <Welcome/>
                 <RegisterDiv/>
-            </View>
+            </KeyboardAwareScrollView>
 
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    ioscontainer : {
+        flex: 1, 
+        backgroundColor: COLORS.background,
+    },
+    androidcontainer :{
+        flex: 1, 
+        backgroundColor: COLORS.background,
+        paddingTop: 50,
+    }
+});
 
 
 
