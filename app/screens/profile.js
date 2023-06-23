@@ -18,8 +18,8 @@ import { auth } from "../firebase";
 
 
 export default function Profile() {
-    // const user = auth.currentUser;
-    // const displayName = user.displayName;
+    const user = auth.currentUser;
+    const name = user.displayName;
     
     return (
         <View style={{ flex: 1, backgroundColor: COLORS.background,}}>
@@ -31,7 +31,7 @@ export default function Profile() {
             
             
             <View style={[{flex: 1, backgroundColor: COLORS.background}]}>
-                <Greeting/>
+                <Greeting mainText="Welcome, " subText={name}/>
                 <FavouriteRoutesDiv/>
             </View>
 
