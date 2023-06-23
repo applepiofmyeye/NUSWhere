@@ -9,7 +9,7 @@ add nav bar
 
 import React, { SafeAreaView, View, ScrollView } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import { COLORS, FONT } from "../../constants";
+import { COLORS, FONT } from "../../constants/theme";
 import {
     Greeting,
     FavouriteRoutesDiv
@@ -32,12 +32,11 @@ export default function Profile() {
             
             <View style={[{flex: 1, backgroundColor: COLORS.background}]}>
                 <Greeting mainText="Welcome, " subText={name}/>
-                <FavouriteRoutesDiv/>
-            </View>
 
+            </View>
         </View>
     )
 }
 
-
+//problem with FRList, cannot render.
 
