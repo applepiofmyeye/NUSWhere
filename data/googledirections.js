@@ -3,9 +3,10 @@ import axios from 'axios';
 
 
 
-export function googleDirections(origin, destination, handle) {
+export async function googleDirections(origin, destination) {
     console.log("----------------------------")
     console.log("RECEIVED DATA: ", origin, destination)
+    
     const data = {
         origin: {
           location: {
@@ -47,16 +48,25 @@ export function googleDirections(origin, destination, handle) {
     const distance = (response) => response.routes[0].distanceMeters
 
     var arr;
-    axios.post('https://routes.googleapis.com/directions/v2:computeRoutes', data, { headers })
-        .then(function (response) {
-            arr = [instructions(response.data), duration(response.data), distance(response.data)]
-            console.log(arr);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    handle(arr);
 
+    try {
+      const response = await axios.post(
+        'https://routes.googleapis.com/directions/v2:computeRoutes',
+        data,
+        { headers }
+      );
+      const arr = [
+        instructions(response.data),
+        duration(response.data),
+        distance(response.data)
+      ];
+      console.log("SENT DATA: ", arr);
+      return arr;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+      
 
 }
 

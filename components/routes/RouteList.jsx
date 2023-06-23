@@ -11,7 +11,7 @@ import RouteCard from "./RouteCard";
 export default function RouteList({origin, destination, o, d}) {
     const [buttonPressed, setButtonPressed] = useState(false);
     const br = findBestRoute(o, d);
-    const [outdoorArr, setOutdoorArr] = useState(null);
+
 
     const brStops = br == null ? null : br.busRoutes[0];
     const brRoute = br == null ? null : br.route;
@@ -24,37 +24,64 @@ export default function RouteList({origin, destination, o, d}) {
     console.log("----------------------------------");
     console.log("Origin: ", origin)
     console.log("Destination: ", destination)
-    const handleOutdoorArr = (arr) => {
-        setOutdoorArr(arr)
-    }
-    googleDirections(origin, destination, handleOutdoorArr);
-    console.log("-----------------------------------");
-    console.log("GOOGLE DIRECTIONS RECEIVED: ", outdoorArr);
-    //  TODO make googleDirections() run first
-    const outdoorDirections = outdoorArr[0].map(x => [x, "WALKING"]);
-    const outdoorDuration = outdoorArr[1];
-    const outdoorDistance = outdoorArr[2] + "m";
-    console.log(outdoorDirections, outdoorDuration, outdoorDistance);
+    
+    let outdoorDirections;
+    let outdoorDuration;
+    let outdoorDistance;
+
+
+        
+      
+    googleDirections(origin, destination)
+        .then((x) => {
+        const outdoorArr = ([x[0].map(z => [z, "WALKING"]), x[1], x[2] + "m"]);
+        outdoorDirections = outdoorArr[0];
+        outdoorDuration = outdoorArr[1];
+        outdoorDistance = outdoorArr[2];
+        console.log(outdoorArr);
+    });
+        
+        
+        
+
+        
+    
+
+    
 
     const data = [ {id: 1, mode: "Outdoor"},
-                   {id: 2, mode: "Sheltered"},
-                   {id: 3, mode: "Bus"}
-                 ]
+                       {id: 2, mode: "Sheltered"},
+                       {id: 3, mode: "Bus"}
+                     ]
 
     const renderItem = ({ item }) => {
         if (item.mode === "Outdoor") {
+            console.log("outdoor running")
+            console.log(outdoorDirections);
             return (<RouteCard 
                 mode={item.mode} 
                 directions={outdoorDirections}
                 duration={outdoorDuration}
                 distance={outdoorDistance}
+                item={item}
                 ></RouteCard>);
             }
+            return (<RouteCard 
+                mode={item.mode} 
+                // directions={outdoorDirections}
+                // duration={outdoorDuration}
+                // distance={outdoorDistance}
+                item={item}
+                ></RouteCard>);
+        }
+        
+        
+
+
         // } else if (idem.mode === "Sheltered") {
         //     return 
         // }
-    }
-        
+
 
     return (    
         <View style={{flex: 2, backgroundColor: COLORS.background}}>
@@ -75,4 +102,9 @@ export default function RouteList({origin, destination, o, d}) {
         </View>
         
     )
+    
 }
+    
+        
+
+    

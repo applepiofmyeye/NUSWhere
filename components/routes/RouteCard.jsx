@@ -1,16 +1,21 @@
 import React from "react";
-import { View, Text, FlatList, ScrollView, Animated, StyleSheet} from "react-native";
+import { View, Text, FlatList, ScrollView, Animated, StyleSheet, TouchableOpacity} from "react-native";
 import { findBestRoute } from "../../app/firebase";
 import { COLORS, FONT, SIZES } from "../../constants";
 
 
-export default function RouteCard({mode, directions}) { // directions will be an array
+export default function RouteCard({mode, directions, item}) { // directions will be an array
+    console.log("DIRECTIONS: ", directions);
     return (    
-        <View 
-        style={styles.routeContainer}>
+        <TouchableOpacity 
+        style={styles.routeContainer}
+        >
+
 
           <Text style={styles.routeMode}>{item.mode}</Text>
-        </View>
+          <Text style={styles.routeMode}>{directions}</Text>
+
+        </TouchableOpacity>
         
     )
 }

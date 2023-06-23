@@ -132,7 +132,7 @@ export default function MapPage() {
                     
                 </Animated.View>
                     
-                    {!scrollEnabled && 
+                    {!showRoute && 
                     <Autocomplete
                         value=""
                         containerStyle={[styles.searchContainer, {marginTop: 120}]}
@@ -150,7 +150,7 @@ export default function MapPage() {
                         isDestination={true}
                     />}
                     
-                    {!scrollEnabled &&
+                    {!showRoute &&
                     <Autocomplete
                         value=""
                         containerStyle={styles.searchContainer}
