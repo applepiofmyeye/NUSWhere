@@ -31,8 +31,8 @@ const Layout = () => {
   }
 
   return (
-    <Stack initialRouteName="login">
-      <Stack.Screen name="login" />
+    <Stack initialRouteName="/login">
+      <Stack.Screen name="auth/login" />
     </Stack>
   )
 };
