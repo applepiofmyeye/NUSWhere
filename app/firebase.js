@@ -15,7 +15,6 @@ import {
  } from "firebase/firestore";
  
 
-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -38,8 +37,9 @@ if (firebase.apps.length === 0) {
     app = firebase.app()
 }
 
-const auth = firebase.auth()
 
+const auth = firebase.auth()
+/*
 // Firestore data collection and adding data
 const db = getFirestore();
 const colRef = collection(db, "busStopNeighbors")
@@ -221,5 +221,5 @@ const loadBusStopData = async () => {
   // console.log("BESTROUTE: ", bestRoute);      // Output: ['A1', 'COM2']
   //console.log(bestRoute.busRoutes);  // Output: ['Bus 1']
   
-
-export { auth, findBestRoute };
+*/
+export { auth }//, findBestRoute };
