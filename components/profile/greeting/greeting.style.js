@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     
     greetingContainer: {
-        alignItems: "left",
+        alignItems: "flex-start",
         justifyContent: "center",
         marginHorizontal: 10,
         marginTop: 10
