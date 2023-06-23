@@ -3,15 +3,16 @@ import { View, Text, Modal, Pressable} from "react-native";
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../CustomButton/CustomButton";
 import { useRouter } from "expo-router";
-import { COLORS, FONT } from "../../../constants";
+import { COLORS, FONT } from "../../../constants/theme";
 import styles from "./logindiv.style";
 import { auth } from '../../../app/firebase';
 import { FirebaseError } from '../Error/FirebaseError';
+import { AuthStore } from "../../../store";
+
 
 
 export default function LoginDiv() {  
   const router = useRouter()
-  const aftLoginPushTo = "./maincontainer"
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
@@ -39,24 +40,34 @@ export default function LoginDiv() {
       setPasswordErrorMsg("Password is required field");
     }
 
-    auth
+    if (email.length > 0 && password.length > 0) {
+      auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
+        AuthStore.update((s) => {
+          s.isLoggedIn = true;
+          s.user = user;
+        });
         console.log('Logged in with:', user.email);
-        router.push(aftLoginPushTo);
+        router.replace("../../../screens");
       })
       .catch(error => {
         setModalVisible(true);
         setErrorMsg(FirebaseError(error));
       })
-
-      setEmail('');
-      setPassword('');
+    }
+    
+      
+    setEmail('');
+    setPassword('');
   }
 
   const register = () => {
-    router.push("./register");
+    AuthStore.update((s) => {
+      s.isLoggedIn = false;
+    });
+    router.push("../../../auth/register");
     setEmail('');
     setPassword('');
   }
@@ -71,19 +82,21 @@ export default function LoginDiv() {
             value={email}
             setValue={setEmail}
             style={styles.input}
+            testID="Login.email"
           />
-          {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
+          {emailErrorMsg !== "" && <Text style={styles.error} testID="Login.emailError">{emailErrorMsg}</Text>}
           <InputBox
             placeholder="Password"
             value={password}
             setValue={setPassword}
             style={styles.input}
             secureTextEntry
+            testID="Login.password"
           />
-          {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
+          {passwordErrorMsg !== "" && <Text style={styles.error} testID="Login.passwordError">{passwordErrorMsg}</Text>}
       </View>
 
-      <CustomButton text="LOGIN" onPress={handleLogin} />
+      <CustomButton text="LOGIN" onPress={handleLogin} testID="Login.button"/>
 
       <Modal
         transparent={true}
