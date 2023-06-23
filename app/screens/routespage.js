@@ -4,7 +4,7 @@ Directions page
 
 import React, { SafeAreaView, View, ScrollView, Text } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import { COLORS, FONT } from "../../constants";
+import { COLORS, FONT } from "../../constants/theme";
 import { GOOGLE_API } from "../../keys";
 import { findBestRoute } from "../firebase";
 import { Dimensions } from "react-native";
