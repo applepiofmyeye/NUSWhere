@@ -6,6 +6,8 @@ import styles from "./registerdiv.style";
 import { auth } from '../../../app/firebase';
 import { useRouter } from "expo-router";
 import { FirebaseError } from '../Error/FirebaseError';
+import { COLORS, FONT } from "../../../constants/theme";
+import { AuthStore } from "../../../store";
 
 
 export default function RegisterDiv() {  
@@ -172,6 +174,17 @@ export default function RegisterDiv() {
       </Modal>
 
       <CustomButton text="REGISTER" onPress={handleSignUp} />
+      <Text
+        onPress={() => {
+          AuthStore.update((s) => {
+            s.isLoggedIn = false;
+          });
+          router.back();
+        }}
+        style={{fontFamily: FONT.iSemiB, color: COLORS.text, textAlign: "center"}}
+      >
+        Back to Login
+      </Text>
       {loading && <ActivityIndicator />}
     </View>
     /* </ScrollView> */

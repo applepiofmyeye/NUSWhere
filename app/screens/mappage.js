@@ -19,7 +19,7 @@ import { GOOGLE_API } from "../../keys";
 
 
 
-import { COLORS, SIZES } from "../../constants";
+import { COLORS, SIZES } from "../../constants/theme";
 import { CustomButton, RouteList } from "../../components";
 import RoutesPage from "./routespage";
 
