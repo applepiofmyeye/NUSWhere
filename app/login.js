@@ -3,8 +3,9 @@ Login page. It contains mainly 2 components: LoginDiv and Welcome.
 */
 
 
-import React, { KeyboardAvoidingView, SafeAreaView, View } from "react-native";
-import { Stack, useRouter } from "expo-router";
+import React, { Platform, SafeAreaView, StyleSheet } from "react-native";
+import { Stack } from "expo-router";
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import { COLORS } from "../constants";
 import {
@@ -16,18 +17,28 @@ import {
 export default function Login() {
     
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }} behavior="padding">
+        <SafeAreaView style={Platform.OS === 'ios' ? styles.ioscontainer : styles.androidcontainer}>
             <Stack.Screen
                 options={{
                 headerShown: false
                 }}
-            />
-            
-            <View style={[{ flex: 1, backgroundColor: COLORS.background}, {flexDirection: 'column'}]}>
+            />            
+            <KeyboardAwareScrollView style={[{ flex: 1, backgroundColor: COLORS.background}, {flexDirection: 'column'}]}>
                 <Welcome />
                 <LoginDiv />
-            </View>
-
+            </KeyboardAwareScrollView>
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    ioscontainer : {
+        flex: 1, 
+        backgroundColor: COLORS.background,
+    },
+    androidcontainer :{
+        flex: 1, 
+        backgroundColor: COLORS.background,
+        paddingTop: 50,
+    }
+});

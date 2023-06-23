@@ -1,9 +1,12 @@
-import { Keyboard, View } from "react-native";
+import { Alert, Keyboard, View } from "react-native";
 import { Menu, TextInput } from "react-native-paper";
 import React, { useState } from "react";
 import { COLORS } from "../constants";
-import { Marker } from "react-native-maps";
-import { useRouter } from "expo-router";
+
+// import hashmap of room codes-coords
+import { roomCodeCoords } from "../data/venues";
+
+
 
 
 
@@ -22,8 +25,8 @@ const Autocomplete = ({
     menuThenGoTo,
     selectedMarker,
     onSelectMarker,
+
   }) => {
-    const router = useRouter();
     const [value, setValue] = useState(origValue);
     const [menuVisible, setMenuVisible] = useState(false);
     const [filteredData, setFilteredData] = useState([]);
@@ -76,8 +79,19 @@ const Autocomplete = ({
                 onPress={() => {
                   // to allow for other uses: eg searching bus stops
                   if (usage === 'mappage') {
-                    const markerLocation = { latitude: 0, longitude: 0 }; // Replace with the actual coordinates of the selected location
-                    onSelectMarker(markerLocation);
+                    const location = roomCodeCoords.get(datum)[2] 
+                    if (location) {
+                      const markerLocation = {latitude: location.y, longitude: location.x}; 
+                      console.log(markerLocation)
+                      onSelectMarker(markerLocation);
+                    } else {
+                      return Alert.alert("Location Unavailable", "Sorry! We currently don't have enough data for this venue.", [{
+                        text: "OK",
+                        onPress: () => {},
+                        style: 'cancel'                      
+                      }])
+                    }
+
                     setValue(datum);
                     setMenuVisible(false);
                     Keyboard.dismiss();
