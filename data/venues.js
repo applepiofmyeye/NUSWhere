@@ -10,7 +10,7 @@ const roomCodeCoords = new Map();
       const floor = room.floor;
       const location = room.location;
       roomCodeCoords.set(roomCode, [roomName, floor, location]);
-      roomCodes.push(roomCode);
+      roomCodes.push(roomCode); // roomCodes.push({id: roomName, name: roomCode}); change for autocomplete to add a key id.
     }
 
 const busStops = [];
@@ -24,7 +24,7 @@ const busStopCoords = new Map();
         longitude: busStop.location[1]
       };
       busStopCoords.set(busStopName, busStopLocation);
-      busStops.push(busStopName);
+      busStops.push(busStopName); // busStops.push({id: busStopName, name: busStopName}); change for autocomplete to add a key id.
     }
     //console.log(busStopCoords)
 
