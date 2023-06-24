@@ -26,6 +26,6 @@ const busStopCoords = new Map();
       busStopCoords.set(busStopName, busStopLocation);
       busStops.push(busStopName);
     }
-    console.log(busStopCoords)
+    //console.log(busStopCoords)
 
 export { roomCodes, roomCodeCoords, busStops, busStopCoords };
