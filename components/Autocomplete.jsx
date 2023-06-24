@@ -248,7 +248,7 @@ const Autocomplete = ({
             <FlatList
               data={filteredData}
               renderItem={renderItem}
-              keyExtractor={(item) => item.name}
+              keyExtractor={(item) => item.id}
             />
           </View>
         ) : null }
