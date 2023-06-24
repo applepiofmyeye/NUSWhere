@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Modal, Pressable} from "react-native";
+import { View, Text, Modal, Pressable, ActivityIndicator} from "react-native";
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../CustomButton/CustomButton";
 import { useRouter } from "expo-router";
@@ -11,6 +11,7 @@ import { AuthStore } from "../../../store";
 
 
 
+
 export default function LoginDiv() {  
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -18,6 +19,7 @@ export default function LoginDiv() {
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
   const [passwordErrorMsg, setPasswordErrorMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
+  const [loading, setLoading] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
 
 
@@ -41,6 +43,7 @@ export default function LoginDiv() {
     }
 
     if (email.length > 0 && password.length > 0) {
+      setLoading(true);
       auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
@@ -56,6 +59,7 @@ export default function LoginDiv() {
         setModalVisible(true);
         setErrorMsg(FirebaseError(error));
       })
+      setLoading(false);
     }
     
       
@@ -72,7 +76,7 @@ export default function LoginDiv() {
     setPassword('');
   }
 
-  return (      
+  return (
     <View style={{flex: 8}}>
       
       <View style={styles.loginContainer}>
@@ -96,7 +100,9 @@ export default function LoginDiv() {
           {passwordErrorMsg !== "" && <Text style={styles.error} testID="Login.passwordError">{passwordErrorMsg}</Text>}
       </View>
 
+      
       <CustomButton text="LOGIN" onPress={handleLogin} testID="Login.button"/>
+      
 
       <Modal
         transparent={true}
@@ -114,6 +120,7 @@ export default function LoginDiv() {
         </View>
       </Modal>
 
+      
       <View style={styles.registerContainer}>
           <Text style={{color: COLORS.text}}>New to NUSWhere? </Text>
           <Text
@@ -121,6 +128,7 @@ export default function LoginDiv() {
           style={{fontFamily: FONT.iSemiB, color: COLORS.text}}
           >Register</Text>
       </View>
+      {loading && <ActivityIndicator />}
     </View>
   )
 }
