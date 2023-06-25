@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         fontFamily: FONT.pSemiB,
         fontSize: SIZES.xLarge + 1,
         color: COLORS.text,
-        margin: 10,
+        marginHorizontal: 10,
     },
 
     titleContainer: {
