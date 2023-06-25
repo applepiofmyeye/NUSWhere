@@ -6,6 +6,7 @@ module.exports = function (api) {
       "@babel/plugin-proposal-export-namespace-from",
       "react-native-reanimated/plugin",
       ["@babel/plugin-transform-private-methods", { "loose": true }],
+      ['@babel/plugin-transform-flow-strip-types'], // newly added
       require.resolve("expo-router/babel"),
     ],
   };
