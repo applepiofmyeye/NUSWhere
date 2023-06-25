@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         justifyContent: "center",
         marginHorizontal: 10,
-        marginTop: 10
     },
 
     greeting: {
