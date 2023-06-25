@@ -24,6 +24,7 @@ export default function LoginDiv() {
 
 
   const handleLogin = () => {
+    //console.log(router);
     setEmailErrorMsg('');
     setPasswordErrorMsg('');
 
@@ -88,7 +89,7 @@ export default function LoginDiv() {
             style={styles.input}
             testID="Login.email"
           />
-          {emailErrorMsg !== "" && <Text style={styles.error} testID="Login.emailError">{emailErrorMsg}</Text>}
+          {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
           <InputBox
             placeholder="Password"
             value={password}
@@ -97,7 +98,7 @@ export default function LoginDiv() {
             secureTextEntry
             testID="Login.password"
           />
-          {passwordErrorMsg !== "" && <Text style={styles.error} testID="Login.passwordError">{passwordErrorMsg}</Text>}
+          {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
       </View>
 
       
@@ -132,3 +133,5 @@ export default function LoginDiv() {
     </View>
   )
 }
+
+export const handleLogin = jest.fn();
