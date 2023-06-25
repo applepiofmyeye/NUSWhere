@@ -37,15 +37,14 @@ export default function Profile() {
       };
     
     return (
-        <View style={{ flex: 1, backgroundColor: COLORS.background,}}>
+        
+            
+            <View style={[{flex: 8, backgroundColor: COLORS.background}]}>
             <Stack.Screen
                 options={{
                     headerShown: false                       
                     }}
             />
-            
-            <View style={[{flex: 1, backgroundColor: COLORS.background}]}>
-
                 <TouchableOpacity 
                     onPress={async () => {
                         const resp = await appSignOut();
@@ -58,14 +57,11 @@ export default function Profile() {
                     style={{ paddingTop: 35, alignItems: "flex-end", marginRight: 10 }}>
                     <Text>Logout</Text>
                 </TouchableOpacity>
-
+                
                 <Greeting mainText="Welcome, " subText={AuthStore.getRawState().user?.displayName}/>
                 <FavouriteRoutesDiv/>
 
             </View>
-        </View>
+        
     )
 }
-
-//problem with FRList, cannot render.
-
