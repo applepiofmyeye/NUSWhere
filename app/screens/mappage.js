@@ -19,15 +19,16 @@ import { GOOGLE_API } from "../../keys";
 
 
 
-import { COLORS, SIZES } from "../../constants/theme";
+import { COLORS, SIZES } from "../../constants";
 import { CustomButton, RouteList } from "../../components";
-import RoutesPage from "../screens/routespage";
+import RoutesPage from "./routespage";
 
 let o = null;
 let d = null;
 
 
 export default function MapPage() {
+    console.log("in MapPage")
     const scrollA = useRef(new Animated.Value(0)).current;
     const handleCardDrag = Animated.event(
         [{ nativeEvent: { contentOffset: { y: scrollA } } }],
@@ -204,7 +205,7 @@ export default function MapPage() {
             
         </View>
     )
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -248,6 +249,3 @@ const styles = StyleSheet.create({
         height: 50
     }
 });
-
-
-
