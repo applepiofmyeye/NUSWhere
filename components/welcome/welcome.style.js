@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     welcomeContainer: {
         paddingBottom: 1,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "center"
     },
 
     welcomeTitle: {
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
         width: '70%',
         maxHeight: 200,
         maxWidth: 220,
-        resizeMode: 'contain', 
+        resizeMode: 'contain',
+        paddingVertical: 20
     }
 })
 

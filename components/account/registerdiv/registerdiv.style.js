@@ -11,15 +11,9 @@ const styles = StyleSheet.create({
     },
     pageTitle: {
         fontFamily: FONT.iSemiB,
-        fontSize: SIZES.xLarge,
-        color: COLORS.text
-    },
-    input: {
-        backgroundColor: 'white',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 10,
-        marginTop: 5,
+        fontSize: SIZES.xxLarge,
+        color: COLORS.text,
+        paddingBottom: 18
     },
     error: {
         color: "#dc3545"
@@ -34,20 +28,22 @@ const styles = StyleSheet.create({
       modalSuccessView: {
         justifyContent: 'center',  
         alignItems: 'center',   
-        backgroundColor : "#32CD32",   
+        backgroundColor : COLORS.secondary,   
         height: 200 ,  
         width: '80%',  
         borderRadius: 50,  
-        borderWidth: 10,  
-        borderColor: '#fff',   
+        borderWidth: 5,  
+        borderColor: COLORS.accent,   
       },
       modalText: {
         marginBottom: 15,
         textAlign: 'center',
-        fontFamily: FONT.pBold,
+        fontFamily: FONT.pMedium,
+        fontSize: SIZES.large,
+        color: COLORS.text,
       },
       buttonTextStyle: {
-        color: 'white',
+        color: COLORS.pressedBtn,
         fontWeight: 'bold',
         textAlign: 'center',
       },
@@ -59,12 +55,12 @@ const styles = StyleSheet.create({
       modalErrorView: {
         justifyContent: 'center',  
         alignItems: 'center',   
-        backgroundColor : "#EE4B2B",   
+        backgroundColor : COLORS.secondary,   
         height: 200 ,  
         width: '80%',  
         borderRadius: 50,  
-        borderWidth: 10,  
-        borderColor: '#fff',
+        borderWidth: 5,  
+        borderColor: COLORS.accent,
       }
 })
 

@@ -68,7 +68,7 @@ export default function RegisterDiv() {
           setPasswordErrorMsg("Password should be min 8 char and max 20 char");
         } else if (password !==  passwordRepeat) {
           errorFlag = true;
-          setErrorMsg("Password and confirm password should be same");
+          setPasswordErrorMsg("Password and confirm password should be same");
         }
         
         if (passwordRepeat.length == 0) {
@@ -88,6 +88,9 @@ export default function RegisterDiv() {
             .then(userCredentials => {
               const user = userCredentials.user;
               console.log('Registered with:', user.email);
+              user.updateProfile({
+                displayName: username
+              })
               setModalSuccessVisible(true);
             }).catch(error => {
               setModalErrorVisible(true);

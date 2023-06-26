@@ -1,19 +1,21 @@
 /*
-Registering page for new users.
-Contains 2 components, the Welcome and the RegisterDiv component.
+Map page where users will key in their go-tos.
+
+TODO:
+make this page.
 */
 
 import React, { SafeAreaView, View, ScrollView } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
-import { COLORS } from "../constants";
+import { COLORS } from "../../constants";
 import {
     Welcome,
     RegisterDiv
-} from "../components";
+} from "../../components";
 
 
-export default function Register() {
+export default function NearestStops() {
     
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
