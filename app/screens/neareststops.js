@@ -8,7 +8,7 @@ make this page.
 import React, { SafeAreaView, View, ScrollView } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "../../constants/theme";
 import {
     Welcome,
     RegisterDiv

@@ -1,27 +1,30 @@
 import React, { useState } from "react";
-import { View, Text, Modal, Pressable} from "react-native";
+import { View, Text, Modal, Pressable, ActivityIndicator} from "react-native";
 import InputBox from "../InputBox/InputBox";
 import CustomButton from "../CustomButton/CustomButton";
 import { useRouter } from "expo-router";
-import { COLORS, FONT } from "../../../constants";
+import { COLORS, FONT } from "../../../constants/theme";
 import styles from "./logindiv.style";
 import { auth } from '../../../app/firebase';
 import { FirebaseError } from '../Error/FirebaseError';
+import { AuthStore } from "../../../store";
+
+
 
 
 export default function LoginDiv() {  
   const router = useRouter()
-  const aftLoginPushTo = "./maincontainer"
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [emailErrorMsg, setEmailErrorMsg] = useState('')
   const [passwordErrorMsg, setPasswordErrorMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
+  const [loading, setLoading] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
 
 
-
   const handleLogin = () => {
+    //console.log(router);
     setEmailErrorMsg('');
     setPasswordErrorMsg('');
 
@@ -40,29 +43,41 @@ export default function LoginDiv() {
       setPasswordErrorMsg("Password is required field");
     }
 
-    auth
+    if (email.length > 0 && password.length > 0) {
+      setLoading(true);
+      auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
+        AuthStore.update((s) => {
+          s.isLoggedIn = true;
+          s.user = user;
+        });
         console.log('Logged in with:', user.email);
-        router.push(aftLoginPushTo);
+        router.replace("../../../screens");
       })
       .catch(error => {
         setModalVisible(true);
         setErrorMsg(FirebaseError(error));
       })
-
-      setEmail('');
-      setPassword('');
-  }
-
-  const register = () => {
-    router.push("./register");
+      setLoading(false);
+    }
+    
+      
     setEmail('');
     setPassword('');
   }
 
-  return (      
+  const register = () => {
+    AuthStore.update((s) => {
+      s.isLoggedIn = false;
+    });
+    router.push("../../../auth/register");
+    setEmail('');
+    setPassword('');
+  }
+
+  return (
     <View style={{flex: 8}}>
       
       <View style={styles.loginContainer}>
@@ -72,6 +87,7 @@ export default function LoginDiv() {
             value={email}
             setValue={setEmail}
             style={styles.input}
+            testID="Login.email"
           />
           {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
           <InputBox
@@ -80,11 +96,14 @@ export default function LoginDiv() {
             setValue={setPassword}
             style={styles.input}
             secureTextEntry
+            testID="Login.password"
           />
           {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
       </View>
 
-      <CustomButton text="LOGIN" onPress={handleLogin} />
+      
+      <CustomButton text="LOGIN" onPress={handleLogin} testID="Login.button"/>
+      
 
       <Modal
         transparent={true}
@@ -102,6 +121,7 @@ export default function LoginDiv() {
         </View>
       </Modal>
 
+      
       <View style={styles.registerContainer}>
           <Text style={{color: COLORS.text}}>New to NUSWhere? </Text>
           <Text
@@ -109,6 +129,9 @@ export default function LoginDiv() {
           style={{fontFamily: FONT.iSemiB, color: COLORS.text}}
           >Register</Text>
       </View>
+      {loading && <ActivityIndicator />}
     </View>
   )
 }
+
+export const handleLogin = jest.fn();

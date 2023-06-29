@@ -1,18 +1,21 @@
-import { COLORS, FONT, SIZES } from "../../../constants/theme";
+import { COLORS, FONT, SIZES } from "../../constants";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    
     routeContainer: {
         borderRadius: 18,
         backgroundColor: COLORS.secondary,
-        padding: 18,
+        padding: 0,
         borderColor: COLORS.accent,
         borderWidth: 1,
-        margin: 10,
+        margin: 5,
+        width: 380,
+        height: 130,
+        justifyContent: "center",
+        alignItems: "center"
     },
 
-    routeName: {
+    routeMode: {
         fontFamily: FONT.iRegular,
         fontSize: SIZES.medium,
         color: COLORS.text,
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
         fontFamily: FONT.pSemiB,
         fontSize: SIZES.xLarge + 1,
         color: COLORS.text,
-        marginHorizontal: 10,
+        margin: 10,
     },
 
     titleContainer: {

@@ -4,9 +4,9 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     
     welcomeContainer: {
+        paddingBottom: 1,
         alignItems: "center",
         justifyContent: "center",
-        paddingBottom: 1
     },
 
     welcomeTitle: {

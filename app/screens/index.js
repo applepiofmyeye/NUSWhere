@@ -5,27 +5,26 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
-import MapPage from "./screens/mappage";
-import Profile from "./screens/profile";
-import NearestStops from "./screens/neareststops";
-import { COLORS, FONT, icons } from "../constants";
+import MapPage from "./mappage";
+import Profile from "./profile";
+import NearestStops from "./neareststops";
+import { COLORS, FONT, icons } from "../../constants/theme";
 import { Stack } from "expo-router";
 
 // Screen names
 const profileName = 'Profile';
 const nearestName = 'NearestStops';
-const mapName = 'MapPage';
+const mapName = 'Map';
 
 const Tab = createBottomTabNavigator();
 
-export default function MainContainer() {
+export default function Index() {
     return (
         <View style={{flex: 1}}>
             <Stack.Screen 
             options={{
                 headerShown: false
             }}/>
-        <NavigationContainer independent={true}>
             <Tab.Navigator
             initialRouteName={profileName}
             screenOptions={({route}) => ({
@@ -72,7 +71,6 @@ export default function MainContainer() {
 
 
 
-        </NavigationContainer>
         </View>
     )
 }

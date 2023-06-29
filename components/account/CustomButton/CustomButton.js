@@ -1,11 +1,11 @@
 import React from 'react'
 import { Text, StyleSheet, Pressable, View } from 'react-native'
-import { COLORS, FONT, SIZES } from "../../../constants";
+import { COLORS, FONT, SIZES } from "../../../constants/theme";
 
-const CustomButton = ({onPress, text}) => {
+const CustomButton = ({onPress, text, ...props}) => {
     return (
     <View style={{alignItems: "center", justifyContent: "flex-end"}}>
-        <Pressable onPress={onPress} style={styles.container}>
+        <Pressable {...props} onPress={onPress} style={styles.container}>
             <Text style={styles.text}>{text}</Text>
         </Pressable>
     </View>
