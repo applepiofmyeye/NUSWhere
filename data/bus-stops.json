@@ -100,6 +100,20 @@
       }
     },
     {
+      "name": "COM3",
+      "location": [
+        1.2932406342533864,
+        103.77507448196413
+      ],
+      "code": "COM3",
+      "routes": [
+        "D1"
+      ],
+      "neighbors": {
+        "D1": "Opp HSSML"
+      }
+    },
+    {
       "name": "EA",
       "location": [
         1.3006255455408364,
@@ -489,7 +503,7 @@
         "A2"
       ],
       "neighbors": {
-        "A2": "Opp HSSMl"
+        "A2": "Opp HSSML"
       }
     },
     {
