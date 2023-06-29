@@ -12,7 +12,7 @@ import Autocomplete from "../../components/Autocomplete";
 import { Stack, useRouter } from "expo-router";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
-import { roomCodes, busStops } from "../../data/venues";
+import { roomCodes, busStops, buildings } from "../../data/venues";
 import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_API } from "../../keys";
 
@@ -21,7 +21,6 @@ import { GOOGLE_API } from "../../keys";
 
 import { COLORS, SIZES } from "../../constants";
 import { CustomButton, RouteList } from "../../components";
-import RoutesPage from "./routespage";
 
 let o = null;
 let d = null;
@@ -42,6 +41,10 @@ export default function MapPage() {
     const [destination, setDestination] = useState(null);
     const [showRoute, setShowRoute] = useState(false);
     const [scrollEnabled, setScrollEnabled] = useState(false);
+
+    // const handleCardPress = () => {
+    //     router.push('./routespage')
+    // }
     
 
 
@@ -142,7 +145,7 @@ export default function MapPage() {
                             flex: 1
                         }}
                         label="Where do you wanna go?"
-                        data={roomCodes.concat(busStops)} // Set to the json
+                        data={roomCodes.concat(busStops).concat(buildings)} // Set to the json
                         menuStyle={{backgroundColor: COLORS.background}}
                         onChange={() => {setShowRoute(false)}}
                         usage='mappage'
@@ -194,7 +197,12 @@ export default function MapPage() {
                         
                 </View>
 
-                {showRoute && <RouteList origin={origin} destination={destination} o={o} d={d} />}
+                {showRoute && <RouteList 
+                origin={origin} 
+                destination={destination} 
+                o={o} 
+                d={d} 
+                />}
                 
 
 

@@ -1,0 +1,922 @@
+{
+    "COM1": {
+	"name": "COM1",
+	"neighbours": ["COM2", "COM3", "AS6"],
+	"location": {
+            "x": 1.2948903220382768,
+            "y": 103.77378095810657
+      	}
+    },
+    "COM2": {
+	"name": "COM2",
+	"neighbours": ["COM1", "COM3", "BIZ2"],
+	"location": {
+            "x": 1.2943219477845713, 
+            "y": 103.77411407170536
+      	}
+    },
+    "COM3": {
+	"name": "COM3",
+	"neighbours": ["COM1", "COM2", "BIZ2"],
+	"location": {
+            "x": 1.2949222292208542, 
+            "y": 103.77455378255516
+      	}
+    },
+    "Hon Sui Sen Memorial Library": {
+	"name": "Hon Sui Sen Memorial Library",
+	"neighbours": ["BIZ2"],
+	"location": {
+            "x": 1.2931335137255293, 
+            "y": 103.77443248273022
+      	}
+    },
+    "BIZ1": {
+	"name": "BIZ1",
+	"neighbours": "",
+	"location": {
+            "x": 1.292496851980201,
+            "y": 103.77408374585615 
+      	}
+    },
+    "BIZ2": {
+	"name": "BIZ2",
+	"neighbours": ["Hon Sui Sen Memorial Library", "COM3", "I3"],
+	"location": {
+            "x": 1.2934424785127683, 
+            "y": 103.77511310292317
+      	}
+    },
+    "I3": {
+	"name": "I3",
+	"neighbours": ["BIZ2", "Kent Ridge Hall"],
+	"location": {
+            "x": 1.2929210213148141, 
+            "y": 103.77552855316338
+      	}
+    },
+    "I4": {
+	"name": "I4",
+	"neighbours": "",
+	"location": {
+            "x": 1.2944651205026525, 
+            "y": 103.77617743965936
+      	}
+    },
+    "Kent Ridge Hall": {
+	"name": "Kent Ridge Hall",
+	"neighbours": ["I3", "Sheares Hall"],
+	"location": {
+            "x": 1.2918879680849846,  
+            "y": 103.77478045622678 
+      	}
+    },
+    "Sheares Hall": {
+	"name": "Sheares Hall",
+	"neighbours": ["Kent Ridge Hall"],
+	"location": {
+            "x": 1.2915393194639702,
+            "y": 103.7756477509512   
+      	}
+    },
+    "AS6": {
+	"name": "AS6",
+	"neighbours": ["AS8", "Central Library", "COM1", "AS1"],
+	"location": {
+            "x": 1.2955727269054422,
+            "y": 103.77324614051948  
+      	}
+    },
+    "AS8": {
+	"name": "AS8",
+	"neighbours": ["AS6", "AS1"],
+	"location": {
+            "x": 1.2960989453637741,
+            "y": 103.77248528640412  
+      	}
+    },
+    "AS1": {
+	"name": "AS1",
+	"neighbours": ["AS2", "AS3", "AS4", "AS6", "AS8", "The Deck"],
+	"location": {
+            "x": 1.295203316675941,
+            "y": 103.77210441232205  
+      	}
+    },
+    "AS2": {
+	"name": "AS2",
+	"neighbours": ["AS1", "AS3", "Ventus"],
+	"location": {
+            "x": 1.2954071125808726,
+            "y": 103.77118709660716
+      	}
+    },
+    "AS3": {
+	"name": "AS3",
+	"neighbours": ["AS1", "AS2", "AS4", "AS7"],
+	"location": {
+            "x": 1.294779635984649,
+            "y": 103.77144458869358
+      	}
+    },
+    "AS4": {
+	"name": "AS4",
+	"neighbours": ["AS1", "AS3", "AS5", "The Deck"],
+	"location": {
+            "x": 1.2946562857748258,
+            "y": 103.7718040047161
+      	}
+    },
+    "AS5": {
+	"name": "AS5",
+	"neighbours": ["AS4"],
+	"location": {
+            "x":1.2942535705736187, 
+            "y": 103.77183647533423
+      	}
+    },
+    "AS7": {
+	"name": "AS7",
+	"neighbours": ["AS3"],
+	"location": {
+            "x": 1.294412718981773,
+            "y": 103.77121532595655
+      	}
+    },
+    "The Deck": {
+	"name": "The Deck",
+	"neighbours": ["AS1", "AS4"],
+	"location": {
+            "x": 1.294496973724799,
+            "y": 103.77255438725938
+      	}
+    },
+    "NUSS Kent Ridge Guild House": {
+	"name": "NUSS Kent Ridge Guild House",
+	"neighbours": [],
+	"location": {
+            "x": 1.2934883550718541,
+            "y": 103.77312722373557
+      	}
+    },
+    "Shaw Foundation Alumni House": {
+	"name": "Shaw Foundation Alumni House",
+	"neighbours": [],
+	"location": {
+            "x": 1.2934193670914846,
+            "y": 103.77393960289012
+      	}
+    },
+    "Ventus": {
+	"name": "Ventus",
+	"neighbours": ["AS2"],
+	"location": {
+            "x": 1.2954001727665005, 
+            "y": 103.77018039230353
+      	}
+    },
+    "Eusoff Hall": {
+	"name": "Eusoff Hall",
+	"neighbours": ["Temasek Hall"],
+	"location": {
+            "x": 1.2938331092483417,
+            "y": 103.77039983733505
+      	}
+    },
+    "Temasek Hall": {
+	"name": "Temasek Hall",
+	"neighbours": ["Eusoff Hall"],
+	"location": {
+            "x": 1.2929331656924046, 
+            "y": 103.77142988599336
+      	}
+    },
+    "Institute of Systems Science": {
+	"name": "Institute of Systems Science",
+	"neighbours": [],
+	"location": {
+            "x": 1.2924229364640025, 
+            "y": 103.77661072592679
+      	}
+    },    
+    "Central Library": {
+	"name": "Central Library",
+	"neighbours": ["AS6", "E5", "Yusof Ishak House"],
+	"location": {
+            "x": 1.2967306421922211, 
+            "y": 103.77354301573958
+      	}
+    }, 
+    "E5": {
+	"name": "E5",
+	"neighbours": ["Central Library", "E4"],
+	"location": {
+            "x": 1.2981612539259817, 
+            "y": 103.77234131810269
+      	}
+    },
+    "NUS Information Technology": {
+	"name": "NUS Information Technology",
+	"neighbours": [],
+	"location": {
+            "x": 1.2976419533984924, 
+            "y": 103.77273361767077
+      	}
+    },
+    "E4": {
+	"name": "E4",
+	"neighbours": ["E1", "E2", "E3", "E4A", "E5"],
+	"location": {
+            "x": 1.2976419533984924, 
+            "y": 103.77273361767077
+      	}
+    },
+    "E4A": {
+	"name": "E4A",
+	"neighbours": ["E4", "E8"],
+	"location": {
+            "x": 1.2986539620888853, 
+            "y": 103.77260454052269
+      	}
+    },
+    "E8": {
+	"name": "E8",
+	"neighbours": ["E4A"],
+	"location": {
+            "x": 1.2991275695778195, 
+            "y": 103.77283896374652 
+      	}
+    },
+    "E3": {
+	"name": "E3",
+	"neighbours": ["T-Lab", "E2", "E4"],
+	"location": {
+            "x": 1.2992203379771334,
+            "y": 103.77130056461014
+      	}
+    },
+    "E2": {
+	"name": "E2",
+	"neighbours": ["EA", "E1", "E1A", "E2A", "E3", "E4"],
+	"location": {
+            "x": 1.2992370154502921,
+            "y": 103.77134709758636
+      	}
+    },
+    "E2A": {
+	"name": "E2A",
+	"neighbours": ["E2"],
+	"location": {
+            "x": 1.2988366467525885,
+            "y": 103.77137151644332
+      	}
+    },
+    "E1": {
+	"name": "E1",
+	"neighbours": ["E1A", "EW1", "E4", "Techno Edge"],
+	"location": {
+            "x": 1.2989635930404704,
+            "y": 103.77109802344012
+      	}
+    },
+    "E1A": {
+	"name": "E1A",
+	"neighbours": ["E1", "E2", "EA"],
+	"location": {
+            "x": 1.2993883750797177,
+            "y": 103.77081476262427
+      	}
+    },
+    "EW1": {
+	"name": "EW1",
+	"neighbours": ["E1", "SDE1"],
+	"location": {
+            "x": 1.2983565996081137, 
+            "y": 103.77114139942664
+      	}
+    },
+    "EW1A": {
+	"name": "EW1A",
+	"neighbours": [],
+	"location": {
+            "x": 1.2993997112303939, 
+            "y": 103.77035282981727
+      	}
+    },
+    "EA": {
+	"name": "EA",
+	"neighbours": ["E1A", "E2", "E3A"],
+	"location": {
+            "x": 1.300478424398456, 
+            "y": 103.77064349492308 
+      	}
+    },
+    "E3A": {
+	"name": "E3A",
+	"neighbours": ["EA"], 
+	"location": {
+            "x": 1.300333622340914, 
+            "y": 103.77139987816079 
+      	}
+    },
+    "Techno Edge": {
+	"name": "Techno Edge",
+	"neighbours": ["E1"], 
+	"location": {
+            "x": 1.2980409230968222, 
+            "y": 103.7718558534839 
+      	}
+    },
+    "T-Lab": {
+	"name": "T-Lab",
+	"neighbours": ["E3"], 
+	"location": {
+            "x": 1.2998375414749102, 
+            "y": 103.77226623155678 
+      	}
+    },
+    "SDE1": {
+	"name": "SDE1",
+	"neighbours": ["EW1", "SDE2", "SDE3", "SDE4"], 
+	"location": {
+            "x": 1.2974795368983307, 
+            "y": 103.77063058448309 
+      	}
+    },
+    "SDE2": {
+	"name": "SDE2",
+	"neighbours": ["SDE1", "CELC"], 
+	"location": {
+            "x": 1.297452672829959,
+            "y": 103.77111873781563 
+      	}
+    },
+    "SDE3": {
+	"name": "SDE3",
+	"neighbours": ["SDE1", "SDE4"], 
+	"location": {
+            "x": 1.297714596150673, 
+            "y": 103.77063730221201
+      	}
+    },
+    "SDE4": {
+	"name": "SDE4",
+	"neighbours": ["SDE1", "SDE3"], 
+	"location": {
+            "x": 1.2969374199174417,
+            "y": 103.77034455132913 
+      	}
+    },
+    "CELC": {
+	"name": "CELC",
+	"neighbours": ["SDE2"], 
+	"location": {
+            "x": 1.297066482166153, 
+            "y": 103.77145129057699
+      	}
+    },
+    "Raffles Hall": {
+	"name": "Raffles Hall",
+	"neighbours": ["Kuok Foundation House", "Runme Shaw CFA Studio"],
+	"location": {
+            "x": 1.3001314585543082, 
+            "y": 103.7741328624474
+      	}
+    },   
+    "Kuok Foundation House": {
+	"name": "Kuok Foundation House",
+	"neighbours": ["Raffles Hall"], 
+	"location": {
+            "x": 1.300420013933161,
+            "y": 103.7738057488293
+      	}
+    },
+    "Runme Shaw CFA Studio": {
+	"name": "Runme Shaw CFA Studio",
+	"neighbours": ["Raffles Hall"], 
+	"location": {
+            "x": 1.2991836370959553, 
+            "y": 103.77390656233186
+      	}
+    },
+    "Yusof Ishak House": {
+	"name": "Yusof Ishak House",
+	"neighbours": ["Central Library", "Ridge View Residential College", "University Sports Centre"], 
+	"location": {
+            "x": 1.2985208145887956,
+            "y": 103.7750823237249
+      	}
+    },    
+    "Ridge View Residential College": {
+	"name": "Ridge View Residential College",
+	"neighbours": ["Yusof Ishak House"],
+	"location": {
+            "x": 1.297551268506784, 
+            "y": 103.77709503271245
+      	}
+    },  
+    "University Sports Centre": {
+	"name": "University Sports Centre",
+	"neighbours": ["Yusof Ishak House", "MPSH6", "University Health Centre"],
+	"location": {
+            "x": 1.2999128737444483, 
+            "y": 103.77540477271441 
+      	}
+    },
+    "University Health Centre": {
+	"name": "University Health Centre",
+	"neighbours": ["University Sports Centre"],
+	"location": {
+            "x": 1.2991301104103874, 
+            "y": 103.77650066749554 
+      	}
+    },
+    "MPSH6": {
+	"name": "MPSH6",
+	"neighbours": ["University Sports Centre", "MPSH5"],
+	"location": {
+            "x": 1.3001937098498004, 
+            "y": 103.77567939033008  
+      	}
+    },
+    "MPSH5": {
+	"name": "MPSH5",
+	"neighbours": ["MPSH4", "MPSH6"],
+	"location": {
+            "x": 1.3003247466315628, 
+            "y": 103.7763760642867  
+      	}
+    },
+    "MPSH4": {
+	"name": "MPSH4",
+	"neighbours": ["MPSH5"], 
+	"location": {
+            "x": 1.30081991564688, 
+            "y": 103.77606759035135  
+      	}
+    },
+    "Singapore Wind Tunnel Facility": {
+	"name": "Singapore Wind Tunnel Facility",
+	"neighbours": [], 
+	"location": {
+            "x": 1.3008312150551047,
+            "y": 103.77538264724707 
+      	}
+    },
+    "University Cultural Centre": {
+	"name": "University Cultural Centre",
+	"neighbours": ["NUS Museum"], 
+	"location": {
+            "x": 1.3016324570547275, 
+            "y": 103.77218204831472
+      	}
+    },
+    "NUS Museum": {
+	"name": "NUS Museum",
+	"neighbours": ["University Cultural Centre", "Yong Siew Toh Conservatory of Music", "Lee Kong Chian Natural History Museum"],
+	"location": {
+            "x": 1.301398809033632, 
+            "y": 103.77271482402705 
+      	}
+    },
+    "Yong Siew Toh Conservatory of Music": {
+	"name": "Yong Siew Toh Conservatory of Music",
+	"neighbours": "NUS Museum",
+	"location": {
+            "x": 1.3024989562109177, 
+            "y": 103.77239650051601  
+      	}
+    },
+    "Lee Kong Chian Natural History Museum": {
+	"name": "Lee Kong Chian Natural History Museum",
+	"neighbours": ["NUS Museum", "CREATE"],
+	"location": {
+            "x": 1.301726212833011, 
+            "y": 103.77364684927231  
+      	}
+    },
+    "University Hall": {
+	"name": "University Hall",
+	"neighbours": ["S12"],
+	"location": {
+            "x": 1.2972719445359893,
+            "y": 103.77795498631293 
+      	}
+    },
+    "S12": {
+	"name": "S12",
+	"neighbours": ["University Hall", "S11", "S13"],
+	"location": {
+            "x": 1.2969827822039215, 
+            "y": 103.77885432034832
+      	}
+    },
+    "S11": {
+	"name": "S11",
+	"neighbours": ["S7", "S12", "S13"],
+	"location": {
+            "x": 1.2966883224199215,
+            "y": 103.77879109430559
+      	}
+    }, 
+    "S7": {
+	"name": "S7",
+	"neighbours": ["S8", "S11"],
+	"location": {
+            "x": 1.2963893073240014, 
+            "y": 103.77880378857408
+      	}
+    }, 
+    "S8": {
+	"name": "S8",
+	"neighbours": ["S7", "S9", "Frontier"],
+	"location": {
+            "x": 1.296069024029309, 
+            "y": 103.77927485972967
+      	}
+    }, 
+    "S9": {
+	"name": "S9",
+	"neighbours": ["S8", "Frontier"],
+	"location": {
+            "x": 1.295928860920285, 
+            "y": 103.78021289749316
+      	}
+    }, 
+    "S13": {
+	"name": "S13",
+	"neighbours": ["S11", "S12", "S14", "Frontier"],
+	"location": {
+            "x": 1.296935774065296, 
+            "y": 103.77903318147351 
+      	}
+    }, 
+    "S14": {
+	"name": "S14",
+	"neighbours": ["S13", "S15"],
+	"location": {
+            "x": 1.2967937443014805, 
+            "y": 103.77976625945868 
+      	}
+    }, 
+    "S15": {
+	"name": "S15",
+	"neighbours": ["S14", "S16"],
+	"location": {
+            "x": 1.297085525145072, 
+            "y": 103.78000990689662
+      	}
+    }, 
+    "S16": {
+	"name": "S16",
+	"neighbours": ["S15"],
+	"location": {
+            "x": 1.2967609212336564, 
+            "y": 103.78030931941854 
+      	}
+    }, 
+    "Frontier": {
+	"name": "Frontier",
+	"neighbours": ["S9", "S13"],
+	"location": {
+            "x": 1.2964408221566914, 
+            "y": 103.78046817660754
+      	}
+    },
+    "S1A": {
+	"name": "S1A",
+	"neighbours": [],
+	"location": {
+            "x": 1.296355587290227, 
+            "y": 103.77830478224361 
+      	}
+    }, 
+    "S1": {
+	"name": "S1",
+	"neighbours": ["S2"],
+	"location": {
+            "x": 1.2957780557828993, 
+            "y": 103.77802033706917 
+      	}
+    }, 
+    "S2": {
+	"name": "S2",
+	"neighbours": ["S1", "S3"],
+	"location": {
+            "x": 1.2955415130867576, 
+            "y": 103.77826606623161
+      	}
+    },
+    "S3": {
+	"name": "S3",
+	"neighbours": ["S2", "S4"],
+	"location": {
+            "x": 1.2956063382875047, 
+            "y": 103.77869256800828 
+      	}
+    },
+    "S4": {
+	"name": "S4",
+	"neighbours": ["S3", "S5"],
+	"location": {
+            "x": 1.2956375842916872, 
+            "y": 103.77909775924002
+      	}
+    },
+    "S4A": {
+	"name": "S4A",
+	"neighbours": [],
+	"location": {
+            "x": 1.2958210736788525, 
+            "y": 103.7791473637601
+      	}
+    },
+    "S5": {
+	"name": "S5",
+	"neighbours": ["S4", "S6"],
+	"location": {
+            "x": 1.295537558995467, 
+            "y": 103.77968212746677
+      	}
+    },
+    "S6": {
+	"name": "S6",
+	"neighbours": ["S5"],
+	"location": {
+            "x": 1.2951356043849402,
+            "y": 103.78032779594467 
+      	}
+    },
+    "S17": {
+	"name": "S17",
+	"neighbours": [],
+	"location": {
+            "x": 1.2977736546990652, 
+            "y": 103.78060719153312
+      	}
+    },
+    "Brenner Centre for Molecular Medicine": {
+	"name": "Brenner Centre for Molecular Medicine",
+	"neighbours": [],
+	"location": {
+            "x": 1.2947513972920088, 
+            "y": 103.78080057008518 
+      	}
+    },
+    "MD1": {
+	"name": "MD1",
+	"neighbours": [],
+	"location": {
+            "x": 1.2955651157176276, 
+            "y": 103.780599938733
+      	}
+    },
+    "MD2": {
+	"name": "MD2",
+	"neighbours": ["MD3"],
+	"location": {
+            "x": 1.2950161992110876, 
+            "y": 103.78115925891194 
+      	}
+    },
+    "MD3": {
+	"name": "MD3",
+	"neighbours": ["MD2", "MD4", "MD6"],
+	"location": {
+            "x": 1.2954435256098376, 
+            "y": 103.78123234010079
+      	}
+    },
+    "MD4": {
+	"name": "MD4",
+	"neighbours": ["MD3", "MD6", "MD7"],
+	"location": {
+            "x": 1.2957297989187067,
+            "y": 103.78095813947904 
+      	}
+    },
+    "MD6": {
+	"name": "MD6",
+	"neighbours": ["MD4", "MD11"],
+	"location": {
+            "x": 1.295405991330804, 
+            "y": 103.78169638738802
+      	}
+    },
+    "MD7": {
+	"name": "MD7",
+	"neighbours": ["MD4", "MD11", "DSO Kent Ridge", "Frontier"],
+	"location": {
+            "x": 1.2960880134685093, 
+            "y": 103.78120768346669 
+      	}
+    },
+    "MD9": {
+	"name": "MD9",
+	"neighbours": ["MD10", "Frontier"],
+	"location": {
+            "x": 1.2967707909782782, 
+            "y": 103.78127499142008  
+      	}
+    },
+    "MD10": {
+	"name": "MD10",
+	"neighbours": ["MD9"], 
+	"location": {
+            "x": 1.2964440783249447, 
+            "y": 103.7818149157588   
+      	}
+    },
+    "MD11": {
+	"name": "MD11",
+	"neighbours": ["MD7", "DSO Kent Ridge"],
+	"location": {
+            "x": 1.2959457755432104, 
+            "y": 103.78194549065846
+      	}
+    },
+    "DSO Kent Ridge": {
+	"name": "DSO Kent Ridge",
+	"neighbours": ["MD7", "MD11"],
+	"location": {
+            "x": 1.2962601030225283,
+            "y": 103.78137750696565 
+      	}
+    },
+    "NUH Service Block": {
+	"name": "NUH Service Block",
+	"neighbours": ["National University Centre of Oral Health"],
+	"location": {
+            "x": 1.296405475610604,
+            "y": 103.78264475045982 
+      	}
+    },
+    "National University Centre of Oral Health": {
+	"name": "National University Centre of Oral Health",
+	"neighbours": ["NUH Service Block"],
+	"location": {
+            "x": 1.296122287135813,
+            "y": 103.7832112741614
+      	}
+    },
+    "NUH Main Building": {
+	"name": "NUH Main Building",
+	"neighbours": ["NUH Kent Ridge Wing", "NUH Medical Centre"],
+	"location": {
+            "x": 1.2947345033546471, 
+            "y": 103.78312216836898
+      	}
+    },
+    "NUH Kent Ridge Wing": {
+	"name": "NUH Kent Ridge Wing",
+	"neighbours": ["NUH Main Building", "NUH Medical Centre", "NUHS Tower Block"],
+	"location": {
+            "x": 1.2932251835871513,
+            "y": 103.78353648738239
+      	}
+    },
+    "NUH Medical Centre": {
+	"name": "NUH Medical Centre",
+	"neighbours": ["NUH Main Building", "NUH Kent Ridge Wing"],
+	"location": {
+            "x": 1.2935172155544814, 
+            "y": 103.7841440246631
+      	}
+    },
+    "NUHS Tower Block": {
+	"name": "NUHS Tower Block",
+	"neighbours": ["NUH Kent Ridge Wing"],
+	"location": {
+            "x": 1.2923973293542095, 
+            "y": 103.78337227660752
+      	}
+    },
+    "Technology Centre for Offshore and Marine, Singapore": {
+	"name": "Technology Centre for Offshore and Marine, Singapore",
+	"neighbours": [],
+	"location": {
+            "x": 1.2935541487937694, 
+            "y": 103.77691741819642 
+      	}
+    },
+    "Temasek Life Sciences Laboratory": {
+	"name": "Temasek Life Sciences Laboratory",
+	"neighbours": [],
+	"location": {
+            "x": 1.2942835563994735, 
+            "y": 103.77676091320977 
+      	}
+    },
+    "King Edward VII Hall": {
+	"name": "King Edward VII Hall",
+	"neighbours": [],
+	"location": {
+            "x": 1.292481045849006, 
+            "y": 103.78105606378516 
+      	}
+    },
+    "Prince George's Park Residences": {
+	"name": "Prince George's Park Residences",
+	"neighbours": [],
+	"location": {
+            "x": 1.2908286663829778, 
+            "y": 103.78108565295223
+      	}
+    },
+    "Institute of Mathematical Sciences": {
+	"name": "Institute of Mathematical Sciences",
+	"neighbours": [],
+	"location": {
+            "x": 1.2928444852872272, 
+            "y": 103.77976256829119
+      	}
+    },
+    "Office of Campus Security HQ": {
+	"name": "Office of Campus Security HQ",
+	"neighbours": [],
+	"location": {
+            "x": 1.292396525583254, 
+            "y": 103.77933140242246 
+      	}
+    },
+    "CREATE": {
+	"name": "CREATE",
+	"neighbours": ["Lee Kong Chian Natural History Museum", "Stephen Riady Centre", "Utown Residence"],
+	"location": {
+            "x": 1.3037511721898916, 
+            "y": 103.77388362138667  
+      	}
+    },
+    "Stephen Riady Centre": {
+	"name": "Stephen Riady Centre",
+	"neighbours": ["CREATE", "Education Resource Centre"],
+	"location": {
+            "x": 1.3046215079154204, 
+            "y": 103.77248035299189  
+      	}
+    },
+    "Education Resource Centre": {
+	"name": "Education Resource Centre",
+	"neighbours": ["Stephen Riady Centre", "Tembusu College", "Utown Residence"],
+	"location": {
+            "x": 1.3057823601449507,  
+            "y": 103.77272477888157 
+      	}
+    },
+    "Tembusu College": {
+	"name": "Tembusu College",
+	"neighbours": ["Education Resource Centre", "Utown Residence", "Cinnamon College"],
+	"location": {
+            "x": 1.3061804783631257, 
+            "y": 103.77376285337381  
+      	}
+    },
+    "Utown Residence": {
+	"name": "Utown Residence",
+	"neighbours": ["Tembusu College", "CREATE"],
+	"location": {
+            "x": 1.3051971232342636,  
+            "y": 103.77391742920383  
+      	}
+    },
+    "Cinnamon College": {
+	"name": "Cinnamon College",
+	"neighbours": ["Tembusu College", "Chua Thian Poh Hall"],
+	"location": {
+            "x": 1.306689498086747,
+            "y": 103.77353276888957   
+      	}
+    },
+    "Chua Thian Poh Hall": {
+	"name": "Chua Thian Poh Hall",
+	"neighbours": ["Cinnamon College", "College of Alice & Peter Tan"],
+	"location": {
+            "x": 1.3070423052349553, 
+            "y": 103.77330691358875   
+      	}
+    },
+    "College of Alice & Peter Tan": {
+	"name": "College of Alice & Peter Tan",
+	"neighbours": ["Chua Thian Poh Hall", "Residential College 4"],
+	"location": {
+            "x": 1.3075821005541164, 
+            "y": 103.77320810179201  
+      	}
+    },
+    "Residential College 4": {
+	"name": "Residential College 4",
+	"neighbours": ["College of Alice & Peter Tan", "Yale-NUS College"],
+	"location": {
+            "x": 1.308246674299386, 
+            "y": 103.77330461190921
+      	}
+    },
+    "Yale-NUS College": {
+	"name": "Yale-NUS College",
+	"neighbours": ["Residential College 4"], 
+	"location": {
+            "x": 1.3069746834160414, 
+            "y": 103.77199705523944
+      	}
+    }
+}

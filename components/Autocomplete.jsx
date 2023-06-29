@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { COLORS } from "../constants";
 
 // import hashmap of room codes-coords
-import { busStopCoords, roomCodeCoords } from "../data/venues";
+import { busStopCoords, roomCodeCoords, buildingCoords } from "../data/venues";
 
 
 
@@ -80,18 +80,32 @@ const Autocomplete = ({
                 onPress={() => {
                   // to allow for other uses: eg searching bus stops
                   if (usage === 'mappage') {
+
+
                     let location;
+
                     if (roomCodeCoords.get(datum) != null) {
                       location = roomCodeCoords.get(datum)[2];
                       const markerLocation = {latitude: location.y, longitude: location.x}; 
                       console.log(markerLocation)
                       onSelectMarker(markerLocation, isDestination, datum);
-                    } else if (busStopCoords.get(datum) != null) {
+                    } 
+                    
+                    else if (busStopCoords.get(datum) != null) {
                       location = busStopCoords.get(datum); 
                       const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
                       console.log(markerLocation)
                       onSelectMarker(markerLocation, isDestination, datum);
-                    } else {
+                    } 
+
+                    else if (buildingCoords.get(datum) != null) {
+                      location = busStopCoords.get(datum); 
+                      const markerLocation = {latitude: location.x, longitude: location.y}; 
+                      console.log(markerLocation)
+                      onSelectMarker(markerLocation, isDestination, datum);
+                    } 
+                    
+                    else {
                       return Alert.alert("Location Unavailable", "Sorry! We currently don't have enough data for this venue.", [{
                         text: "OK",
                         onPress: () => {},

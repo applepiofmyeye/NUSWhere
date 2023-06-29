@@ -23,7 +23,9 @@ export default function MainContainer() {
         <View style={{flex: 1}}>
             <Stack.Screen 
             options={{
-                headerShown: false
+                headerShown: false,
+                gestureEnabled: false
+                
             }}/>
             <Tab.Navigator
             initialRouteName={profileName}

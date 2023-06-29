@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, FlatList, ScrollView, Animated, StyleSheet, TouchableOpacity} from "react-native";
-import { findBestRoute } from "../../app/firebase";
 import { COLORS, FONT, SIZES } from "../../constants";
 
+function secToMin(x) {
+    return x == null ? "No timing available" : x;
+}
 
-export default function RouteCard({mode, directions, item}) { // directions will be an array
-    console.log("DIRECTIONS: ", directions);
+export default function RouteCard({mode, directions, duration, route, handler}) { // directions will be an array
+    const formattedDirections = !directions
+                                ? ""
+                                : mode == "Outdoor" 
+                                ? directions.map(x => x[0] +"\n")
+                                : directions.map(x => x + "\n")
+    const displayedDirections = !directions             
+                                ? "No available route."
+                                : mode == "Outdoor" 
+                                ? "Route available. Total duration: " + secToMin(duration)
+                                : mode == "Sheltered" 
+                                ? "Route available. Total duration: " + secToMin(duration) + "s"
+                                : "Route available. Total duration: " + secToMin(duration) + "s" + "\nBus Route: " + route
+                                
     return (    
         <TouchableOpacity 
         style={styles.routeContainer}
         >
 
 
-          <Text style={styles.routeMode}>{item.mode}</Text>
-          <Text style={styles.routeMode}>{directions}</Text>
+          <Text style={styles.routeMode}>{mode}</Text>
+        <Text style={styles.displayedDirections}>{displayedDirections}</Text>
+          <Text style={styles.routeDirections}>{formattedDirections}</Text>
 
         </TouchableOpacity>
         
@@ -29,15 +44,25 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         margin: 5,
         width: 380,
-        height: 130,
+        height: 150,
         justifyContent: "center",
-        alignItems: "center"
+
+    },
+    routeMode: {
+        fontFamily: FONT.pBold,
+        fontSize: SIZES.large,
+        color: COLORS.text,
+        textAlign: "left",
+        paddingLeft: 10
     },
 
-    routeMode: {
+    routeDirections: {
         fontFamily: FONT.iRegular,
         fontSize: SIZES.medium,
         color: COLORS.text,
+        textAlign: "left",
+        paddingLeft: 10
+
     },
 
     title: {
@@ -50,5 +75,12 @@ const styles = StyleSheet.create({
     titleContainer: {
         backgroundColor: COLORS.background
 
+    },
+    displayedDirections: {
+        fontFamily: FONT.iSemiB,
+        fontSize: SIZES.medium,
+        color: COLORS.text,
+        textAlign: "left",
+        paddingLeft: 10
     }
 })
