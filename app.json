@@ -6,6 +6,18 @@
     },
     "name": "NUSWhere",
     "slug": "NUSWhere",
-    "description": "Navigate around NUS with ease!"
+    "description": "Navigate around NUS with ease!",
+    "extra": {
+      "eas": {
+        "projectId": "c7ea1995-3c04-4d4b-b9cb-c2a0667244bb"
+      }
+    },
+    "owner": "applepiofmyeye",
+    "android": {
+      "package": "com.applepiofmyeye.NUSWhere"
+    },
+    "ios": {
+      "bundleIdentifier": "com.applepiofmyeye.NUSWhere"
+    }
   }
 }
