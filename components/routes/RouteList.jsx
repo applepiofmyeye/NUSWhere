@@ -35,6 +35,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
     const [outdoorDirections, setOutdoorDirections] = useState(null);
     const [outdoorDuration, setOutdoorDuration] = useState(null);
     const [outdoorDistance, setOutdoorDistance] = useState(null);
+    const [outdoorAll, setOutdoorAll] = useState(null);
 
     const [shelteredDirections, setShelteredDirections] = useState(null);
     const [shelteredDuration, setShelteredDuration] = useState(null);
@@ -51,6 +52,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
                     setOutdoorDirections(outdoorArr[0]);
                     setOutdoorDuration(outdoorArr[1]);
                     setOutdoorDistance(outdoorArr[2]);
+                    setOutdoorAll(outdoorArr[3])
 
                     console.log("outdoorArr: ", outdoorArr);
                     console.log("outdoorDirections: ", outdoorDirections);
@@ -81,7 +83,6 @@ export default function RouteList({origin, destination, o, d, handler}) {
                   // 1 is for cant find route, 0 is for invalid input
                   setShelteredDirections(shelteredShortestPath);
                   shelteredDirections != null ? setShelteredDuration(shelteredDirections.length * shelteredOneStepDuration) : null
-
               // hardcoded duration for placeholder -- each step from one building to another assumed to be 3
               }
 
@@ -101,6 +102,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 directions={outdoorDirections} // array of string instructions
                 duration={outdoorDuration}
                 distance={outdoorDistance}
+                all={outdoorAll}
                 handler={handler}
                 ></RouteCard>);
         } else if (item.mode === "Sheltered") {
@@ -111,15 +113,17 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 duration={shelteredDuration} 
                 distance={null}
                 handler={handler}
+                all={null}
                 ></RouteCard>);
         } else{
             return (<RouteCard 
                 mode={item.mode} 
-                directions={busDirections}
-                route={busRoute}
+                directions={busDirections} // array of bus stops
+                route={busRoute} // possible bus routes to take
                 duration={busDuration}
                 distance={null}
                 handler={handler}
+                all={null}
                 ></RouteCard>);
 
         }

@@ -35,6 +35,7 @@ export default function MapPage() {
       );
 
     const router = useRouter();
+
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [showDirectionsBtn, setShowDirectionsBtn] = useState(true);
     const [origin, setOrigin] = useState(null);
@@ -45,7 +46,18 @@ export default function MapPage() {
     // const handleCardPress = () => {
     //     router.push('./routespage')
     // }
-    
+    const handler = (directions, duration, all, mode, route) => {
+        router.push({
+          pathname: "./screens/routespage",
+          query: {
+            directions: directions,
+            duration: duration,
+            all: all,
+            mode: mode,
+            route: route,
+          },
+        });
+      };
 
 
     const handleSelectMarker = (markerLocation, isDestination, name) => {
@@ -202,6 +214,7 @@ export default function MapPage() {
                 destination={destination} 
                 o={o} 
                 d={d} 
+                handler={handler}
                 />}
                 
 

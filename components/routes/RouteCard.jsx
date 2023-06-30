@@ -3,10 +3,10 @@ import { View, Text, FlatList, ScrollView, Animated, StyleSheet, TouchableOpacit
 import { COLORS, FONT, SIZES } from "../../constants";
 
 function secToMin(x) {
-    return x == null ? "No timing available" : x;
+    return x == null ? "No timing available" : x + "s";
 }
 
-export default function RouteCard({mode, directions, duration, route, handler}) { // directions will be an array
+export default function RouteCard({mode, directions, duration, route, all, handler}) { // directions will be an array
     const formattedDirections = !directions
                                 ? ""
                                 : mode == "Outdoor" 
@@ -17,15 +17,17 @@ export default function RouteCard({mode, directions, duration, route, handler}) 
                                 : mode == "Outdoor" 
                                 ? "Route available. Total duration: " + secToMin(duration)
                                 : mode == "Sheltered" 
-                                ? "Route available. Total duration: " + secToMin(duration) + "s"
-                                : "Route available. Total duration: " + secToMin(duration) + "s" + "\nBus Route: " + route
-                                
+                                ? "Route available. Total duration: " + secToMin(duration) 
+                                : "Route available. Total duration: " + secToMin(duration) + "\nBus Route: " + route
+        
+        
+   
+    
     return (    
         <TouchableOpacity 
         style={styles.routeContainer}
+        onPress={() => handler(directions, duration, route, all, mode)}
         >
-
-
           <Text style={styles.routeMode}>{mode}</Text>
         <Text style={styles.displayedDirections}>{displayedDirections}</Text>
           <Text style={styles.routeDirections}>{formattedDirections}</Text>
