@@ -87,23 +87,35 @@ const Autocomplete = ({
   
                       if (roomCodeCoords.get(datum) != null) {
                         location = roomCodeCoords.get(datum)[2];
-                        const markerLocation = {latitude: location.y, longitude: location.x}; 
-                        console.log(markerLocation)
-                        onSelectMarker(markerLocation, isDestination, datum);
+                        if (location != null) {
+                          const markerLocation = {latitude: location.y, longitude: location.x}; 
+                          console.log(markerLocation)
+                          onSelectMarker(markerLocation, isDestination, datum);
+                        }
+                        
                       } 
                       
                       else if (busStopCoords.get(datum) != null) {
+
                         location = busStopCoords.get(datum); 
-                        const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
-                        console.log(markerLocation)
-                        onSelectMarker(markerLocation, isDestination, datum);
+                        if (location != null) {
+                          const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
+                          console.log(markerLocation)
+                          onSelectMarker(markerLocation, isDestination, datum);
+                        }
+                        
+
                       } 
   
                       else if (buildingCoords.get(datum) != null) {
-                        location = busStopCoords.get(datum); 
-                        const markerLocation = {latitude: location.x, longitude: location.y}; 
-                        console.log(markerLocation)
-                        onSelectMarker(markerLocation, isDestination, datum);
+                        location = buildingCoords.get(datum);
+                        
+                        if (location != null) {
+                          const markerLocation = {latitude: location.x, longitude: location.y}; 
+                          console.log(markerLocation)
+                          onSelectMarker(markerLocation, isDestination, datum);
+                        }
+                        
                       } 
                       
   

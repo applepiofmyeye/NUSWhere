@@ -47,7 +47,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
 
             googleDirections(origin, destination).then((x) => {
                 if (x){
-                    const outdoorArr = [x[0].map((z) => [z, "WALKING"]), x[1], x[2] + "m"];
+                    const outdoorArr = [x[0], x[1], x[2] + "m"];
 
                     setOutdoorDirections(outdoorArr[0]);
                     setOutdoorDuration(outdoorArr[1]);

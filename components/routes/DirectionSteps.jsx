@@ -1,13 +1,13 @@
-import { View, StyleSheet } from "react-native";
-import Ionicons from 'react-native-vector-icons';
+import React from "react";
+import { View, StyleSheet, Text} from "react-native";
 import { COLORS } from "../../constants";
 
 
-export default function DirectionStep({icon, text, isStartOrEnd, dur}) {
+export default function DirectionSteps({icon, text, isStartOrEnd, dur}) {
     return (
         <View style={{flexDirection: 'row'}}>
             <View style={styles.vertLine}></View>
-            <Ionicons icon={icon}></Ionicons>
+            {/* <Ionicons icon={icon}></Ionicons> */}
             <Text style={styles.textStyle}>{text}</Text>
             <View style={styles.vertLine}></View>
         </View>

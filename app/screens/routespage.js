@@ -1,65 +1,60 @@
-import { useRouter } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import React from "react";
+import { Stack, useRouter, useLocalSearchParams } from "expo-router";
+import { StyleSheet, View, Text } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import DirectionStep from "../../components/routes/DirectionStep";
-import { COLORS } from "../../constants";
+import { COLORS, SIZES } from "../../constants";
+import Ionicons from 'react-native-vector-icons';
+import { SafeAreaView } from "react-native-safe-area-context";
 
-function directionData(mode, directions, distance, duration, outdoorAll) {
-    if (mode == "Outdoor"){
-        return outdoorAll.routes[0].legs[0].steps.map(
-                (step) => ({
-                    icon: "walk",
-                    text: step.navigationIntruction.instructions, 
-                    duration: step.distanceMetres}));
-
-    }
-    const busDurationOneStep = 2;
-    const shelteredDurOneStep = 3;
-    
-    return mode == "Bus" 
-        ? directions.map(x => ({icon: "bus", text: x, duration: busDurationOneStep})) 
-        : directions.map(x => ({icon: "walk", text: x, duration: shelteredDurOneStep}));
-}
 
 
 
 export default function RoutesPage() {
-    const router = useRouter();
-    console.log(router);
-    const directions = router.query.directions;
-    const distance = router.query.distance;
-    const duration = router.query.duration;
-    const outdoorAll = router.query.all;
-    const mode = router.query.mode;
-    let dirData = directionData(directions)
-    dirData[0].isStartOrEnd = "start";
-    dirData[dirData.length - 1] = "end";
+    console.log("in routespage");    
+
+    const {directions, distance, duration, all, mode} = useLocalSearchParams();
+    const directionsArr = directions.split("/");
 
 
-    const renderItem = ({item}) => {
-        <DirectionStep 
-        icon={item.icon} 
-        text={item.text} 
-        dur={item.duration} 
-        isStartOrEnd={item.isStartOrEnd}/>
+    let data = [];
+    for (let i = 0; i < directionsArr.length; i ++) {
+        data[i] = {
+            id: i,
+            text: directionsArr[i],
+            icon: mode == "Bus" ? "bus" : "walk"  // currently a simple one where a whole page will have the same mode
+        }
+
     }
 
 
-    return (
-        <View style={styles.container}>
-            <FlatList
-            renderItem={renderItem}
-            data={dirData}>
-            </FlatList>
-            
+    const renderItem = ({item}) => (
+        <View>
+            <View style={{flexDirection: 'row'}}>
+            <View style={styles.vertLine}></View>
+            {/* <Ionicons icon={item.icon}></Ionicons> */}
+            <Text style={styles.textStyle}>{item.text}</Text>
+            </View>
+            <View style={styles.vertLine}></View>
 
-            
         </View>
-
+        
     )
 
 
+    return (
+        <SafeAreaView style={styles.container}>
+            <Stack.Screen options={{
+                headerShown: false
+            }} />
 
+            <FlatList
+            renderItem={renderItem}
+            data={data}>
+            </FlatList>
+            
+        </SafeAreaView>
+
+    )
 }
 
 const styles = StyleSheet.create({
@@ -69,4 +64,15 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
         padding: 8,
     },
+    vertLine: {
+        width: 5,
+        height: "100%",
+        backgroundColor: COLORS.accent,
+    },
+    textStyle: {
+        backgroundColor: COLORS.background,
+        color: COLORS.text,
+        paddingLeft: 10,
+        fontSize: SIZES.medium
+    }
 })

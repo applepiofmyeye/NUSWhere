@@ -3,35 +3,57 @@ import { View, Text, FlatList, ScrollView, Animated, StyleSheet, TouchableOpacit
 import { COLORS, FONT, SIZES } from "../../constants";
 
 function secToMin(x) {
-    return x == null ? "No timing available" : x + "s";
+    return x == null ? "No timing available" : x ;
+}
+
+function hrefString(str) {
+    return str.reduce((a))
 }
 
 export default function RouteCard({mode, directions, duration, route, all, handler}) { // directions will be an array
+    
+    console.log(directions);
+
     const formattedDirections = !directions
-                                ? ""
-                                : mode == "Outdoor" 
-                                ? directions.map(x => x[0] +"\n")
-                                : directions.map(x => x + "\n")
+    ? ""
+    : directions.map(x => x.trim()).join("\n");
+
+    const hrefDirections = !formattedDirections
+    ? ""
+    : formattedDirections.replace(/\n/g, "%2F");
+
+    console.log(formattedDirections);
+    console.log(hrefDirections);
+    
+
+
     const displayedDirections = !directions             
-                                ? "No available route."
-                                : mode == "Outdoor" 
-                                ? "Route available. Total duration: " + secToMin(duration)
-                                : mode == "Sheltered" 
-                                ? "Route available. Total duration: " + secToMin(duration) 
-                                : "Route available. Total duration: " + secToMin(duration) + "\nBus Route: " + route
+                           ? "No available route."
+                           : mode == "Outdoor" 
+                           ? "Route available. Total duration: " + secToMin(duration)
+                           : mode == "Sheltered" 
+                           ? "Route available. Total duration: " + secToMin(duration) + "s"
+                           : "Route available. Total stops: " + directions.length + "\nBus Route: " + route.map(x => " " + x)
+
+
+
+    
+                        
         
         
-   
+    
     
     return (    
         <TouchableOpacity 
         style={styles.routeContainer}
-        onPress={() => handler(directions, duration, route, all, mode)}
+        onPress={() => route == null 
+            ? handler(hrefDirections, duration, all, mode, "") 
+            : handler(hrefDirections, duration, all, mode, route)}
         >
           <Text style={styles.routeMode}>{mode}</Text>
         <Text style={styles.displayedDirections}>{displayedDirections}</Text>
           <Text style={styles.routeDirections}>{formattedDirections}</Text>
-
+     
         </TouchableOpacity>
         
     )
