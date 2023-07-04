@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { COLORS, SIZES } from "../../constants";
-import Ionicons from 'react-native-vector-icons';
+import { COLORS, FONT, SIZES } from "../../constants";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
@@ -12,8 +12,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function RoutesPage() {
     console.log("in routespage");    
 
-    const {directions, distance, duration, all, mode} = useLocalSearchParams();
+    const {directions, distance, duration, all, mode, origin, destination} = useLocalSearchParams();
     const directionsArr = directions.split("/");
+
 
 
     let data = [];
@@ -28,29 +29,85 @@ export default function RoutesPage() {
 
 
     const renderItem = ({item}) => (
-        <View>
-            <View style={{flexDirection: 'row'}}>
-            <View style={styles.vertLine}></View>
-            {/* <Ionicons icon={item.icon}></Ionicons> */}
-            <Text style={styles.textStyle}>{item.text}</Text>
-            </View>
-            <View style={styles.vertLine}></View>
 
-        </View>
+
+        <View style={styles.container}>
+
+
+            <View style={{flexDirection: 'row'}}>
+                <View style={styles.vertLine}/>
+                <View >
+                    <Text style={styles.textStyle}> </Text>
+                </View>
+            </View>
+
+
+            <View style={{flexDirection: 'row'}}>
+                <Ionicons name={item.icon} size={20} color={COLORS.accent}/> 
+                <View >
+                    <Text style={styles.textStyle}>{item.text}</Text>
+                </View>
+            </View>
+
+
+            <View style={{flexDirection: 'row'}}>
+                <View style={styles.vertLine}/>
+                <View >
+                    <Text style={styles.textStyle}> </Text>
+                </View>
+            </View>
+
+
+    </View>
         
+
     )
+
+
+   
+
+
 
 
     return (
         <SafeAreaView style={styles.container}>
             <Stack.Screen options={{
-                headerShown: false
+                headerTitle: origin + " to " + destination,
+                headerTintColor: COLORS.text
             }} />
+
+            <Text style={{
+                fontSize: SIZES.xLarge,
+                color: COLORS.text,
+                fontFamily: FONT.pSemiB,
+                alignSelf: "center"
+
+                }}>{destination}</Text>
+            <View style={{
+                alignItems: "center", 
+                padding: 20,
+                paddingBottom: 30,
+                height: 300
+                }}>
+
+                <Image 
+                source={require('../../assets/images/NUS.png')} 
+                resizeMode="stretch" 
+                style={{
+                    borderRadius: 10
+                    }}
+                />
+            </View>
+            
+
 
             <FlatList
             renderItem={renderItem}
             data={data}>
+                
             </FlatList>
+
+
             
         </SafeAreaView>
 
@@ -73,6 +130,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
         color: COLORS.text,
         paddingLeft: 10,
-        fontSize: SIZES.medium
+        fontSize: SIZES.medium,
+        fontFamily: FONT.fBedium
     }
 })

@@ -61,6 +61,8 @@ export default function MapPage() {
         // router.setParams({directions: directions, duration: duration, all: all, mode: mode, route: route})
         router.push({pathname: './screens/routespage', 
         params: {
+            origin: o,
+            destination: d,
             directions: directions,
             duration: duration,
             all: all,

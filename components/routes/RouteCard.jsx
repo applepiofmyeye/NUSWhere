@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, ScrollView, Animated, StyleSheet, TouchableOpacity} from "react-native";
 import { COLORS, FONT, SIZES } from "../../constants";
+import Ionicons from "react-native-vector-icons/Ionicons"
 
 function secToMin(x) {
     return x == null ? "No timing available" : x ;
@@ -50,9 +51,16 @@ export default function RouteCard({mode, directions, duration, route, all, handl
             ? handler(hrefDirections, duration, all, mode, "") 
             : handler(hrefDirections, duration, all, mode, route)}
         >
-          <Text style={styles.routeMode}>{mode}</Text>
-        <Text style={styles.displayedDirections}>{displayedDirections}</Text>
-          <Text style={styles.routeDirections}>{formattedDirections}</Text>
+        <View style={{flexDirection: "row"}}>
+            <View>
+                <Text style={styles.routeMode}>{mode}</Text>
+                <Text style={styles.displayedDirections}>{displayedDirections}</Text>
+            </View>
+        </View>
+        
+          {/* <Text style={styles.routeDirections}>{formattedDirections}</Text> */}
+
+        
      
         </TouchableOpacity>
         
