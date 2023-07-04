@@ -7,9 +7,9 @@ origin and destination is coordinates of bus stops
 
 */
 import React, { useState, useEffect, useRef } from "react";
-import { View, ScrollView, StyleSheet, Dimensions, Button, Platform, TextInput, Animated, Text } from "react-native";
+import { View, ScrollView, StyleSheet, Dimensions, Button, Platform, TextInput, Animated, Text, Alert } from "react-native";
 import Autocomplete from "../../components/Autocomplete";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
 import { roomCodes, busStops, buildings } from "../../data/venues";
@@ -27,14 +27,20 @@ let d = null;
 
 
 export default function MapPage() {
-    console.log("in MapPage")
+    console.log("in MapPage");
+
     const scrollA = useRef(new Animated.Value(0)).current;
     const handleCardDrag = Animated.event(
         [{ nativeEvent: { contentOffset: { y: scrollA } } }],
         { useNativeDriver: true }
       );
 
+
     const router = useRouter();
+    const navigation = useNavigation();
+
+
+
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [showDirectionsBtn, setShowDirectionsBtn] = useState(true);
     const [origin, setOrigin] = useState(null);
@@ -45,7 +51,26 @@ export default function MapPage() {
     // const handleCardPress = () => {
     //     router.push('./routespage')
     // }
-    
+    const handler = (directions, duration, all, mode, route) => {
+        if (!directions) { return Alert.alert("No route", "Whoops! No available route currently.", [
+            {
+                text: "OK",
+                onPress: () => console.log("button pressed")
+            }
+        ])}
+        // router.setParams({directions: directions, duration: duration, all: all, mode: mode, route: route})
+        router.push({pathname: './screens/routespage', 
+        params: {
+            origin: o,
+            destination: d,
+            directions: directions,
+            duration: duration,
+            all: all,
+            mode: mode, 
+            route: route},
+            
+        });
+      };
 
 
     const handleSelectMarker = (markerLocation, isDestination, name) => {
@@ -202,6 +227,7 @@ export default function MapPage() {
                 destination={destination} 
                 o={o} 
                 d={d} 
+                handler={handler}
                 />}
                 
 

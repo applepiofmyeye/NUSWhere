@@ -6,6 +6,7 @@ import RegisterDiv from "./account/registerdiv/RegisterDiv";
 import Greeting from "./profile/greeting/Greeting";
 import FavouriteRoutesDiv from "./profile/list/FRList";
 import RouteList from "./routes/RouteList";
+import DirectionSteps from "./routes/DirectionSteps";
 
 // TODO: import the divs 
 
@@ -24,5 +25,6 @@ export {
     Greeting,
 
     //Map page
-    RouteList
+    RouteList,
+    DirectionSteps
 };

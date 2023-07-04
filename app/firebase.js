@@ -317,12 +317,12 @@ function findBestShelteredRoute(start, destination) {
         }
     
         const currentNeighbors = neighborBuildingSet[currentNode];
-        console.log("------------------------------------")
-        console.log("currentNode: ", JSON.stringify(currentNode));
-        console.log("currentNeighbors: ", currentNeighbors);
-        console.log("queue: ", queue);
-        console.log("queue.length: ", queue.length)
-        console.log("------------------------------------")
+        // console.log("------------------------------------")
+        // console.log("currentNode: ", JSON.stringify(currentNode));
+        // console.log("currentNeighbors: ", currentNeighbors);
+        // console.log("queue: ", queue);
+        // console.log("queue.length: ", queue.length)
+        // console.log("------------------------------------")
         if (!currentNeighbors || currentNeighbors.length == 0) {
           console.log("No valid route found.")
           return 1;

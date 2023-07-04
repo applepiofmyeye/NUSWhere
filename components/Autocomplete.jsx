@@ -37,95 +37,112 @@ const Autocomplete = ({
         (val) => val?.toLowerCase()?.indexOf(text?.toLowerCase()) > -1
       );
     };
-    return (
-      <View style={[containerStyle]}>
-        <TextInput
-          onFocus={() => {
-            if (value.length === 0) {
-              setMenuVisible(true);
-            }
-          }}
-          // onBlur={() => setMenuVisible(false)}
-          placeholder={label}
-          right={right}
-          left={left}
-          style={style}
-          onChangeText={(text) => {
-            origOnChange(text);
-            if (text && text.length > 0) {
-              setFilteredData(filterData(text));
-            } else if (text && text.length === 0) {
-              setFilteredData(data);
-            }
-            setMenuVisible(true);
-            setValue(text);
-          }}
-          value={value}
-        />
-        {menuVisible && filteredData && (
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: COLORS.background,
-              borderWidth: 1,
-              flexDirection: 'column',
-              borderColor: COLORS.text,
+    try {
+      return (
+        <View style={[containerStyle]}>
+          <TextInput
+            onFocus={() => {
+              if (value.length === 0) {
+                setMenuVisible(true);
+              }
             }}
-          >
-            {filteredData.map((datum, i) => (
-              <Menu.Item
-                key={i}
-                style={[{ width: '100%' }, menuStyle]}
-                icon={icon}
-                onPress={() => {
-                  // to allow for other uses: eg searching bus stops
-                  if (usage === 'mappage') {
+            // onBlur={() => setMenuVisible(false)}
+            placeholder={label}
+            right={right}
+            left={left}
+            style={style}
+            onChangeText={(text) => {
+              origOnChange(text);
+              if (text && text.length > 0) {
+                setFilteredData(filterData(text));
+              } else if (text && text.length === 0) {
+                setFilteredData(data);
+              }
+              setMenuVisible(true);
+              setValue(text);
+            }}
+            value={value}
+          />
+          {menuVisible && filteredData && (
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: COLORS.background,
+                borderWidth: 1,
+                flexDirection: 'column',
+                borderColor: COLORS.text,
+              }}
+            >
+              {filteredData.map((datum, i) => (
+                <Menu.Item
+                  key={i}
+                  style={[{ width: '100%' }, menuStyle]}
+                  icon={icon}
+                  onPress={() => {
+                    // to allow for other uses: eg searching bus stops
+                    if (usage === 'mappage') {
+  
+  
+                      let location;
+  
+                      if (roomCodeCoords.get(datum) != null) {
+                        location = roomCodeCoords.get(datum)[2];
+                        if (location != null) {
+                          const markerLocation = {latitude: location.y, longitude: location.x}; 
+                          console.log(markerLocation)
+                          onSelectMarker(markerLocation, isDestination, datum);
+                        }
+                        
+                      } 
+                      
+                      else if (busStopCoords.get(datum) != null) {
 
+                        location = busStopCoords.get(datum); 
+                        if (location != null) {
+                          const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
+                          console.log(markerLocation)
+                          onSelectMarker(markerLocation, isDestination, datum);
+                        }
+                        
 
-                    let location;
-
-                    if (roomCodeCoords.get(datum) != null) {
-                      location = roomCodeCoords.get(datum)[2];
-                      const markerLocation = {latitude: location.y, longitude: location.x}; 
-                      console.log(markerLocation)
-                      onSelectMarker(markerLocation, isDestination, datum);
-                    } 
-                    
-                    else if (busStopCoords.get(datum) != null) {
-                      location = busStopCoords.get(datum); 
-                      const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
-                      console.log(markerLocation)
-                      onSelectMarker(markerLocation, isDestination, datum);
-                    } 
-
-                    else if (buildingCoords.get(datum) != null) {
-                      location = busStopCoords.get(datum); 
-                      const markerLocation = {latitude: location.x, longitude: location.y}; 
-                      console.log(markerLocation)
-                      onSelectMarker(markerLocation, isDestination, datum);
-                    } 
-                    
-                    else {
-                      return Alert.alert("Location Unavailable", "Sorry! We currently don't have enough data for this venue.", [{
-                        text: "OK",
-                        onPress: () => {},
-                        style: 'cancel'                      
-                      }])
+                      } 
+  
+                      else if (buildingCoords.get(datum) != null) {
+                        location = buildingCoords.get(datum);
+                        
+                        if (location != null) {
+                          const markerLocation = {latitude: location.x, longitude: location.y}; 
+                          console.log(markerLocation)
+                          onSelectMarker(markerLocation, isDestination, datum);
+                        }
+                        
+                      } 
+                      
+  
+                      setValue(datum);
+                      setMenuVisible(false);
+                      Keyboard.dismiss();
+                      
                     }
+                  }}
+                  title={datum}
+                />
+              ))}
+            </View>
+          )}
+        </View>
+      );
 
-                    setValue(datum);
-                    setMenuVisible(false);
-                    Keyboard.dismiss();
-                    
-                  }
-                }}
-                title={datum}
-              />
-            ))}
-          </View>
-        )}
-      </View>
-    );
-  };
+    } catch (error) {
+      return Alert.alert("Location Unavailable", "Sorry! We currently don't have enough data for this venue.", [{
+        text: "OK",
+        onPress: () => {},
+        style: 'cancel'                      
+      }])
+
+    }
+  }
+    
+  
   
   export default Autocomplete;
