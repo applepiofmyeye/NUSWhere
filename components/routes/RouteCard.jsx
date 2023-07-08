@@ -7,9 +7,7 @@ function secToMin(x) {
     return x == null ? "No timing available" : x ;
 }
 
-function hrefString(str) {
-    return str.reduce((a))
-}
+
 
 export default function RouteCard({mode, directions, duration, route, all, handler}) { // directions will be an array
     

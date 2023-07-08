@@ -12,8 +12,15 @@ import {
     query,
     where,
     setDoc,
+    arrayUnion,
+    arrayRemove,
+    updateDoc,
+    doc,
+    FieldValue,
 
  } from "firebase/firestore";
+ import { useEffect } from 'react';
+ 
  
 
 
@@ -43,12 +50,75 @@ const auth = firebase.auth()
 
 // Firestore data collection and adding data
 const db = getFirestore();
-const busColRef = collection(db, "busStopNeighbors")
+
+
+// LOAD FAVOURITE ROUTES INTO FIREBASE
+// store as key: value -- uid: [route hrefs]
+
+
+async function addToFavourites(uid, href) {
+
+  await setDoc(
+    doc(db, "favouriteRoutes", uid), 
+    { 
+      uid: uid,
+      routeHref: arrayUnion(href) 
+    },
+    {merge: true} ).then(console.log("Favourite route added to user ", uid))
+    
+
+}
+
+async function removeFromFavourites(uid, href) {
+
+  await setDoc(
+    doc(db, "favouriteRoutes", uid), 
+    { 
+      uid: uid,
+      routeHref: arrayRemove(href) 
+    },
+    {merge: true} ).then(console.log("Favourite route removed from user ", uid))
+    
+
+}
+
+async function queryFR(uid, href) {
+
+  const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid), where("routeHref", "array-contains", href));
+  const querySnapshot = await getDocs(q);
+
+  let queryResult = false;
+  querySnapshot.forEach(doc => {
+    console.log(doc.id, "=>", doc.data);
+    queryResult = true; 
+  })
+
+  return queryResult
+  
+}
+
+async function getFavouriteRoutes(uid) {
+  console.log("in firebase::getFavouriteRoutes");
+  const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid));
+  const querySnapshot = await getDocs(q);
+  let hrefParams = [];
+  querySnapshot.docs.forEach(doc => {
+    hrefParams.push(doc._document.data.value.mapValue.fields.routeHref.arrayValue.values.map(x => x.mapValue.fields));
+  })
+  return hrefParams
+}
+
+const isItemInFavorites = async (favoriteRef) => {
+  const favoriteSnapshot = await favoriteRef.get();
+  return favoriteSnapshot.exists();
+};
 
 
 
 
 // LOAD BUS STOPS INTO FIREBASE -- ONLY NEED TO DO ONCE
+const busColRef = collection(db, "busStopNeighbors");
+
 const busStopJson = require('../data/bus-stops.json');
 
 const loadBusStopData = async () => {
@@ -368,4 +438,4 @@ function constructShelteredRoute(parent, startBuilding, endBuilding) {
 
 
 
-export { auth, findBestBusRoute , findBestShelteredRoute};
+export { auth, findBestBusRoute , findBestShelteredRoute, addToFavourites, removeFromFavourites, queryFR, getFavouriteRoutes};

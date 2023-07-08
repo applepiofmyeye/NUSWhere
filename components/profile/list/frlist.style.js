@@ -18,6 +18,14 @@ const styles = StyleSheet.create({
         color: COLORS.text,
     },
 
+    modeName: {
+        fontFamily: FONT.iLight,
+        fontSize: SIZES.medium,
+        color: COLORS.text,
+        textAlign: "left",
+        paddingLeft: 10
+    },
+
     title: {
         fontFamily: FONT.pSemiB,
         fontSize: SIZES.xLarge + 1,
