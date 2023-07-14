@@ -1,43 +1,136 @@
-/*
-Directions page
-*/
-
-import React, { SafeAreaView, View, ScrollView, Text } from "react-native";
-import { Stack, useRouter } from "expo-router";
-import { COLORS, FONT } from "../../constants";
-import { GOOGLE_API } from "../../keys";
-import { findBestRoute } from "../firebase";
-import { Dimensions } from "react-native";
+import React, { useState } from "react";
+import { Stack, useRouter, useLocalSearchParams } from "expo-router";
+import { StyleSheet, View, Text, Image } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { COLORS, FONT, SIZES } from "../../constants";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
-export default function RoutesPage({o, d}) {
-    const br = findBestRoute(o, d);
-    console.log("----------------------------------")
-    console.log("BESTROUTE IN ROUTESPAGE: ", br)
-    console.log(o, d)
-    const brStops = br == null ? null : br.busRoutes[0];
-    const brRoute = br == null ? null : br.route;
-    console.log(brRoute);
 
-    
+
+export default function RoutesPage() {
+    console.log("in routespage");    
+
+    const {directions, distance, duration, all, mode, origin, destination} = useLocalSearchParams();
+    const directionsArr = directions.split("/");
+
+
+
+    let data = [];
+    for (let i = 0; i < directionsArr.length; i ++) {
+        data[i] = {
+            id: i,
+            text: directionsArr[i],
+            icon: mode == "Bus" ? "bus" : "walk"  // currently a simple one where a whole page will have the same mode
+        }
+
+    }
+
+
+    const renderItem = ({item}) => (
+
+
+        <View style={styles.container}>
+
+
+            <View style={{flexDirection: 'row'}}>
+                <View style={styles.vertLine}/>
+                <View >
+                    <Text style={styles.textStyle}> </Text>
+                </View>
+            </View>
+
+
+            <View style={{flexDirection: 'row'}}>
+                <Ionicons name={item.icon} size={20} color={COLORS.accent}/> 
+                <View >
+                    <Text style={styles.textStyle}>{item.text}</Text>
+                </View>
+            </View>
+
+
+            <View style={{flexDirection: 'row'}}>
+                <View style={styles.vertLine}/>
+                <View >
+                    <Text style={styles.textStyle}> </Text>
+                </View>
+            </View>
+
+
+    </View>
+        
+
+    )
+
+
+   
+
+
+
+
     return (
-    
-        <View 
-        style={{
-            flex: 1,
-            backgroundColor: COLORS.text,
-            marginTop: -1000,
-            paddingTop: 1000,
-            alignItems: 'center',
-            overflow: 'hidden',
-            }}>
+        <SafeAreaView style={styles.container}>
+            <Stack.Screen options={{
+                headerTitle: origin + " to " + destination,
+                headerTintColor: COLORS.text
+            }} />
 
-               
-            <Text style={{color: COLORS.text}}>{brRoute}</Text>
-        </View>
+            <Text style={{
+                fontSize: SIZES.xLarge,
+                color: COLORS.text,
+                fontFamily: FONT.pSemiB,
+                alignSelf: "center"
+
+                }}>{destination}</Text>
+            <View style={{
+                alignItems: "center", 
+                padding: 20,
+                paddingBottom: 30,
+                height: 300
+                }}>
+
+                <Image 
+                source={require('../../assets/images/NUS.png')} 
+                resizeMode="stretch" 
+                style={{
+                    borderRadius: 10
+                    }}
+                />
+            </View>
             
-    );
+
+
+            <FlatList
+            renderItem={renderItem}
+            data={data}>
+                
+            </FlatList>
+
+
+            
+        </SafeAreaView>
+
+    )
 }
 
-
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: COLORS.background,
+        padding: 8,
+    },
+    vertLine: {
+        width: 5,
+        height: "100%",
+        backgroundColor: COLORS.accent,
+    },
+    textStyle: {
+        backgroundColor: COLORS.background,
+        color: COLORS.text,
+        paddingLeft: 10,
+        fontSize: SIZES.medium,
+        fontFamily: FONT.fBedium
+    }
+})

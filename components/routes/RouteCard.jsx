@@ -1,20 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, FlatList, ScrollView, Animated, StyleSheet, TouchableOpacity} from "react-native";
-import { findBestRoute } from "../../app/firebase";
 import { COLORS, FONT, SIZES } from "../../constants";
+import Ionicons from "react-native-vector-icons/Ionicons"
+
+function secToMin(x) {
+    return x == null ? "No timing available" : x ;
+}
+
+function hrefString(str) {
+    return str.reduce((a))
+}
+
+export default function RouteCard({mode, directions, duration, route, all, handler}) { // directions will be an array
+    
+    console.log(directions);
+
+    const formattedDirections = !directions
+    ? ""
+    : directions.map(x => x.trim()).join("\n");
+
+    const hrefDirections = !formattedDirections
+    ? ""
+    : formattedDirections.replace(/\n/g, "%2F");
+
+    console.log(formattedDirections);
+    console.log(hrefDirections);
+    
 
 
-export default function RouteCard({mode, directions, item}) { // directions will be an array
-    console.log("DIRECTIONS: ", directions);
+    const displayedDirections = !directions             
+                           ? "No available route."
+                           : mode == "Outdoor" 
+                           ? "Route available. Total duration: " + secToMin(duration)
+                           : mode == "Sheltered" 
+                           ? "Route available. Total duration: " + secToMin(duration) + "s"
+                           : "Route available. Total stops: " + directions.length + "\nBus Route: " + route.map(x => " " + x)
+
+
+
+    
+                        
+        
+        
+    
+    
     return (    
         <TouchableOpacity 
         style={styles.routeContainer}
+        onPress={() => route == null 
+            ? handler(hrefDirections, duration, all, mode, "") 
+            : handler(hrefDirections, duration, all, mode, route)}
         >
+        <View style={{flexDirection: "row"}}>
+            <View>
+                <Text style={styles.routeMode}>{mode}</Text>
+                <Text style={styles.displayedDirections}>{displayedDirections}</Text>
+            </View>
+        </View>
+        
+          {/* <Text style={styles.routeDirections}>{formattedDirections}</Text> */}
 
-
-          <Text style={styles.routeMode}>{item.mode}</Text>
-          <Text style={styles.routeMode}>{directions}</Text>
-
+        
+     
         </TouchableOpacity>
         
     )
@@ -29,15 +76,25 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         margin: 5,
         width: 380,
-        height: 130,
+        height: 150,
         justifyContent: "center",
-        alignItems: "center"
+
+    },
+    routeMode: {
+        fontFamily: FONT.pBold,
+        fontSize: SIZES.large,
+        color: COLORS.text,
+        textAlign: "left",
+        paddingLeft: 10
     },
 
-    routeMode: {
+    routeDirections: {
         fontFamily: FONT.iRegular,
         fontSize: SIZES.medium,
         color: COLORS.text,
+        textAlign: "left",
+        paddingLeft: 10
+
     },
 
     title: {
@@ -50,5 +107,12 @@ const styles = StyleSheet.create({
     titleContainer: {
         backgroundColor: COLORS.background
 
+    },
+    displayedDirections: {
+        fontFamily: FONT.iSemiB,
+        fontSize: SIZES.medium,
+        color: COLORS.text,
+        textAlign: "left",
+        paddingLeft: 10
     }
 })
