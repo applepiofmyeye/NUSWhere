@@ -25,7 +25,7 @@ export default function RegisterDiv() {
 
   const router = useRouter()
   const login = () => {
-    router.push("./login");
+    router.replace("../../../auth/login");
   }
 
   /* const onRefresh = React.useCallback(() => {
