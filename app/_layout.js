@@ -7,7 +7,7 @@ import React from "react-native";
 
 export const unstable_settings = {
   // Ensure any route can link back to `/`
-  initialRouteName: "/login",
+  initialRouteName: "./auth/login",
 };
 
 const Layout = () => {
@@ -31,8 +31,8 @@ const Layout = () => {
   }
 
   return (
-    <Stack initialRouteName="login">
-      <Stack.Screen name="login" />
+    <Stack initialRouteName="/login">
+      <Stack.Screen name="auth/login" />
     </Stack>
   )
 };
