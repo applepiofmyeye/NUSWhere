@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { COLORS, FONT, SIZES } from "../../constants";
+import { COLORS, FONT, SIZES } from "../../constants/theme";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from "react-native-safe-area-context";
 
