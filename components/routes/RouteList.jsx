@@ -6,9 +6,10 @@ import { COLORS } from "../../constants";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { googleDirections } from "../../data/googledirections";
 import RouteCard from "./RouteCard";
+import CustomButton from "../account/CustomButton/CustomButton";
 
 
-export default function RouteList({origin, destination, o, d, handler}) {
+export default function RouteList({origin, destination, o, d, handler, handleBack}) {
     // hardcoded values for one bus stop to another duration
     const busOneStepDuration = 2 * 60 
     const shelteredOneStepDuration = 3 * 60
@@ -88,6 +89,14 @@ export default function RouteList({origin, destination, o, d, handler}) {
 
     }, [origin, destination]);
     
+    const BackBtn = () => {
+        return(
+            <CustomButton 
+                onPress={handleBack}
+                text="Back"
+            ></CustomButton>
+        )
+    }
 
 
 
@@ -147,6 +156,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
+                ListHeaderComponent={BackBtn}
                 showsVerticalScrollIndicator={false}
                 style={{padding: 10}}
             />}

@@ -35,7 +35,7 @@ export default function RouteCard({mode, directions, duration, route, all, handl
                            : "Route available. Total stops: " + directions.length + "\nBus Route: " + route.map(x => " " + x)
 
 
-
+    let formattedDuration = mode == "Outdoor" ? duration : duration + "s"
     
                         
         
@@ -46,8 +46,8 @@ export default function RouteCard({mode, directions, duration, route, all, handl
         <TouchableOpacity 
         style={styles.routeContainer}
         onPress={() => route == null 
-            ? handler(hrefDirections, duration, all, mode, "") 
-            : handler(hrefDirections, duration, all, mode, route)}
+            ? handler(hrefDirections, formattedDuration, all, mode, "") 
+            : handler(hrefDirections, formattedDuration, all, mode, route)}
         >
         <View style={{flexDirection: "row"}}>
             <View>

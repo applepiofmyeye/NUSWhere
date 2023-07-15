@@ -19,8 +19,7 @@ import {
     FieldValue,
 
  } from "firebase/firestore";
- import { useEffect } from 'react';
- 
+ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
  
 
 
@@ -50,6 +49,11 @@ const auth = firebase.auth()
 
 // Firestore data collection and adding data
 const db = getFirestore();
+
+// Cloud Storage (for photos)
+const storage = getStorage(app);
+
+
 
 
 // LOAD FAVOURITE ROUTES INTO FIREBASE
@@ -83,16 +87,19 @@ async function removeFromFavourites(uid, href) {
 }
 
 async function queryFR(uid, href) {
-
   const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid), where("routeHref", "array-contains", href));
+
   const querySnapshot = await getDocs(q);
+  
 
   let queryResult = false;
   querySnapshot.forEach(doc => {
-    console.log(doc.id, "=>", doc.data);
-    queryResult = true; 
+    // console.log(doc.data);
+    console.log("true");
+    return true; 
   })
-
+  
+  console.log(queryResult);
   return queryResult
   
 }
@@ -108,10 +115,30 @@ async function getFavouriteRoutes(uid) {
   return hrefParams
 }
 
-const isItemInFavorites = async (favoriteRef) => {
-  const favoriteSnapshot = await favoriteRef.get();
-  return favoriteSnapshot.exists();
-};
+
+// ADD PHOTOS TO FIREBASE 
+const photosStorage = getStorage(app, "gs://photos-linkways")
+
+
+// const loadPictures = async () => {
+//   try {
+//     const photos = new Map()
+//     for (const neighbor in buildingsJson.COM1) {
+//       photos.set(neighbor, )
+
+//     }
+//     await setDoc(
+//       doc(db, "buildingNeighbors", "test"), 
+//       { 
+//         photos: 
+//       },
+//       {merge: true} ).then(console.log("Favourite route added to user ", uid))
+//     }
+//     catch (error) {
+//       console.log("error in loadPictures: ", error);
+//     }
+//   }
+    
 
 
 
@@ -275,7 +302,7 @@ const loadBuildingData = async () => {
       const buildingName = building.name;
       const location = building.location;
       const neighbours = building.neighbours;
-      console.log(neighbours)
+      // console.log(neighbours)
 
       // neighborBuildingSet[buildingName] = [];
 
@@ -438,4 +465,15 @@ function constructShelteredRoute(parent, startBuilding, endBuilding) {
 
 
 
-export { auth, findBestBusRoute , findBestShelteredRoute, addToFavourites, removeFromFavourites, queryFR, getFavouriteRoutes};
+
+
+export { 
+  auth, 
+  findBestBusRoute , 
+  findBestShelteredRoute, 
+  addToFavourites, 
+  removeFromFavourites, 
+  queryFR, 
+  getFavouriteRoutes, 
+  photosStorage
+};

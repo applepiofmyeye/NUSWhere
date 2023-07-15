@@ -61,7 +61,7 @@ export async function googleDirections(origin, destination) {
         distance(response.data),
         response.data
       ];
-      console.log("SENT DATA: ", arr);
+      // console.log("SENT DATA: ", arr);
       return arr;
     } catch (error) {
       console.log(error);

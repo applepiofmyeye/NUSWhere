@@ -68,9 +68,10 @@ export default function MapPage() {
             all: all,
             mode: mode, 
             route: route},
-            
         });
-      };
+    };
+    
+    const handleBack = () => setShowRoute(false)
 
 
     const handleSelectMarker = (markerLocation, isDestination, name) => {
@@ -124,7 +125,7 @@ export default function MapPage() {
     return (
 
         <View style={styles.container}>
-            <Stack.Screen options={{ headerShown: false, }}/>
+            <Stack.Screen options={{ headerShown: false, headerBackButtonMenuEnabled: true}}/>
                 <Animated.ScrollView
                         // onScroll={e => console.log(e.nativeEvent.contentOffset.y)}
                         onScroll={handleCardDrag}
@@ -188,7 +189,7 @@ export default function MapPage() {
                             flex: 1
                         }}
                         label="Where are you?"
-                        data={roomCodes.concat(busStops)} // Set to the json
+                        data={roomCodes.concat(busStops).concat(buildings)} // Set to the json
                         menuStyle={{backgroundColor: COLORS.background}}
                         onChange={() => {setShowRoute(false)}}
                         usage='mappage'
@@ -228,6 +229,7 @@ export default function MapPage() {
                 o={o} 
                 d={d} 
                 handler={handler}
+                handleBack={handleBack}
                 />}
                 
 

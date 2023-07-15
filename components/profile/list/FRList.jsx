@@ -1,20 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, FlatList} from "react-native";
 import styles from "./frlist.style";
 import { getFavouriteRoutes, auth } from "../../../app/firebase";
 import RouteCard from "../../routes/RouteCard";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRouter } from "expo-router";
+import { COLORS, FONT, SIZES } from "../../../constants";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function FRList() {
-    /*
-    TODO: add a favouriteRoutes attribute to each user / store in firestore and query.
-    const data = [ {origin: COM1 destination: Temasek Hall} ]
-    */
-
-    // const data = [ {id: 1, origin: "COM1" , destination: "Temasek Hall"},
-    //                {id: 2, origin: "KR MRT", destination: "UTown Gym"} ]
+    const [refresh, setRefresh] = useState(false)
 
     
     let originArr = [];
@@ -23,7 +19,7 @@ export default function FRList() {
     let length = 0;
     let mode = "";
     let directionsArr = [];
-    let duration = 0;
+    let duration = "";
     let routeArr =[];
 
     const router = useRouter();
@@ -33,35 +29,41 @@ export default function FRList() {
 
     useEffect(() => {
         getFavouriteRoutes(auth.currentUser.uid).then(x => {
-            console.log(x[0]);
-            originArr = x[0].map(y => y.origin.stringValue);
-            destinationArr = x[0].map(y => y.destination.stringValue);
-            length = originArr.length;
-
-            modeArr = x[0].map(y => y.mode.stringValue);
-            hrefDirectionsArr = x[0].map(y => y.directions.stringValue);
-            directionsArr = x[0].map(y => y.directions.stringValue.split("/")); // 2d array or routes and dir
-            distanceArr = x[0].map(y => y.distance ? y.distance.stringValue : null)
-            routeArr = x[0].map(y => y.route ? y.route.stringValue : null);
+            if (x[0]) {
+                originArr = x[0].map(y => y.origin.stringValue);
+                destinationArr = x[0].map(y => y.destination.stringValue);
+                length = originArr.length;
 
 
-            for (let i = 0; i < length; i++) {
-                data.push({
-                    id: i, 
-                    origin: originArr[i], 
-                    destination: destinationArr[i], 
-                    mode: mode[i], 
-                    directions: directionsArr[i],
-                    distance: distanceArr[i],
-                    route: routeArr[i],
-                    hrefDirections: hrefDirectionsArr[i]
-                });
-            }
+                modeArr = x[0].map(y => y.mode.stringValue);
+                hrefDirectionsArr = x[0].map(y => y.directions.stringValue);
+                directionsArr = x[0].map(y => y.directions.stringValue.split("/")); // 2d array or routes and dir
+                distanceArr = x[0].map(y => y.distance ? y.distance.stringValue : null)
+                routeArr = x[0].map(y => y.route ? y.route.stringValue : null);
+                durationArr = x[0].map(y => y.duration ? y.duration.stringValue : "")
+
+
+                for (let i = 0; i < length; i++) {
+                    data.push({
+                        id: i, 
+                        origin: originArr[i], 
+                        destination: destinationArr[i], 
+                        mode: mode[i], 
+                        directions: directionsArr[i],
+                        distance: distanceArr[i],
+                        route: routeArr[i],
+                        hrefDirections: hrefDirectionsArr[i],
+                        duration: duration[i]
+                    });
+                }
+                
+            } 
             
-        });
+            
+        }).then(setRefresh(false));
         
 
-    }, [])
+    }, [refresh])
 
     const handler = (directions, duration, all, mode, route, o, d) => {
         if (!directions) { return Alert.alert("No route", "Whoops! No available route currently.", [
@@ -98,6 +100,7 @@ export default function FRList() {
 
         </TouchableOpacity>
         
+        
 
         // <RouteCard 
         // mode={item.mode}
@@ -108,19 +111,28 @@ export default function FRList() {
     );
 
     return (      
-        <View style={{flex: 10}}>
+        <SafeAreaView style={{flex: 10}}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>
                     Favourite Routes
                 </Text>
+                
             </View>
             <FlatList
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
+                ListEmptyComponent={<Text style={{
+                    color: COLORS.text, 
+                    fontSize: SIZES.medium, 
+                    fontFamily: FONT.iLight,
+                    margin: 10
+                    }}>No favourites added.</Text>}
+                refreshing={refresh}
+                onRefresh={() => setRefresh(true)}
             />
             
-        </View>
+        </SafeAreaView>
         
     )
 }
