@@ -51,13 +51,24 @@ export default function MapPage() {
     // const handleCardPress = () => {
     //     router.push('./routespage')
     // }
-    const handler = (directions, duration, all, mode, route) => {
+    const handler = (directions, duration, all, mode, route, directionsLength) => {
         if (!directions) { return Alert.alert("No route", "Whoops! No available route currently.", [
             {
                 text: "OK",
                 onPress: () => console.log("button pressed")
             }
         ])}
+
+        if (mode === "Sheltered" && directionsLength === 1) {
+            return Alert.alert("You have reached!", "You are in the building. Proceed to the floor of your destination.");
+        }
+
+        /*
+        console.log(mode + directionsLength);
+        if (mode === "Sheltered" && directionsLength === 1) {
+            return Alert.alert("You have reached!", "You are in the building. Proceed to the floor of your destination.");
+        }
+        */
         // router.setParams({directions: directions, duration: duration, all: all, mode: mode, route: route})
         router.push({pathname: './screens/routespage', 
         params: {
@@ -68,9 +79,10 @@ export default function MapPage() {
             all: all,
             mode: mode, 
             route: route},
-            
         });
-      };
+    };
+    
+    const handleBack = () => setShowRoute(false)
 
 
     const handleSelectMarker = (markerLocation, isDestination, name) => {
@@ -90,6 +102,16 @@ export default function MapPage() {
 
     };    
 
+    const handleErrenousInput = () => {
+        if (o === d) {
+            Alert.alert("Wait a minute...", "Your current location and destination is the same! Please verify again!");
+            setShowDirectionsBtn(false);
+        } else {
+            setShowRoute(true);
+            setShowDirectionsBtn(false);
+        }
+    }
+
     // Map-related constants
     const [mapRegion, setMapRegion] = useState({
         latitude: 1.2966,
@@ -98,10 +120,11 @@ export default function MapPage() {
         longitudeDelta: 0.09,
     });
 
+    /*
     const userLocation = async () => {
         let {status} = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied.')
+            Alert.alert('Permission to access location was denied.')
         }
         let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
         
@@ -117,14 +140,14 @@ export default function MapPage() {
         userLocation();
     },[])
 
-    
+    */
 
 
 
     return (
 
         <View style={styles.container}>
-            <Stack.Screen options={{ headerShown: false, }}/>
+            <Stack.Screen options={{ headerShown: false, headerBackButtonMenuEnabled: true}}/>
                 <Animated.ScrollView
                         // onScroll={e => console.log(e.nativeEvent.contentOffset.y)}
                         onScroll={handleCardDrag}
@@ -188,7 +211,7 @@ export default function MapPage() {
                             flex: 1
                         }}
                         label="Where are you?"
-                        data={roomCodes.concat(busStops)} // Set to the json
+                        data={roomCodes.concat(busStops).concat(buildings)} // Set to the json
                         menuStyle={{backgroundColor: COLORS.background}}
                         onChange={() => {setShowRoute(false)}}
                         usage='mappage'
@@ -214,8 +237,7 @@ export default function MapPage() {
                             <CustomButton 
                             text="Routes" 
                             onPress={() => {
-                                setShowRoute(true);
-                                setShowDirectionsBtn(false);
+                                handleErrenousInput();
                             }}/>
                         )}
                         
@@ -228,6 +250,7 @@ export default function MapPage() {
                 o={o} 
                 d={d} 
                 handler={handler}
+                handleBack={handleBack}
                 />}
                 
 

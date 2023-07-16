@@ -12,8 +12,14 @@ import {
     query,
     where,
     setDoc,
+    arrayUnion,
+    arrayRemove,
+    updateDoc,
+    doc,
+    FieldValue,
 
  } from "firebase/firestore";
+ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
  
 
 
@@ -22,7 +28,6 @@ import {
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-/* Joey's
 const firebaseConfig = {
     apiKey: "AIzaSyCi0nWW_ksUwL8I2VwSIty2GGi3BGcrKtw",
     authDomain: "nuswhere-e219d.firebaseapp.com",
@@ -30,16 +35,6 @@ const firebaseConfig = {
     storageBucket: "nuswhere-e219d.appspot.com",
     messagingSenderId: "827689257762",
     appId: "1:827689257762:web:4649238c67db99c7b8f37b"
-};
-*/
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDG986veNI1D4G9_GtNk1XWh6SbGERrpa0",
-  authDomain: "nuswhere-authentication.firebaseapp.com",
-  projectId: "nuswhere-authentication",
-  storageBucket: "nuswhere-authentication.appspot.com",
-  messagingSenderId: "421786405236",
-  appId: "1:421786405236:web:7cfba6a4f87c9e0e524421"
 };
 
 // Initialize Firebase
@@ -54,12 +49,81 @@ const auth = firebase.auth()
 
 // Firestore data collection and adding data
 const db = getFirestore();
-const busColRef = collection(db, "busStopNeighbors")
 
+// Cloud Storage (for photos)
+const storage = getStorage(app);
+
+
+
+
+// LOAD FAVOURITE ROUTES INTO FIREBASE
+// store as key: value -- uid: [route hrefs]
+
+
+async function addToFavourites(uid, href) {
+
+  await setDoc(
+    doc(db, "favouriteRoutes", uid), 
+    { 
+      uid: uid,
+      routeHref: arrayUnion(href) 
+    },
+    {merge: true} ).then(console.log("Favourite route added to user ", uid))
+    
+
+}
+
+async function removeFromFavourites(uid, href) {
+
+  await setDoc(
+    doc(db, "favouriteRoutes", uid), 
+    { 
+      uid: uid,
+      routeHref: arrayRemove(href) 
+    },
+    {merge: true} ).then(console.log("Favourite route removed from user ", uid))
+    
+
+}
+
+async function queryFR(uid, href) {
+  const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid), where("routeHref", "array-contains", href));
+
+  const querySnapshot = await getDocs(q);
+  
+
+  let queryResult = false;
+  querySnapshot.forEach(doc => {
+    // console.log(doc.data);
+    console.log("true");
+    return true; 
+  })
+  
+  console.log(queryResult);
+  return queryResult
+  
+}
+
+async function getFavouriteRoutes(uid) {
+  console.log("in firebase::getFavouriteRoutes");
+  const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid));
+  const querySnapshot = await getDocs(q);
+  let hrefParams = [];
+  querySnapshot.docs.forEach(doc => {
+    hrefParams.push(doc._document.data.value.mapValue.fields.routeHref.arrayValue.values.map(x => x.mapValue.fields));
+  })
+  return hrefParams
+}
+
+
+// GET PHOTOS FROM FIREBASE 
+const photosStorage = getStorage(app, "gs://photos-linkways")
 
 
 
 // LOAD BUS STOPS INTO FIREBASE -- ONLY NEED TO DO ONCE
+const busColRef = collection(db, "busStopNeighbors");
+
 const busStopJson = require('../data/bus-stops.json');
 
 const loadBusStopData = async () => {
@@ -125,6 +189,9 @@ for (let i = 0; i < busStopJson.length; i++) {
 // FIND SHORTEST BUS ROUTES 
 function findBestBusRoute(start, destination) {
   console.log("In findBestBusRoute")
+  if (start === destination) {
+    return null;
+  }
   const queue = [];
   const visited = new Set();
   const parent = {};
@@ -132,6 +199,7 @@ function findBestBusRoute(start, destination) {
 
   queue.push(start);
   visited.add(start);
+
 
   while (queue.length > 0) {
     const currentNode = queue.shift();
@@ -153,6 +221,7 @@ function findBestBusRoute(start, destination) {
 
     for (const n of currentNeighbors) {
       if (!visited.has(n)) {
+        console.log("")
         queue.push(n);
         visited.add(n);
         parent[n] = currentNode;
@@ -168,6 +237,7 @@ function findBestBusRoute(start, destination) {
 }
 
 function constructRoute(parent, parentRoute, start, destination) {
+  console.log('Constructing Route')
   const route = [];
   let current = destination;
 
@@ -187,6 +257,8 @@ function constructRoute(parent, parentRoute, start, destination) {
     //console.log("parentRoute: ", parentRoute)
   }
 
+  console.log("Route: " + route);
+  console.log("BusRoutes: " + busRoutes);
   return {
     route: route,
     busRoutes: busRoutes,
@@ -216,7 +288,7 @@ const loadBuildingData = async () => {
       const buildingName = building.name;
       const location = building.location;
       const neighbours = building.neighbours;
-      console.log(neighbours)
+      // console.log(neighbours)
 
       // neighborBuildingSet[buildingName] = [];
 
@@ -307,7 +379,6 @@ function findBestShelteredRoute(start, destination) {
     return 0}
 
 
-
   console.log("In findBestShelteredRoute")
   const visited = new Set();
 
@@ -369,7 +440,7 @@ function constructShelteredRoute(parent, startBuilding, endBuilding) {
   }
 
   route.unshift(startBuilding);
-  console.log(route);
+  console.log("Construct Sheltered Route:" + route);
 
 
   return route
@@ -379,4 +450,15 @@ function constructShelteredRoute(parent, startBuilding, endBuilding) {
 
 
 
-export { auth, findBestBusRoute , findBestShelteredRoute, db };
+
+
+export { 
+  auth, 
+  findBestBusRoute , 
+  findBestShelteredRoute, 
+  addToFavourites, 
+  removeFromFavourites, 
+  queryFR, 
+  getFavouriteRoutes, 
+  photosStorage
+};

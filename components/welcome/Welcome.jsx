@@ -1,5 +1,5 @@
 import React, { View, Text, Image, /* useWindowDimensions */ } from "react-native";
-import Logo from "../../assets/images/NUSWhereLogo.png";
+import Logo from "../../assets/NUSWhereLogo.png";
 import styles from "./welcome.style";
 
 export default function Welcome() {

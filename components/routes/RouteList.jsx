@@ -6,9 +6,11 @@ import { COLORS } from "../../constants";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { googleDirections } from "../../data/googledirections";
 import RouteCard from "./RouteCard";
+import CustomButton from "../account/CustomButton/CustomButton";
 
 
-export default function RouteList({origin, destination, o, d, handler}) {
+export default function RouteList({origin, destination, o, d, handler, handleBack}) {
+    console.log("In RouteList: " + o + " , " + d);
     // hardcoded values for one bus stop to another duration
     const busOneStepDuration = 2 * 60 
     const shelteredOneStepDuration = 3 * 60
@@ -62,7 +64,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
               });
       
               const busShortestPath = findBestBusRoute(o, d);
-              console.log(busShortestPath)
+              console.log('FindBestBusRoute:' + busShortestPath)
               if (
                 busShortestPath != null && 
                 busShortestPath != 1 && 
@@ -75,6 +77,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
               
       
               const shelteredShortestPath = findBestShelteredRoute(o, d) 
+              console.log('FindBestshelteredRoute:' + shelteredShortestPath)
               // currently only works for going from venue to venue not bus to bus
               if (
                 shelteredShortestPath != null && 
@@ -82,12 +85,21 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 shelteredShortestPath != 0) {
                   // 1 is for cant find route, 0 is for invalid input
                   setShelteredDirections(shelteredShortestPath);
+                  console.log('ShelteredDirections:' + shelteredDirections);
                   shelteredDirections != null ? setShelteredDuration(shelteredDirections.length * shelteredOneStepDuration) : null
               // hardcoded duration for placeholder -- each step from one building to another assumed to be 3
               }
 
     }, [origin, destination]);
     
+    const BackBtn = () => {
+        return(
+            <CustomButton 
+                onPress={handleBack}
+                text="Back"
+            ></CustomButton>
+        )
+    }
 
 
 
@@ -116,6 +128,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 all={null}
                 ></RouteCard>);
         } else{
+            console.log("bus card running")
             return (<RouteCard 
                 mode={item.mode} 
                 directions={busDirections} // array of bus stops
@@ -147,6 +160,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
+                ListHeaderComponent={BackBtn}
                 showsVerticalScrollIndicator={false}
                 style={{padding: 10}}
             />}
@@ -156,7 +170,4 @@ export default function RouteList({origin, destination, o, d, handler}) {
     )
     
 }
-    
-        
-
     

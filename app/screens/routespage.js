@@ -1,118 +1,147 @@
-import React, { useState, useEffect } from "react";
-import { Stack, useNavigation, useLocalSearchParams } from "expo-router";
-import { StyleSheet, View, Text, Image, TouchableOpacity, Platform, Pressable } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { Stack, useRouter, useLocalSearchParams } from "expo-router";
+import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { COLORS, FONT, SIZES } from "../../constants/theme";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AuthStore } from "../../store";
-import { db } from "../firebase";
-import { getDoc, setDoc, doc, updateDoc, deleteField } from "firebase/firestore";
+import { addToFavourites, auth, removeFromFavourites, queryFR, photosStorage } from "../firebase";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
+
+
+
 
 export default function RoutesPage() {
-    const { user } = AuthStore.useState();
-    const [favorite, setFavorite] = useState(false); // whether this data is saved
-    const [favoriteRouteName, setFavoriteRouteName] = useState(false); // what the data yet to be saved should be named after
-    const [dataFieldName, setDataFieldName] = useState(''); // to remove the data of this particular route
-    const { directions, distance, duration, all, mode, origin, destination } = useLocalSearchParams();
+    const navigation = useNavigation();
+    console.log("in routespage");    
+
+    // Get params passed through route
+    const {directions, distance, duration, all, mode, origin, destination, route} = useLocalSearchParams();
+    const routesArr = navigation.getState().routes;
+    const params = routesArr[routesArr.length - 1].params
+
+    // Display directions
     const directionsArr = directions.split("/");
-    const favRef = doc(db, 'favorites/' + user.uid);
+
+    // Button rendering and logic
+    const [isPressed, setIsPressed] = useState(false)
+
+
+    // Image rendering (Sheltered Routes)
+    const [url, setUrl] = useState([])
+
+
+
+
+
+
+    useEffect(() => {
+        /*
+        const fetchPhotoData = async () => {
+            const storage = getStorage();
+            const photoRef = ref(storage, `AS6/COM1`);
+            console.log(`photos-linkways/${origin}/${destination}`);
+            
+            await listAll(photoRef)
+                .then((result) => {
+                    const promises = result.items.map(x => {
+                        getDownloadURL(x).then(photoUrl => {
+                            console.log(photoUrl);
+                            setUrl((prevUrl) => [...prevUrl, photoUrl])
+                            console.log("in setURL");
+                        })
+                    })
+                    if (promises.length > 0) {
+                        Promise.all(promises)
+                            .then(() => setIsLoading(false))
+                            .catch((error) => console.log(error));
+                    } else {
+                        setIsLoading(false);
+                    }
+                    
+                })
+
+                
+            // await getDownloadURL(photoRef).then(photoUrl => setUrl(photoUrl))
+           
+            
+        };
+
+        */
+        const fetchFavouritesData = async () => {
+            if (params) {
+                await queryFR(params, auth.currentUser.uid).then(result => {
+                    setIsPressed(result);
+                    console.log(result);
+                });
+                
+            }
+        }
+
+        //if (isPressed == false) fetchPhotoData()
+        fetchFavouritesData();
+        console.log(url);
+
+    }, [params, isPressed]);
+      
+
+    
+      
+
+    const favContainerColor = {
+        backgroundColor: isPressed ? COLORS.pressedBtn : COLORS.unpressedBtn
+    }
+
+    const favText = isPressed ? "Remove from Favourites" : "Add to Favourites";
+
+
+   
+
+    const handleFav = useCallback(async () => {
+        if (!isPressed) {
+            addToFavourites(auth.currentUser.uid, params);
+        } else {
+            removeFromFavourites(auth.currentUser.uid, params);
+        } 
+        setIsPressed(!isPressed);
+    }, [isPressed, params]);
+      
+
+      
+      
+
+    const FavouritesBtn = () => {
+        return (
+            <View style={{alignItems: "center", justifyContent: "flex-end"}}>
+                <Pressable onPress={handleFav} style={[styles.favContainer, favContainerColor]}>
+                    <Text style={styles.text}>{favText}</Text>
+                </Pressable>
+            </View>
+        )
+    }
+
+
+
+
 
     let data = [];
-    let directionString = '';
-    for (let i = 0; i < directionsArr.length; i++) {
+    for (let i = 0; i < directionsArr.length; i ++) {
         data[i] = {
             id: i,
             text: directionsArr[i],
-            icon: mode == "Bus" ? "bus" : "walk"
+            icon: mode == "Bus" ? "bus" : "walk"  // currently a simple one where a whole page will have the same mode
         }
-        if (i === directionsArr.length - 1) {
-            directionString += directionsArr[i];
-        } else {
-            directionString += directionsArr[i] + ", ";
-        }
+
     }
 
-    useEffect(() => {
-        checkSavedData();
-    }, []);
-
-    const checkSavedData = async () => {
-        try {
-            const savedData = await getDoc(favRef);
-            if (savedData.exists()) {
-                const data = savedData.data();
-                const fieldCount = Object.keys(data).length;
-                console.log(fieldCount);
-                if (fieldCount === 0) {
-                    setFavoriteRouteName('Route1');
-                }
-                let count = 0;
-                let i = 1;
-                while (count !== fieldCount) { 
-                    const fieldName = 'Route' + i;
-                    const field = data[fieldName];
-                    if (field !== undefined) {
-                        const o = data[fieldName][0];
-                        const d = data[fieldName][1];
-                        const dir = data[fieldName][2];
-                        if (o === origin && d === destination && dir === directionString) {
-                            setFavorite(true);
-                            setDataFieldName(fieldName);
-                            break;
-                        } else {
-                            i++;
-                            count++;
-                            setFavoriteRouteName('Route' + i);
-                        }
-                    } else {
-                        i++;
-                        count++;
-                        setFavoriteRouteName(fieldName);
-                    }
-                } 
-            } else {
-                setFavoriteRouteName('Route1');
-            }
-        } catch (error) {
-            console.error("Error checking saved route data:", error);
-        }
-    };
-
-    const handleAddToFavorites = async () => {
-        let dataToSave = [];
-        dataToSave[0] = origin;
-        dataToSave[1] = destination;
-        dataToSave[2] = directionString;
-        dataToSave[3] = favoriteRouteName;
-        dataToSave[4] = mode;
-        console.log(directionString);
-        const routeData = {
-            [favoriteRouteName]: dataToSave
-        };
-        try {
-            await setDoc(favRef, routeData, { merge : true });
-            setFavorite(true);
-            setDataFieldName(favoriteRouteName); // if user clicks twice while at the same page
-        } catch (error) {
-            console.error("Error saving route data:", error);
-        }
-    };
-
-    const handleRemoveFavorites = async () => {
-        try {
-            await updateDoc(favRef, {
-                [dataFieldName]: deleteField()
-            })
-            setFavorite(false);
-            setFavoriteRouteName(dataFieldName); // the dataFieldName is now available to be saved under.
-        } catch (error) {
-            console.error("Error deleting route data:", error);
-        }
-    }
 
     const renderItem = ({item}) => (
+
+
         <View style={styles.container}>
+
 
             <View style={{flexDirection: 'row'}}>
                 <View style={styles.vertLine}/>
@@ -120,6 +149,7 @@ export default function RoutesPage() {
                     <Text style={styles.textStyle}> </Text>
                 </View>
             </View>
+
 
             <View style={{flexDirection: 'row'}}>
                 <Ionicons name={item.icon} size={20} color={COLORS.accent}/> 
@@ -128,6 +158,8 @@ export default function RoutesPage() {
                 </View>
             </View>
 
+
+
             <View style={{flexDirection: 'row'}}>
                 <View style={styles.vertLine}/>
                 <View >
@@ -135,57 +167,40 @@ export default function RoutesPage() {
                 </View>
             </View>
 
-        </View>
+            
+
+
+    </View>
+        
+
     )
 
+
+   
+
+
+
+
     return (
-    <SafeAreaView style={styles.container}>
-        <Stack.Screen
-        options={{
-            headerTitle: origin + " to " + destination,
-            headerRight: () => (
-            <View style={{ flexDirection: 'column', alignItems: "center" }}>
-                <TouchableOpacity onPress={favorite ? handleRemoveFavorites : handleAddToFavorites}>
-                    <Ionicons name='heart-outline' size={30} color={favorite ? '#FF0000' : '#000000'}/>
-                </TouchableOpacity>
-            </View>
-            ),
-            headerTintColor: COLORS.text,
-            headerStyle: {
-                backgroundColor: COLORS.background
-            }
-        }}
-        />
+        <SafeAreaView style={styles.container}>
+            <Stack.Screen options={{
+                headerTitle: origin + " to " + destination,
+                headerTintColor: COLORS.text
+            }} />
 
             <Text style={{
                 fontSize: SIZES.xLarge,
                 color: COLORS.text,
                 fontFamily: FONT.pSemiB,
-                alignSelf: "center"
-
+                alignSelf: "center",
+                paddingBottom: 10
                 }}>{destination}</Text>
-            <View style={{
-                alignItems: "center", 
-                padding: 20,
-                paddingBottom: 30,
-                height: 300
-                }}>
-
-                <Image 
-                source={require('../../assets/images/NUS.png')} 
-                resizeMode="stretch" 
-                style={{
-                    borderRadius: 10
-                    }}
-                />
-            </View>
             
-
-
+            
             <FlatList
             renderItem={renderItem}
-            data={data}>
-                
+            data={data}
+            ListFooterComponent= {isPressed != null && FavouritesBtn}>
             </FlatList>
 
 
@@ -200,7 +215,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         backgroundColor: COLORS.background,
-        padding: 8,
+        paddingHorizontal: 8,
     },
     vertLine: {
         width: 5,
@@ -213,5 +228,27 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         fontSize: SIZES.medium,
         fontFamily: FONT.fBedium
-    }
+    },
+    favContainer: {
+
+        width: 250,
+        padding: 15,
+        marginVertical : 5,
+
+        alignItems: "center",
+        borderRadius: SIZES.xLarge,
+        justifyContent: "center",
+    },
+    imageContainer: {
+        alignItems: "center",
+        padding: 20,
+        paddingBottom: 30,
+        height: 300,
+    },
+    image: {
+        borderRadius: 10,
+        width: "100%",
+        height: "100%",
+        resizeMode: "cover"
+    },
 })
