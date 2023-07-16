@@ -19,7 +19,7 @@ const loadBusStopData = async () => {
         neighbors: neighbors
       });
 
-      console.log("DONE LOADING BUS STOPS");
+      //console.log("DONE LOADING BUS STOPS");
     }
   } catch (error) {
     console.error("Error loading bus stop data:", error);
