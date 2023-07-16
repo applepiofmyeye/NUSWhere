@@ -116,30 +116,8 @@ async function getFavouriteRoutes(uid) {
 }
 
 
-// ADD PHOTOS TO FIREBASE 
+// GET PHOTOS FROM FIREBASE 
 const photosStorage = getStorage(app, "gs://photos-linkways")
-
-
-// const loadPictures = async () => {
-//   try {
-//     const photos = new Map()
-//     for (const neighbor in buildingsJson.COM1) {
-//       photos.set(neighbor, )
-
-//     }
-//     await setDoc(
-//       doc(db, "buildingNeighbors", "test"), 
-//       { 
-//         photos: 
-//       },
-//       {merge: true} ).then(console.log("Favourite route added to user ", uid))
-//     }
-//     catch (error) {
-//       console.log("error in loadPictures: ", error);
-//     }
-//   }
-    
-
 
 
 

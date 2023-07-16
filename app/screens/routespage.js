@@ -26,13 +26,11 @@ export default function RoutesPage() {
     const directionsArr = directions.split("/");
 
     // Button rendering and logic
-    const [pressedStates, setPressedStates] = useState({});
     const [isPressed, setIsPressed] = useState(false)
+
 
     // Image rendering (Sheltered Routes)
     const [url, setUrl] = useState([])
-
-    const [isLoading, setIsLoading] = useState(true);
 
 
 
@@ -71,18 +69,19 @@ export default function RoutesPage() {
 
         const fetchFavouritesData = async () => {
             if (params) {
-                const result = await queryFR(params, auth.currentUser.uid);
-                const persistedState = await AsyncStorage.getItem('isPressed');
-                console.log(result);
-                setIsPressed(persistedState ? JSON.parse(persistedState) : result);
+                await queryFR(params, auth.currentUser.uid).then(result => {
+                    setIsPressed(result);
+                    console.log(result);
+                });
+                
             }
         }
 
-        fetchPhotoData()
+        if (isPressed == false) fetchPhotoData()
         fetchFavouritesData();
         console.log(url);
 
-    }, [params]);
+    }, [params, isPressed]);
       
 
     
@@ -103,10 +102,7 @@ export default function RoutesPage() {
         } else {
             removeFromFavourites(auth.currentUser.uid, params);
         } 
-
-        const updatedState = !isPressed
-        setIsPressed(updatedState);
-        await AsyncStorage.setItem('isPressed', JSON.stringify(updatedState));
+        setIsPressed(!isPressed);
     }, [isPressed, params]);
       
 
