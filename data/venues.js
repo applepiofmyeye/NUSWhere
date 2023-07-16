@@ -14,8 +14,8 @@ const roomCodeCoords = new Map();
       roomCodes.push(roomCode);
     }
 
-    roomCodes ? console.log("roomCodes loaded") : console.log("roomCodes not loaded");
-    roomCodeCoords ? console.log("roomCodeCoords loaded") : console.log("roomCodeCoords not loaded");
+    //roomCodes ? console.log("roomCodes loaded") : console.log("roomCodes not loaded");
+    //roomCodeCoords ? console.log("roomCodeCoords loaded") : console.log("roomCodeCoords not loaded");
 
 const busStops = [];
 const busStopCoords = new Map();
@@ -30,8 +30,8 @@ const busStopCoords = new Map();
       busStopCoords.set(busStopName, busStopLocation);
       busStops.push(busStopName);
     }
-    busStopCoords ? console.log("busStopCoords loaded") : console.log("busStopCoords not loaded");
-    busStops ? console.log("busStops loaded") : console.log("busStops not loaded");
+    //busStopCoords ? console.log("busStopCoords loaded") : console.log("busStopCoords not loaded");
+    //busStops ? console.log("busStops loaded") : console.log("busStops not loaded");
 
 const buildings = [];
 const buildingCoords = new Map();
@@ -43,8 +43,8 @@ const buildingCoords = new Map();
       buildingCoords.set(buildingName, buildingLocation);
       buildings.push(buildingName);
     }
-    buildingCoords ? console.log("buildingCoords loaded") : console.log("buildingCoords not loaded");
-    buildings ? console.log("buildings loaded") : console.log("buildings not loaded");
-    console.log(buildings)
+    //buildingCoords ? console.log("buildingCoords loaded") : console.log("buildingCoords not loaded");
+    //buildings ? console.log("buildings loaded") : console.log("buildings not loaded");
+    //console.log(buildings)
 
 export { roomCodes, roomCodeCoords, busStops, busStopCoords, buildings, buildingCoords};
