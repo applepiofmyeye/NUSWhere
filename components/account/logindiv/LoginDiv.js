@@ -43,7 +43,6 @@ export default function LoginDiv() {
       setPasswordErrorMsg("Password is required field");
     }
 
-    console.log('Before if condition');
     if (email.length > 0 && password.length > 0) {
       console.log('Email:', email);
       console.log('Password:', password);
