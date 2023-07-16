@@ -15,7 +15,7 @@ import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 
 export default function RoutesPage() {
     const navigation = useNavigation();
-    console.log("in routespage");    
+    //console.log("in routespage");    
 
     // Get params passed through route
     const {directions, distance, duration, all, mode, origin, destination, route} = useLocalSearchParams();
@@ -74,7 +74,7 @@ export default function RoutesPage() {
             if (params) {
                 await queryFR(params, auth.currentUser.uid).then(result => {
                     setIsPressed(result);
-                    console.log(result);
+                    //console.log(result);
                 });
                 
             }
@@ -82,7 +82,7 @@ export default function RoutesPage() {
 
         //if (isPressed == false) fetchPhotoData()
         fetchFavouritesData();
-        console.log(url);
+        //console.log(url);
 
     }, [params, isPressed]);
       

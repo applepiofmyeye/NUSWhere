@@ -56,15 +56,15 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                     setOutdoorDistance(outdoorArr[2]);
                     setOutdoorAll(outdoorArr[3])
 
-                    console.log("outdoorArr: ", outdoorArr);
-                    console.log("outdoorDirections: ", outdoorDirections);
+                    //console.log("outdoorArr: ", outdoorArr);
+                    //console.log("outdoorDirections: ", outdoorDirections);
                 }
                 
                 
               });
       
               const busShortestPath = findBestBusRoute(o, d);
-              console.log('FindBestBusRoute:' + busShortestPath)
+              //console.log('FindBestBusRoute:' + busShortestPath)
               if (
                 busShortestPath != null && 
                 busShortestPath != 1 && 
@@ -77,7 +77,7 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
               
       
               const shelteredShortestPath = findBestShelteredRoute(o, d) 
-              console.log('FindBestshelteredRoute:' + shelteredShortestPath)
+              //console.log('FindBestshelteredRoute:' + shelteredShortestPath)
               // currently only works for going from venue to venue not bus to bus
               if (
                 shelteredShortestPath != null && 
@@ -85,7 +85,7 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 shelteredShortestPath != 0) {
                   // 1 is for cant find route, 0 is for invalid input
                   setShelteredDirections(shelteredShortestPath);
-                  console.log('ShelteredDirections:' + shelteredDirections);
+                  //console.log('ShelteredDirections:' + shelteredDirections);
                   shelteredDirections != null ? setShelteredDuration(shelteredDirections.length * shelteredOneStepDuration) : null
               // hardcoded duration for placeholder -- each step from one building to another assumed to be 3
               }
@@ -108,7 +108,7 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
         
     const renderItem = ({ item }) => {
         if (item.mode === "Outdoor") {
-            console.log("outdoor card running")
+            //console.log("outdoor card running")
             return (<RouteCard 
                 mode={item.mode} 
                 directions={outdoorDirections} // array of string instructions
@@ -118,7 +118,7 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 handler={handler}
                 ></RouteCard>);
         } else if (item.mode === "Sheltered") {
-            console.log("sheltered card running")
+            //console.log("sheltered card running")
             return(<RouteCard 
                 mode={item.mode} 
                 directions={shelteredDirections} // array of buildings to walk through 
@@ -128,7 +128,7 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 all={null}
                 ></RouteCard>);
         } else{
-            console.log("bus card running")
+            //console.log("bus card running")
             return (<RouteCard 
                 mode={item.mode} 
                 directions={busDirections} // array of bus stops

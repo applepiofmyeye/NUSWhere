@@ -27,7 +27,7 @@ let d = null;
 
 
 export default function MapPage() {
-    console.log("in MapPage");
+    //console.log("in MapPage");
 
     const scrollA = useRef(new Animated.Value(0)).current;
     const handleCardDrag = Animated.event(

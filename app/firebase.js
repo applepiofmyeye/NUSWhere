@@ -95,17 +95,17 @@ async function queryFR(uid, href) {
   let queryResult = false;
   querySnapshot.forEach(doc => {
     // console.log(doc.data);
-    console.log("true");
+    // console.log("true");
     return true; 
   })
   
-  console.log(queryResult);
+  // console.log(queryResult);
   return queryResult
   
 }
 
 async function getFavouriteRoutes(uid) {
-  console.log("in firebase::getFavouriteRoutes");
+  // console.log("in firebase::getFavouriteRoutes");
   const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid));
   const querySnapshot = await getDocs(q);
   let hrefParams = [];
@@ -155,7 +155,7 @@ const loadBusStopData = async () => {
   
         
   
-        console.log("DONE LOADING BUS STOPS");
+        // console.log("DONE LOADING BUS STOPS");
       }
      
     } catch (error) {
@@ -188,7 +188,7 @@ for (let i = 0; i < busStopJson.length; i++) {
 
 // FIND SHORTEST BUS ROUTES 
 function findBestBusRoute(start, destination) {
-  console.log("In findBestBusRoute")
+  //console.log("In findBestBusRoute")
   if (start === destination) {
     return null;
   }
@@ -215,13 +215,13 @@ function findBestBusRoute(start, destination) {
     //console.log("currentNeighbors: ", currentNeighbors);
     //console.log("------------------------------------")
     if (currentNeighbors == undefined) {
-      console.log("No valid route found.")
+      // console.log("No valid route found.")
       return null;
     }
 
     for (const n of currentNeighbors) {
       if (!visited.has(n)) {
-        console.log("")
+        // console.log("")
         queue.push(n);
         visited.add(n);
         parent[n] = currentNode;
@@ -237,7 +237,7 @@ function findBestBusRoute(start, destination) {
 }
 
 function constructRoute(parent, parentRoute, start, destination) {
-  console.log('Constructing Route')
+  //console.log('Constructing Route')
   const route = [];
   let current = destination;
 
@@ -257,8 +257,8 @@ function constructRoute(parent, parentRoute, start, destination) {
     //console.log("parentRoute: ", parentRoute)
   }
 
-  console.log("Route: " + route);
-  console.log("BusRoutes: " + busRoutes);
+  //console.log("Route: " + route);
+  //console.log("BusRoutes: " + busRoutes);
   return {
     route: route,
     busRoutes: busRoutes,
@@ -324,18 +324,18 @@ for (const key of Object.keys(buildingsJson)) {
 
 }
 
-
+/*
 neighborBuildingSet ? console.log("neighborBuildingSet loaded") 
                     : console.log("neighborBuildingSet not loaded")
-
+*/
 
 
 
 // FIND SHORTEST PATH -- SHELTERED
 function findBestShelteredRoute(start, destination) {
-  console.log("START: ", start);
-  console.log("destination: ", destination);
-  console.log("in findBestshelteredRoute")
+  //console.log("START: ", start);
+  //console.log("destination: ", destination);
+  //console.log("in findBestshelteredRoute")
   let startBuilding = null;
   let endBuilding = null;
   for (const buildingKey in buildingsJson) {
@@ -375,11 +375,11 @@ function findBestShelteredRoute(start, destination) {
   }
 
   if (!startBuilding && !endBuilding) {
-    console.log("invalid input for sheltered route algo");
+    //console.log("invalid input for sheltered route algo");
     return 0}
 
 
-  console.log("In findBestShelteredRoute")
+  //console.log("In findBestShelteredRoute")
   const visited = new Set();
 
   for (const building in buildingsJson){
@@ -406,7 +406,7 @@ function findBestShelteredRoute(start, destination) {
         // console.log("queue.length: ", queue.length)
         // console.log("------------------------------------")
         if (!currentNeighbors || currentNeighbors.length == 0) {
-          console.log("No valid route found.")
+          //console.log("No valid route found.")
           return 1;
         }
     
@@ -440,7 +440,7 @@ function constructShelteredRoute(parent, startBuilding, endBuilding) {
   }
 
   route.unshift(startBuilding);
-  console.log("Construct Sheltered Route:" + route);
+  //console.log("Construct Sheltered Route:" + route);
 
 
   return route
