@@ -2,10 +2,11 @@ import { View, TextInput, StyleSheet } from "react-native";
 import React from "react";
 
 
-const InputBox = ({value, setValue, placeholder, secureTextEntry}) => {
+const InputBox = ({value, setValue, placeholder, secureTextEntry, ...props}) => {
     return (
             <View style={styles.container}>
                 <TextInput
+                    {...props}
                     value ={value}
                     onChangeText={setValue}
                     placeholder={placeholder}
@@ -32,4 +33,3 @@ const styles = StyleSheet.create({
 });
 
 export default InputBox;
-

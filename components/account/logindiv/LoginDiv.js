@@ -24,7 +24,7 @@ export default function LoginDiv() {
 
 
   const handleLogin = () => {
-    console.log('handleLogin function called'); 
+    //console.log('handleLogin function called'); 
     setEmailErrorMsg('');
     setPasswordErrorMsg('');
 
@@ -44,8 +44,8 @@ export default function LoginDiv() {
     }
 
     if (email.length > 0 && password.length > 0) {
-      console.log('Email:', email);
-      console.log('Password:', password);
+      //console.log('Email:', email);
+      //console.log('Password:', password);
       setLoading(true);
       auth
       .signInWithEmailAndPassword(email, password)
@@ -59,7 +59,7 @@ export default function LoginDiv() {
         router.replace("../../../screens");
       })
       .catch(error => {
-        console.log('Authentication error:', error);
+        //console.log('Authentication error:', error);
         setModalVisible(true);
         setErrorMsg(FirebaseError(error));
       })
@@ -89,6 +89,7 @@ export default function LoginDiv() {
             value={email}
             setValue={setEmail}
             style={styles.input}
+            testID="Login.email"
           />
           {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
           <InputBox
@@ -97,6 +98,7 @@ export default function LoginDiv() {
             setValue={setPassword}
             style={styles.input}
             secureTextEntry
+            testID="Login.password"
           />
           {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
       </View>

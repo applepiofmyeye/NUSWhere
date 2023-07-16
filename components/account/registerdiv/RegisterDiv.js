@@ -80,7 +80,7 @@ export default function RegisterDiv() {
         }
        
         if (errorFlag) {
-            console.log("errorFlag");
+            //console.log("errorFlag");
         } else {
           setLoading(true);
           await auth
@@ -112,6 +112,7 @@ export default function RegisterDiv() {
             value={username}
             setValue={setUsername}
             style={styles.input}
+            testID="Register.username"
             />
           {usernameErrorMsg !== "" && <Text style={styles.error}>{usernameErrorMsg}</Text>}
           <InputBox
@@ -119,6 +120,7 @@ export default function RegisterDiv() {
             value={email}
             setValue={setEmail}
             style={styles.input}
+            testID="Register.email"
           />
           {emailErrorMsg !== "" && <Text style={styles.error}>{emailErrorMsg}</Text>}
           <InputBox
@@ -127,6 +129,7 @@ export default function RegisterDiv() {
             setValue={setPassword}
             style={styles.input}
             secureTextEntry
+            testID="Register.password"
           />
           {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
           <InputBox
@@ -135,6 +138,7 @@ export default function RegisterDiv() {
             setValue={setPasswordRepeat}
             style={styles.input}
             secureTextEntry
+            testID="Register.repeatPassword"
           />
           {passwordRepeatErrorMsg !== "" && <Text style={styles.error}>{passwordRepeatErrorMsg}</Text>}
       </View>
@@ -171,7 +175,7 @@ export default function RegisterDiv() {
         </View>
       </Modal>
 
-      <CustomButton text="REGISTER" onPress={handleSignUp} />
+      <CustomButton text="REGISTER" onPress={handleSignUp} testID="Register.button"/>
       {loading && <ActivityIndicator />}
     </View>
     /* </ScrollView> */
