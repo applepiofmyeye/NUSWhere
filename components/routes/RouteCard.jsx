@@ -11,7 +11,6 @@ function secToMin(x) {
 
 export default function RouteCard({mode, directions, duration, route, all, handler, o, d}) { // directions will be an array
     
-    console.log(directions);
 
     const formattedDirections = !directions
     ? ""
@@ -19,11 +18,7 @@ export default function RouteCard({mode, directions, duration, route, all, handl
 
     const hrefDirections = !formattedDirections
     ? ""
-    : formattedDirections.replace(/\n/g, "%2F");
-
-    console.log(formattedDirections);
-    console.log(hrefDirections);
-    
+    : formattedDirections.replace(/\n/g, "%2F");    
 
 
     const displayedDirections = !directions             

@@ -36,7 +36,6 @@ export default function FRList() {
 
 
                 modeArr = x[0].map(y => y.mode.stringValue);
-                console.log(modeArr);
                 hrefDirectionsArr = x[0].map(y => y.directions.stringValue);
                 directionsArr = x[0].map(y => y.directions.stringValue.split("/")); // 2d array or routes and dir
                 distanceArr = x[0].map(y => y.distance ? y.distance.stringValue : null)

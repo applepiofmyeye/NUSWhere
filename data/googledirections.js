@@ -4,8 +4,7 @@ import axios from 'axios';
 
 
 export async function googleDirections(origin, destination) {
-    console.log("----------------------------")
-    console.log("RECEIVED DATA: ", origin, destination)
+
     
     const data = {
         origin: {
@@ -61,7 +60,6 @@ export async function googleDirections(origin, destination) {
         distance(response.data),
         response.data
       ];
-      // console.log("SENT DATA: ", arr);
       return arr;
     } catch (error) {
       console.log(error);

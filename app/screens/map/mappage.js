@@ -38,7 +38,6 @@ export default function MapPage() {
 
 
     const router = useRouter();
-    const navigation = useNavigation();
 
 
 
@@ -105,24 +104,22 @@ export default function MapPage() {
         longitudeDelta: 0.09,
     });
 
-    const userLocation = async () => {
-        let {status} = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied.')
-        }
-        let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
+
+
+    // NOT USED CURRENTLY, but would be good to track current user location
+    // const userLocation = async () => {
+    //     let {status} = await Location.requestForegroundPermissionsAsync();
+    //     if (status !== 'granted') {
+    //         setErrorMsg('Permission to access location was denied.')
+    //     }
+    //     let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
         
-        // !origin && location && setOrigin({
-        //     latitude: location.coords.latitude,
-        //     longitude: location.coords.longitude
-        // });
+    // }
 
-        console.log({location})
-    }
 
-    useEffect(() => {
-        userLocation();
-    },[])
+    // useEffect(() => {
+    //     userLocation();
+    // },[])
 
     
 

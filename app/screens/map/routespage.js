@@ -21,7 +21,6 @@ export default function RoutesPage() {
     const {directions, distance, duration, all, mode, origin, destination, route} = useLocalSearchParams();
     const routesArr = navigation.getState().routes;
     const params = routesArr[routesArr.length - 1].params
-    console.log(params);
 
     // Display directions
     const directionsArr = directions.split("/");
@@ -43,15 +42,12 @@ export default function RoutesPage() {
         const fetchPhotoData = async () => {
             const storage = getStorage();
             const photoRef = ref(storage, `${origin}/${destination}`);
-            console.log(`photos-linkways/${origin}/${destination}`);
             
             await listAll(photoRef)
                 .then((result) => {
                     const promises = result.items.map(x => {
                         getDownloadURL(x).then(photoUrl => {
-                            console.log(photoUrl);
                             setUrl((prevUrl) => [...prevUrl, photoUrl])
-                            console.log("in setURL");
                         })
                     })
                     if (promises.length > 0) {
@@ -93,7 +89,6 @@ export default function RoutesPage() {
 
         fetchPhotoData();
         fetchFavouritesData();
-        console.log(url);
 
     }, []);
       

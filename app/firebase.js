@@ -188,7 +188,6 @@ for (let i = 0; i < busStopJson.length; i++) {
 
 // FIND SHORTEST BUS ROUTES 
 function findBestBusRoute(start, destination) {
-  console.log("In findBestBusRoute")
   const queue = [];
   const visited = new Set();
   const parent = {};
@@ -206,10 +205,6 @@ function findBestBusRoute(start, destination) {
     }
 
     const currentNeighbors = neighborBusSet[currentNode];
-    //console.log("------------------------------------")
-    //console.log("currentNode: ", JSON.stringify(currentNode));
-    //console.log("currentNeighbors: ", currentNeighbors);
-    //console.log("------------------------------------")
     if (currentNeighbors == undefined) {
       console.log("No valid route found.")
       return null;
@@ -225,7 +220,6 @@ function findBestBusRoute(start, destination) {
       }
     }
   }
-  //console.log("parentRoute: ", parentRoute)
 
   // No valid route found
   return null;
@@ -247,8 +241,7 @@ function constructRoute(parent, parentRoute, start, destination) {
     const from = route[i];
     const to = route[i + 1];
     busRoutes.push(parentRoute[to][from]);
-    //console.log("route: ", route)
-    //console.log("parentRoute: ", parentRoute)
+
   }
 
   return {
@@ -280,7 +273,6 @@ const loadBuildingData = async () => {
       const buildingName = building.name;
       const location = building.location;
       const neighbours = building.neighbours;
-      // console.log(neighbours)
 
       // neighborBuildingSet[buildingName] = [];
 
@@ -289,7 +281,7 @@ const loadBuildingData = async () => {
 
       
 
-      console.log("DONE LOADING BUS STOPS");
+      console.log("DONE LOADING BUILDINGS");
       await addDoc(buildingColRef, {
         name: buildingName,
         coords: location,
@@ -325,8 +317,6 @@ neighborBuildingSet ? console.log("neighborBuildingSet loaded")
 
 // FIND SHORTEST PATH -- SHELTERED
 function findBestShelteredRoute(start, destination) {
-  console.log("START: ", start);
-  console.log("destination: ", destination);
   console.log("in findBestshelteredRoute")
   let startBuilding = null;
   let endBuilding = null;
@@ -392,12 +382,6 @@ function findBestShelteredRoute(start, destination) {
         }
     
         const currentNeighbors = neighborBuildingSet[currentNode];
-        // console.log("------------------------------------")
-        // console.log("currentNode: ", JSON.stringify(currentNode));
-        // console.log("currentNeighbors: ", currentNeighbors);
-        // console.log("queue: ", queue);
-        // console.log("queue.length: ", queue.length)
-        // console.log("------------------------------------")
         if (!currentNeighbors || currentNeighbors.length == 0) {
           console.log("No valid route found.")
           return 1;
@@ -415,9 +399,6 @@ function findBestShelteredRoute(start, destination) {
     }
   }
 
-
-  //console.log("parentRoute: ", parentRoute)
-
   // No valid route found
   return 1;
 }
@@ -433,7 +414,6 @@ function constructShelteredRoute(parent, startBuilding, endBuilding) {
   }
 
   route.unshift(startBuilding);
-  console.log(route);
 
 
   return route

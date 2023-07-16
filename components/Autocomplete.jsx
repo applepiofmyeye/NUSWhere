@@ -89,7 +89,6 @@ const Autocomplete = ({
                         location = roomCodeCoords.get(datum)[2];
                         if (location != null) {
                           const markerLocation = {latitude: location.y, longitude: location.x}; 
-                          console.log(markerLocation)
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
                         
@@ -100,7 +99,6 @@ const Autocomplete = ({
                         location = busStopCoords.get(datum); 
                         if (location != null) {
                           const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
-                          console.log(markerLocation)
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
                         
@@ -112,7 +110,6 @@ const Autocomplete = ({
                         
                         if (location != null) {
                           const markerLocation = {latitude: location.x, longitude: location.y}; 
-                          console.log(markerLocation)
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
                         

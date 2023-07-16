@@ -79,9 +79,7 @@ export default function RegisterDiv() {
           setPasswordRepeatErrorMsg("Password should be min 8 char and max 20 char");
         }
        
-        if (errorFlag) {
-            console.log("errorFlag");
-        } else {
+        if (!errorFlag) {
           setLoading(true);
           await auth
             .createUserWithEmailAndPassword(email, password)
