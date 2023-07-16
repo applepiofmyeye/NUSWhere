@@ -86,22 +86,20 @@ async function removeFromFavourites(uid, href) {
 
 }
 
-async function queryFR(uid, href) {
-  const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid), where("routeHref", "array-contains", href));
+async function queryFR(params, uid) {
+  const q = query(
+    collection(db, 'favouriteRoutes'),
+    where('uid', '==', uid),
+    where('routeHref', 'array-contains', params)
+  );
 
-  const querySnapshot = await getDocs(q);
-  
-
-  let queryResult = false;
-  querySnapshot.forEach(doc => {
-    // console.log(doc.data);
-    console.log("true");
-    return true; 
-  })
-  
-  console.log(queryResult);
-  return queryResult
-  
+  try {
+    const querySnapshot = await getDocs(q);
+    return querySnapshot;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
 
 async function getFavouriteRoutes(uid) {
@@ -110,7 +108,9 @@ async function getFavouriteRoutes(uid) {
   const querySnapshot = await getDocs(q);
   let hrefParams = [];
   querySnapshot.docs.forEach(doc => {
-    hrefParams.push(doc._document.data.value.mapValue.fields.routeHref.arrayValue.values.map(x => x.mapValue.fields));
+    if (doc._document.data.value.mapValue.fields.routeHref.arrayValue.values) {
+      hrefParams.push(doc._document.data.value.mapValue.fields.routeHref.arrayValue.values.map(x => x.mapValue.fields));
+    }
   })
   return hrefParams
 }

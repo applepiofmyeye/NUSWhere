@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
 
     routeName: {
-        fontFamily: FONT.iRegular,
+        fontFamily: FONT.pSemiB,
         fontSize: SIZES.medium,
         color: COLORS.text,
     },
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
         fontSize: SIZES.medium,
         color: COLORS.text,
         textAlign: "left",
-        paddingLeft: 10
     },
 
     title: {

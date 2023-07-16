@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
-import MapPage from "./screens/mappage";
-import Profile from "./screens/profile";
+import MapPage from "./screens/map/mappage";
+import Profile from "./screens/profile/profile";
 import NearestStops from "./screens/neareststops";
 import { COLORS, FONT, icons } from "../constants";
 import { Stack } from "expo-router";

@@ -113,6 +113,8 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 distance={outdoorDistance}
                 all={outdoorAll}
                 handler={handler}
+                o={o}
+                d={d}
                 ></RouteCard>);
         } else if (item.mode === "Sheltered") {
             console.log("sheltered card running")
@@ -123,6 +125,8 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 distance={null}
                 handler={handler}
                 all={null}
+                o={o}
+                d={d}
                 ></RouteCard>);
         } else{
             return (<RouteCard 
@@ -133,6 +137,8 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 distance={null}
                 handler={handler}
                 all={null}
+                o={o}
+                d={d}
                 ></RouteCard>);
 
         }

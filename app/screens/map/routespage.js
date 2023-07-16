@@ -2,10 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { COLORS, FONT, SIZES } from "../../constants";
+import { COLORS, FONT, SIZES } from "../../../constants";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { addToFavourites, auth, removeFromFavourites, queryFR, photosStorage } from "../firebase";
+import { addToFavourites, auth, removeFromFavourites, queryFR, photosStorage } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
@@ -21,12 +21,15 @@ export default function RoutesPage() {
     const {directions, distance, duration, all, mode, origin, destination, route} = useLocalSearchParams();
     const routesArr = navigation.getState().routes;
     const params = routesArr[routesArr.length - 1].params
+    console.log(params);
 
     // Display directions
     const directionsArr = directions.split("/");
 
     // Button rendering and logic
     const [isPressed, setIsPressed] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
 
     // Image rendering (Sheltered Routes)
@@ -39,7 +42,7 @@ export default function RoutesPage() {
     useEffect(() => {
         const fetchPhotoData = async () => {
             const storage = getStorage();
-            const photoRef = ref(storage, `AS6/COM1`);
+            const photoRef = ref(storage, `${origin}/${destination}`);
             console.log(`photos-linkways/${origin}/${destination}`);
             
             await listAll(photoRef)
@@ -67,21 +70,32 @@ export default function RoutesPage() {
             
         };
 
-        const fetchFavouritesData = async () => {
+        const fetchFavouritesData = () => {
             if (params) {
-                await queryFR(params, auth.currentUser.uid).then(result => {
-                    setIsPressed(result);
-                    console.log(result);
+              setLoading(true); // Set loading to true before fetching data
+      
+              queryFR(params, auth.currentUser.uid)
+                .then((querySnapshot) => {
+                    let queryResult = false;
+                    querySnapshot.forEach((doc) => {
+                        queryResult = true;
+                    });
+                    setIsPressed(queryResult);
+                    setLoading(false); // Set loading to false after fetching data
+                })
+                .catch((error) => {
+                    // Handle any error that occurred during the query
+                    console.log(error);
+                    setLoading(false); // Set loading to false in case of an error
                 });
-                
             }
-        }
+        };
 
-        if (isPressed == false) fetchPhotoData()
+        fetchPhotoData();
         fetchFavouritesData();
         console.log(url);
 
-    }, [params, isPressed]);
+    }, []);
       
 
     
@@ -103,13 +117,23 @@ export default function RoutesPage() {
             removeFromFavourites(auth.currentUser.uid, params);
         } 
         setIsPressed(!isPressed);
-    }, [isPressed, params]);
+    }, [isPressed]);
       
 
       
       
 
     const FavouritesBtn = () => {
+        if (loading) {
+            return (
+                <Text style={{
+                    color: COLORS.text, 
+                    fontSize: SIZES.medium, 
+                    fontFamily: FONT.iLight,
+                    margin: 10
+                    }}>Loading..</Text>
+            )
+        }
         return (
             <View style={{alignItems: "center", justifyContent: "flex-end"}}>
                 <Pressable onPress={handleFav} style={[styles.favContainer, favContainerColor]}>
@@ -128,7 +152,7 @@ export default function RoutesPage() {
         data[i] = {
             id: i,
             text: directionsArr[i],
-            icon: mode == "Bus" ? "bus" : "walk"  // currently a simple one where a whole page will have the same mode
+            icon: "radio-button-off"  // currently a simple one where a whole page will have the same mode
         }
 
     }
@@ -149,7 +173,7 @@ export default function RoutesPage() {
 
 
             <View style={{flexDirection: 'row'}}>
-                <Ionicons name={item.icon} size={20} color={COLORS.accent}/> 
+                <Ionicons name={item.icon} size={23} color={COLORS.accent}/> 
                 <View >
                     <Text style={styles.textStyle}>{item.text}</Text>
                 </View>
@@ -236,6 +260,7 @@ const styles = StyleSheet.create({
         width: 5,
         height: "100%",
         backgroundColor: COLORS.accent,
+        marginLeft: 8
     },
     textStyle: {
         backgroundColor: COLORS.background,

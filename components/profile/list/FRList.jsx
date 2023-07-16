@@ -36,6 +36,7 @@ export default function FRList() {
 
 
                 modeArr = x[0].map(y => y.mode.stringValue);
+                console.log(modeArr);
                 hrefDirectionsArr = x[0].map(y => y.directions.stringValue);
                 directionsArr = x[0].map(y => y.directions.stringValue.split("/")); // 2d array or routes and dir
                 distanceArr = x[0].map(y => y.distance ? y.distance.stringValue : null)
@@ -48,12 +49,12 @@ export default function FRList() {
                         id: i, 
                         origin: originArr[i], 
                         destination: destinationArr[i], 
-                        mode: mode[i], 
+                        mode: modeArr[i], 
                         directions: directionsArr[i],
                         distance: distanceArr[i],
                         route: routeArr[i],
                         hrefDirections: hrefDirectionsArr[i],
-                        duration: duration[i]
+                        duration: durationArr[i]
                     });
                 }
                 
@@ -73,7 +74,7 @@ export default function FRList() {
             }
         ])}
         // router.setParams({directions: directions, duration: duration, all: all, mode: mode, route: route})
-        router.push({pathname: './screens/routespage', 
+        router.push({pathname: './screens/map/routespage', 
         params: {
             origin: o,
             destination: d,
