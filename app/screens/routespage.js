@@ -1,38 +1,118 @@
-import React, { useState } from "react";
-import { Stack, useRouter, useLocalSearchParams } from "expo-router";
-import { StyleSheet, View, Text, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Stack, useNavigation, useLocalSearchParams } from "expo-router";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Platform, Pressable } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { COLORS, FONT, SIZES } from "../../constants/theme";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from "react-native-safe-area-context";
-
-
-
+import { AuthStore } from "../../store";
+import { db } from "../firebase";
+import { getDoc, setDoc, doc, updateDoc, deleteField } from "firebase/firestore";
 
 export default function RoutesPage() {
-    console.log("in routespage");    
-
-    const {directions, distance, duration, all, mode, origin, destination} = useLocalSearchParams();
+    const { user } = AuthStore.useState();
+    const [favorite, setFavorite] = useState(false); // whether this data is saved
+    const [favoriteRouteName, setFavoriteRouteName] = useState(false); // what the data yet to be saved should be named after
+    const [dataFieldName, setDataFieldName] = useState(''); // to remove the data of this particular route
+    const { directions, distance, duration, all, mode, origin, destination } = useLocalSearchParams();
     const directionsArr = directions.split("/");
-
-
+    const favRef = doc(db, 'favorites/' + user.uid);
 
     let data = [];
-    for (let i = 0; i < directionsArr.length; i ++) {
+    let directionString = '';
+    for (let i = 0; i < directionsArr.length; i++) {
         data[i] = {
             id: i,
             text: directionsArr[i],
-            icon: mode == "Bus" ? "bus" : "walk"  // currently a simple one where a whole page will have the same mode
+            icon: mode == "Bus" ? "bus" : "walk"
         }
-
+        if (i === directionsArr.length - 1) {
+            directionString += directionsArr[i];
+        } else {
+            directionString += directionsArr[i] + ", ";
+        }
     }
 
+    useEffect(() => {
+        checkSavedData();
+    }, []);
+
+    const checkSavedData = async () => {
+        try {
+            const savedData = await getDoc(favRef);
+            if (savedData.exists()) {
+                const data = savedData.data();
+                const fieldCount = Object.keys(data).length;
+                console.log(fieldCount);
+                if (fieldCount === 0) {
+                    setFavoriteRouteName('Route1');
+                }
+                let count = 0;
+                let i = 1;
+                while (count !== fieldCount) { 
+                    const fieldName = 'Route' + i;
+                    const field = data[fieldName];
+                    if (field !== undefined) {
+                        const o = data[fieldName][0];
+                        const d = data[fieldName][1];
+                        const dir = data[fieldName][2];
+                        if (o === origin && d === destination && dir === directionString) {
+                            setFavorite(true);
+                            setDataFieldName(fieldName);
+                            break;
+                        } else {
+                            i++;
+                            count++;
+                            setFavoriteRouteName('Route' + i);
+                        }
+                    } else {
+                        i++;
+                        count++;
+                        setFavoriteRouteName(fieldName);
+                    }
+                } 
+            } else {
+                setFavoriteRouteName('Route1');
+            }
+        } catch (error) {
+            console.error("Error checking saved route data:", error);
+        }
+    };
+
+    const handleAddToFavorites = async () => {
+        let dataToSave = [];
+        dataToSave[0] = origin;
+        dataToSave[1] = destination;
+        dataToSave[2] = directionString;
+        dataToSave[3] = favoriteRouteName;
+        dataToSave[4] = mode;
+        console.log(directionString);
+        const routeData = {
+            [favoriteRouteName]: dataToSave
+        };
+        try {
+            await setDoc(favRef, routeData, { merge : true });
+            setFavorite(true);
+            setDataFieldName(favoriteRouteName); // if user clicks twice while at the same page
+        } catch (error) {
+            console.error("Error saving route data:", error);
+        }
+    };
+
+    const handleRemoveFavorites = async () => {
+        try {
+            await updateDoc(favRef, {
+                [dataFieldName]: deleteField()
+            })
+            setFavorite(false);
+            setFavoriteRouteName(dataFieldName); // the dataFieldName is now available to be saved under.
+        } catch (error) {
+            console.error("Error deleting route data:", error);
+        }
+    }
 
     const renderItem = ({item}) => (
-
-
         <View style={styles.container}>
-
 
             <View style={{flexDirection: 'row'}}>
                 <View style={styles.vertLine}/>
@@ -40,7 +120,6 @@ export default function RoutesPage() {
                     <Text style={styles.textStyle}> </Text>
                 </View>
             </View>
-
 
             <View style={{flexDirection: 'row'}}>
                 <Ionicons name={item.icon} size={20} color={COLORS.accent}/> 
@@ -49,7 +128,6 @@ export default function RoutesPage() {
                 </View>
             </View>
 
-
             <View style={{flexDirection: 'row'}}>
                 <View style={styles.vertLine}/>
                 <View >
@@ -57,24 +135,27 @@ export default function RoutesPage() {
                 </View>
             </View>
 
-
-    </View>
-        
-
+        </View>
     )
 
-
-   
-
-
-
-
     return (
-        <SafeAreaView style={styles.container}>
-            <Stack.Screen options={{
-                headerTitle: origin + " to " + destination,
-                headerTintColor: COLORS.text
-            }} />
+    <SafeAreaView style={styles.container}>
+        <Stack.Screen
+        options={{
+            headerTitle: origin + " to " + destination,
+            headerRight: () => (
+            <View style={{ flexDirection: 'column', alignItems: "center" }}>
+                <TouchableOpacity onPress={favorite ? handleRemoveFavorites : handleAddToFavorites}>
+                    <Ionicons name='heart-outline' size={30} color={favorite ? '#FF0000' : '#000000'}/>
+                </TouchableOpacity>
+            </View>
+            ),
+            headerTintColor: COLORS.text,
+            headerStyle: {
+                backgroundColor: COLORS.background
+            }
+        }}
+        />
 
             <Text style={{
                 fontSize: SIZES.xLarge,
