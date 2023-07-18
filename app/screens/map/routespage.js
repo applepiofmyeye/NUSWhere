@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
-import { StyleSheet, View, Text, Image, Pressable } from "react-native";
+import { StyleSheet, View, Text, Image, Pressable, Dimensions } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { COLORS, FONT, SIZES } from "../../../constants";
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -40,6 +40,7 @@ export default function RoutesPage() {
 
 
 
+
     useEffect(() => {
         const fetchPhotoData = async () => {
             const storage = getStorage();
@@ -53,9 +54,24 @@ export default function RoutesPage() {
                         getDownloadURL(x).then(photoUrl => {
                             setUrl((prevUrl) => {
                                 const updatedUrl = [...prevUrl];
-                                updatedUrl[i][j] = photoUrl;
+                                if (updatedUrl[i]) {
+                                    updatedUrl[i][j] = {
+                                        i: i,
+                                        j: j,
+                                        uri: photoUrl
+                                    };
+                                } else {
+                                    updatedUrl[i] = [];
+                                    updatedUrl[i][j] = {
+                                        i: i,
+                                        j: j,
+                                        uri: photoUrl
+                                    };
+                                }
                                 return updatedUrl;
                             })
+                            j++;
+
                         })
                     })
                     if (promises.length > 0) {
@@ -67,9 +83,9 @@ export default function RoutesPage() {
                     }
                     
                 })
-                j++;
 
             }
+
             
             
             
@@ -101,8 +117,34 @@ export default function RoutesPage() {
             }
         };
 
+        // const setPhotoData = () => {
+        //     for (let i = 0; i < url.length - 1; i++) {
+        //         for (let j = 0; j < url[i].length; i++) {
+        //             setPhotoFlatListData((prevData) => {
+        //                 updatedData = [...prevData]
+        //                 if (updatedData[i]) {
+        //                     updatedData[i][j] = {
+        //                         i: i,
+        //                         j: j,
+        //                         uri: 
+        //                     };
+        //                 } else {
+        //                     updatedData[i] = [];
+        //                     updatedData[i][j] = photoUrl;
+        //                 }
+        //                 return updatedData;
+        //             }) 
+        //         }
+        //     }
+
+        // }
+        
+    
+
         fetchPhotoData();
         fetchFavouritesData();
+        // setPhotoData();
+        console.log(url);
 
     }, []);
       
@@ -128,6 +170,91 @@ export default function RoutesPage() {
         setIsPressed(!isPressed);
     }, [isPressed]);
       
+    // let onScrollEnd = (e) => {
+    //     let contentOffset = e.nativeEvent.contentOffset;
+    //     let viewSize = Dimensions.get("window");
+
+    //     // Divide the horizontal offset by the width of the view to see which page is visible
+    //     let pageNum = Math.round(contentOffset.x / viewSize.width * 0.9 );
+    //     setCarouselIndex(pageNum);
+    // }
+
+    const Carousel = (i) => {
+        const [visibleIndex, setVisibleIndex] = useState(0);
+
+        const onViewableItemsChanged = useCallback(
+            ({ viewableItems }) => {
+              if (viewableItems.length > 0) {
+                setVisibleIndex(viewableItems[0].index);
+              }
+        }, []);
+
+        formattedI = i.i
+
+        return (
+        <View style={{alignItems: "center"}}>
+                <FlatList
+                    // onMomentumScrollEnd={onScrollEnd}
+                    onViewableItemsChanged={onViewableItemsChanged}
+                    viewabilityConfig={{
+                        itemVisiblePercentThreshold: 50, // Adjust this value as per your requirements
+                    }}
+                    data={url[formattedI]}
+                    horizontal={true}
+                    pagingEnabled={true}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={ 
+                        (photoItem) => {
+                            console.log("uri", photoItem.item.j, photoItem.item.uri);
+                            return (
+                                <View style={[styles.imageContainer]}>
+
+                                    <Image
+                                        source={{ uri: photoItem.item.uri}}
+                                        resizeMode="stretch"
+                                        style={[styles.image]}
+                                    /> 
+                                </View>
+                            )
+                            
+                        }
+                    
+                    }
+                />
+        
+
+            {url[formattedI].length > 1 && <AnimatedDotsCarousel
+            length={url[formattedI].length}
+            currentIndex={visibleIndex}
+            maxIndicators={5}
+            interpolateOpacityAndColor={true}
+            activeIndicatorConfig={{
+                color: COLORS.pressedBtn,
+                margin: 3,
+                opacity: 1,
+                size: 8,
+            }}
+            inactiveIndicatorConfig={{
+                color: COLORS.unpressedBtn,
+                margin: 3,
+                opacity: 0.5,
+                size: 8,
+            }}
+            decreasingDots={[{
+                config: { color: COLORS.unpressedBtn, margin: 3, opacity: 0.5, size: 6 },
+                quantity: 1,
+            },
+            {
+                config: { color: COLORS.unpressedBtn, margin: 3, opacity: 0.5, size: 4 },
+                quantity: 1,
+            },
+            ]}
+            
+            />}
+
+        </View>)
+        
+    }
 
       
       
@@ -166,23 +293,10 @@ export default function RoutesPage() {
     }
 
     // Sheltered walkways photo data for flatlist
-    let photoFlatListData =[]
-    if (!isLoading) {
-        for (let i = 0; i < url.length - 1; i++) {
-            for (let j = 0; j < url[i].length; i++) {
-                photoFlatListData[i][j] = {
-                    i: i,
-                    j: j,
-                    uri: url[i][j]
-                } 
-            }
-        }
-    }
     
 
 
     const renderItem = ({item}) => (
-
 
         <View style={styles.container}>
 
@@ -210,81 +324,34 @@ export default function RoutesPage() {
                     <Text style={styles.textStyle}> </Text>
                 </View>
             </View>
-{/* 
-                {mode == "Sheltered" && (isLoading 
-                ? ( <Text>Loading...</Text> ) 
-                : ( url.length > 0 
-                    ? ( <View style={styles.imageContainer}>
-                            <Image
-                                source={{ uri: url[item.id] }}
-                                resizeMode="stretch"
-                                style={styles.image}
-                            />
-                        </View> ) 
-                    : ( <Text>No image available</Text> )
-                ))} */}
 
-                {mode == "Sheltered" && (isLoading 
-                ? ( <Text>Loading...</Text> ) 
-                : ( url.length > 0 
-                    ? ( <View>
-                        <View style={styles.imageContainer}>
-                            <FlatList
-                                data={photoFlatListData}
-                                keyExtractor={(item) => item.id.toString()}
-                                horizontal
-                                pagingEnabled
-                                showsHorizontalScrollIndicator={false}
-                                renderItem={ 
-                                    (photoItem) => {
-                                        <Image
-                                        source={{ uri: photoFlatListData[photoItem.i][photoItem.j]}}
-                                        resizeMode="stretch"
-                                        style={styles.image}
-                                        />
-                                    }
-                                
-                                }
-                            
-                            
-                            />
-                            
-                        </View> 
-                        <AnimatedDotsCarousel
-                        length={directionsArr.length}
-                        currentIndex={carouselIndex}
-                        maxIndicators={4}
-                        interpolateOpacityAndColor={true}
-                        activeIndicatorConfig={{
-                            color: COLORS.accent,
-                            margin: 3,
-                            opacity: 1,
-                            size: 8,
-                        }}
-                        inactiveIndicatorConfig={{
-                            color: 'white',
-                            margin: 3,
-                            opacity: 0.5,
-                            size: 8,
-                        }}
-                        decreasingDots={[{
-                            config: { color: 'white', margin: 3, opacity: 0.5, size: 6 },
-                            quantity: 1,
-                        },
-                        {
-                            config: { color: 'white', margin: 3, opacity: 0.5, size: 4 },
-                            quantity: 1,
-                        },
-                        ]}
-                    />
-                    </View>) 
-                    : ( <Text>No image available</Text> )
-                ))} 
+            { mode == "Sheltered" && (
+                isLoading ? (
+                    <Text>Loading...</Text> 
+                ) : ( 
+                    url[item.id] ? (
+                        <View style={{flexDirection: "row"}}>
+                            <View style={styles.vertLine}/>
+                            <Carousel i={item.id}/> 
+                        </View>
+                    ) : (
+                        <View style={{flexDirection: "row"}}>
+                            <View style={styles.vertLine}/>
+                            <Text style={{
+                                fontFamily: FONT.iLight,
+                                fontSize: SIZES.medium,
+                                color: COLORS.text,
+                                textAlign: "center",
+                                paddingLeft: 10,
+                            }}>No image available</Text> 
+                        </View>
+                    )
+                )
+            )
             
+            }
 
             
-
-
     </View>
         
 
@@ -310,12 +377,39 @@ export default function RoutesPage() {
                 alignSelf: "center",
                 paddingBottom: 10
                 }}>{destination}</Text>
+
+            <Text style={{
+                fontFamily: FONT.iLight,
+                fontSize: SIZES.medium,
+                color: COLORS.text,
+                textAlign: "center",
+                paddingBottom: 20
+            }}>
+                {mode} Route
+            </Text>
+
+            {mode == "Bus" && (
+                <Text style={{
+                    fontFamily: FONT.iLight,
+                    fontSize: SIZES.medium,
+                    color: COLORS.text,
+                    textAlign: "center",
+                }}>Bus numbers:
+                <Text style={{
+                    fontFamily: FONT.iSemiB,
+                    fontSize: SIZES.large,
+                    color: COLORS.text,
+                    textAlign: "center",
+                }}> {route}</Text>
+                </Text>
+            )}
             
             
             <FlatList
             renderItem={renderItem}
-            data={data}
-            ListFooterComponent= {isPressed != null && FavouritesBtn}>
+            data={data} // data[i] = {id: i, text: directionsArr[i], icon: xxx}
+            ListFooterComponent= {isPressed != null && FavouritesBtn}
+            >
             </FlatList>
 
 
@@ -357,14 +451,21 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         alignItems: "center",
-        padding: 20,
-        paddingBottom: 30,
+        padding: 15,
         height: 300,
+        width: Dimensions.get("window").width * 0.9
+        
     },
     image: {
         borderRadius: 10,
         width: "100%",
         height: "100%",
-        resizeMode: "cover"
+        resizeMode: "cover",
+        flex: 1
     },
+    imageItem: {
+        width: "100%",
+        height: "100%",
+        color: "blue"
+    }
 })
