@@ -9,6 +9,7 @@ import { addToFavourites, auth, removeFromFavourites, queryFR, photosStorage } f
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
+import AnimatedDotsCarousel from 'react-native-animated-dots-carousel';
 
 
 
@@ -33,6 +34,7 @@ export default function RoutesPage() {
 
     // Image rendering (Sheltered Routes)
     const [url, setUrl] = useState([])
+    const [carouselIndex, setCarouselIndex] = useState(0)
 
 
 
@@ -41,13 +43,19 @@ export default function RoutesPage() {
     useEffect(() => {
         const fetchPhotoData = async () => {
             const storage = getStorage();
-            const photoRef = ref(storage, `${origin}/${destination}`);
-            
-            await listAll(photoRef)
+            for (let i = 0; i < directionsArr.length - 1; i ++) {
+                var j = 0;
+                console.log(directionsArr);
+                const photoRef = ref(storage, `${directionsArr[i]}/${directionsArr[i + 1]}`);
+                await listAll(photoRef)
                 .then((result) => {
                     const promises = result.items.map(x => {
                         getDownloadURL(x).then(photoUrl => {
-                            setUrl((prevUrl) => [...prevUrl, photoUrl])
+                            setUrl((prevUrl) => {
+                                const updatedUrl = [...prevUrl];
+                                updatedUrl[i][j] = photoUrl;
+                                return updatedUrl;
+                            })
                         })
                     })
                     if (promises.length > 0) {
@@ -59,6 +67,12 @@ export default function RoutesPage() {
                     }
                     
                 })
+                j++;
+
+            }
+            
+            
+            
 
                 
             // await getDownloadURL(photoRef).then(photoUrl => setUrl(photoUrl))
@@ -141,7 +155,7 @@ export default function RoutesPage() {
 
 
 
-
+    // Direction Steps data
     let data = [];
     for (let i = 0; i < directionsArr.length; i ++) {
         data[i] = {
@@ -149,8 +163,22 @@ export default function RoutesPage() {
             text: directionsArr[i],
             icon: "radio-button-off"  // currently a simple one where a whole page will have the same mode
         }
-
     }
+
+    // Sheltered walkways photo data for flatlist
+    let photoFlatListData =[]
+    if (!isLoading) {
+        for (let i = 0; i < url.length - 1; i++) {
+            for (let j = 0; j < url[i].length; i++) {
+                photoFlatListData[i][j] = {
+                    i: i,
+                    j: j,
+                    uri: url[i][j]
+                } 
+            }
+        }
+    }
+    
 
 
     const renderItem = ({item}) => (
@@ -182,23 +210,76 @@ export default function RoutesPage() {
                     <Text style={styles.textStyle}> </Text>
                 </View>
             </View>
+{/* 
+                {mode == "Sheltered" && (isLoading 
+                ? ( <Text>Loading...</Text> ) 
+                : ( url.length > 0 
+                    ? ( <View style={styles.imageContainer}>
+                            <Image
+                                source={{ uri: url[item.id] }}
+                                resizeMode="stretch"
+                                style={styles.image}
+                            />
+                        </View> ) 
+                    : ( <Text>No image available</Text> )
+                ))} */}
 
-            
-                {mode == "Sheltered" && (isLoading ? (
-                    <Text>Loading...</Text>
-                ) : (
-                    <View style={styles.imageContainer}>
-                    {url.length > 0 ? (
-                        <Image
-                            source={{ uri: url[item.id] }}
-                            resizeMode="stretch"
-                            style={styles.image}
-                        />
-                        ) : (
-                        <Text>No image available</Text>
-                    )}
-                    </View>
-                ))}
+                {mode == "Sheltered" && (isLoading 
+                ? ( <Text>Loading...</Text> ) 
+                : ( url.length > 0 
+                    ? ( <View>
+                        <View style={styles.imageContainer}>
+                            <FlatList
+                                data={photoFlatListData}
+                                keyExtractor={(item) => item.id.toString()}
+                                horizontal
+                                pagingEnabled
+                                showsHorizontalScrollIndicator={false}
+                                renderItem={ 
+                                    (photoItem) => {
+                                        <Image
+                                        source={{ uri: photoFlatListData[photoItem.i][photoItem.j]}}
+                                        resizeMode="stretch"
+                                        style={styles.image}
+                                        />
+                                    }
+                                
+                                }
+                            
+                            
+                            />
+                            
+                        </View> 
+                        <AnimatedDotsCarousel
+                        length={directionsArr.length}
+                        currentIndex={carouselIndex}
+                        maxIndicators={4}
+                        interpolateOpacityAndColor={true}
+                        activeIndicatorConfig={{
+                            color: COLORS.accent,
+                            margin: 3,
+                            opacity: 1,
+                            size: 8,
+                        }}
+                        inactiveIndicatorConfig={{
+                            color: 'white',
+                            margin: 3,
+                            opacity: 0.5,
+                            size: 8,
+                        }}
+                        decreasingDots={[{
+                            config: { color: 'white', margin: 3, opacity: 0.5, size: 6 },
+                            quantity: 1,
+                        },
+                        {
+                            config: { color: 'white', margin: 3, opacity: 0.5, size: 4 },
+                            quantity: 1,
+                        },
+                        ]}
+                    />
+                    </View>) 
+                    : ( <Text>No image available</Text> )
+                ))} 
             
 
             
