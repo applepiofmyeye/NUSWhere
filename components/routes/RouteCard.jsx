@@ -21,13 +21,15 @@ export default function RouteCard({mode, directions, duration, route, all, handl
     : formattedDirections.replace(/\n/g, "%2F");    
 
 
-    const displayedDirections = !directions             
+    const displayedDirections = directions == null             
                            ? "No available route."
                            : mode == "Outdoor" 
-                           ? "Route available. Total duration: " + secToMin(duration)
+                           ? "Total duration: " + secToMin(duration)
                            : mode == "Sheltered" 
-                           ? "Route available. Total duration: " + secToMin(duration) + "s"
-                           : "Route available. Total stops: " + directions.length + "\nBus Route: " + route.map(x => " " + x)
+                           ? "Total duration: " + secToMin(duration) + "s"
+                           : route == null
+                           ? "Total stops: " + directions.length + "\nBus Route: None" 
+                           : "Total stops: " + directions.length + "\nBus Route:" + route.map(x => " " + x)
 
 
     let formattedDuration = mode == "Outdoor" ? duration : duration == null ? duration : duration+ "s"
@@ -47,7 +49,7 @@ export default function RouteCard({mode, directions, duration, route, all, handl
         <View style={{flexDirection: "row"}}>
             <View>
                 <Text style={styles.routeMode}>{mode}</Text>
-                <Text style={styles.displayedDirections}>{displayedDirections}</Text>
+                <Text style={[styles.displayedDirections, {fontFamily: directions ? FONT.iSemiB : FONT.iLight}]}>{displayedDirections}</Text>
             </View>
         </View>
         
@@ -102,10 +104,14 @@ const styles = StyleSheet.create({
 
     },
     displayedDirections: {
-        fontFamily: FONT.iSemiB,
-        fontSize: SIZES.medium,
-        color: COLORS.text,
-        textAlign: "left",
-        paddingLeft: 10
+            fontSize: SIZES.medium,
+            color: COLORS.text,
+            textAlign: "left",
+            paddingLeft: 10
     }
+
+        
+        
+        
+    
 })

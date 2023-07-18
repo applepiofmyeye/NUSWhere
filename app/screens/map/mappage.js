@@ -214,12 +214,22 @@ export default function MapPage() {
                                 setShowRoute(true);
                                 setShowDirectionsButton(false)}}/>
                         )} */}
-                        {origin && destination && showDirectionsBtn && (
+                        {origin != destination && origin && destination && showDirectionsBtn && (
                             <CustomButton 
                             text="Routes" 
                             onPress={() => {
-                                setShowRoute(true);
-                                setShowDirectionsBtn(false);
+                                console.log(origin);
+                                console.log(destination);
+                                console.log(origin.latitude != destination.latitude && origin.longitude != destination.longitude);
+                                if (origin.latitude != destination.latitude && origin.longitude != destination.longitude){
+                                    setShowRoute(true);
+                                    setShowDirectionsBtn(false);
+                                } else {
+                                    return Alert.alert("Repeated venues", "Please enter different locations", [{
+                                        text: "OK",
+                                        onPress: () => console.log("button pressed")
+                                    }])
+                                }
                             }}/>
                         )}
                         
