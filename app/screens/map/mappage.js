@@ -51,11 +51,7 @@ export default function MapPage() {
     // const handleCardPress = () => {
     //     router.push('./routespage')
     // }
-<<<<<<< HEAD:app/screens/mappage.js
-    const handler = (directions, duration, all, mode, route, directionsLength) => {
-=======
     const handler = (directions, duration, all, mode, route, o, d) => {
->>>>>>> e4c9b46dbcf072c93ec836b8e658f5fafa9f16d7:app/screens/map/mappage.js
         if (!directions) { return Alert.alert("No route", "Whoops! No available route currently.", [
             {
                 text: "OK",
@@ -129,15 +125,6 @@ export default function MapPage() {
         longitudeDelta: 0.09,
     });
 
-<<<<<<< HEAD:app/screens/mappage.js
-    /*
-    const userLocation = async () => {
-        let {status} = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            Alert.alert('Permission to access location was denied.')
-        }
-        let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
-=======
 
 
     // NOT USED CURRENTLY, but would be good to track current user location
@@ -147,7 +134,6 @@ export default function MapPage() {
     //         setErrorMsg('Permission to access location was denied.')
     //     }
     //     let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
->>>>>>> e4c9b46dbcf072c93ec836b8e658f5fafa9f16d7:app/screens/map/mappage.js
         
     // }
 
@@ -156,7 +142,7 @@ export default function MapPage() {
     //     userLocation();
     // },[])
 
-    */
+    
 
 
 
@@ -249,11 +235,22 @@ export default function MapPage() {
                                 setShowRoute(true);
                                 setShowDirectionsButton(false)}}/>
                         )} */}
-                        {origin && destination && showDirectionsBtn && (
+                        {origin != destination && origin && destination && showDirectionsBtn && (
                             <CustomButton 
                             text="Routes" 
                             onPress={() => {
-                                handleErrenousInput();
+                                console.log(origin);
+                                console.log(destination);
+                                console.log(origin.latitude != destination.latitude && origin.longitude != destination.longitude);
+                                if (origin.latitude != destination.latitude && origin.longitude != destination.longitude){
+                                    setShowRoute(true);
+                                    setShowDirectionsBtn(false);
+                                } else {
+                                    return Alert.alert("Repeated venues", "Please enter different locations", [{
+                                        text: "OK",
+                                        onPress: () => console.log("button pressed")
+                                    }])
+                                }
                             }}/>
                         )}
                         
