@@ -8,22 +8,23 @@ origin and destination is coordinates of bus stops
 */
 import React, { useState, useEffect, useRef } from "react";
 import { View, ScrollView, StyleSheet, Dimensions, Button, Platform, TextInput, Animated, Text, Alert } from "react-native";
-import Autocomplete from "../../components/Autocomplete";
+import Autocomplete from "../../../components/Autocomplete";
 import { Stack, useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
-import { roomCodes, busStops, buildings } from "../../data/venues";
+import { roomCodes, busStops, buildings } from "../../../data/venues";
 import MapViewDirections from 'react-native-maps-directions';
-import { GOOGLE_API } from "../../keys";
+import { GOOGLE_API } from "../../../keys";
 
 
 
 
-import { COLORS, SIZES } from "../../constants";
-import { CustomButton, RouteList } from "../../components";
+import { COLORS, SIZES } from "../../../constants";
+import { CustomButton, RouteList } from "../../../components";
 
 let o = null;
 let d = null;
+
 
 
 export default function MapPage() {
@@ -37,7 +38,6 @@ export default function MapPage() {
 
 
     const router = useRouter();
-    const navigation = useNavigation();
 
 
 
@@ -51,7 +51,11 @@ export default function MapPage() {
     // const handleCardPress = () => {
     //     router.push('./routespage')
     // }
+<<<<<<< HEAD:app/screens/mappage.js
     const handler = (directions, duration, all, mode, route, directionsLength) => {
+=======
+    const handler = (directions, duration, all, mode, route, o, d) => {
+>>>>>>> e4c9b46dbcf072c93ec836b8e658f5fafa9f16d7:app/screens/map/mappage.js
         if (!directions) { return Alert.alert("No route", "Whoops! No available route currently.", [
             {
                 text: "OK",
@@ -70,7 +74,8 @@ export default function MapPage() {
         }
         */
         // router.setParams({directions: directions, duration: duration, all: all, mode: mode, route: route})
-        router.push({pathname: './screens/routespage', 
+        
+        router.push({pathname: "./screens/map/routespage", 
         params: {
             origin: o,
             destination: d,
@@ -82,7 +87,11 @@ export default function MapPage() {
         });
     };
     
-    const handleBack = () => setShowRoute(false)
+    const handleBack = () => {
+        setShowRoute(false);
+        setOrigin(null);
+        setDestination(null);
+    }
 
 
     const handleSelectMarker = (markerLocation, isDestination, name) => {
@@ -120,6 +129,7 @@ export default function MapPage() {
         longitudeDelta: 0.09,
     });
 
+<<<<<<< HEAD:app/screens/mappage.js
     /*
     const userLocation = async () => {
         let {status} = await Location.requestForegroundPermissionsAsync();
@@ -127,18 +137,24 @@ export default function MapPage() {
             Alert.alert('Permission to access location was denied.')
         }
         let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
+=======
+
+
+    // NOT USED CURRENTLY, but would be good to track current user location
+    // const userLocation = async () => {
+    //     let {status} = await Location.requestForegroundPermissionsAsync();
+    //     if (status !== 'granted') {
+    //         setErrorMsg('Permission to access location was denied.')
+    //     }
+    //     let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
+>>>>>>> e4c9b46dbcf072c93ec836b8e658f5fafa9f16d7:app/screens/map/mappage.js
         
-        // !origin && location && setOrigin({
-        //     latitude: location.coords.latitude,
-        //     longitude: location.coords.longitude
-        // });
+    // }
 
-        console.log({location})
-    }
 
-    useEffect(() => {
-        userLocation();
-    },[])
+    // useEffect(() => {
+    //     userLocation();
+    // },[])
 
     */
 

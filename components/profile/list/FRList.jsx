@@ -48,12 +48,12 @@ export default function FRList() {
                         id: i, 
                         origin: originArr[i], 
                         destination: destinationArr[i], 
-                        mode: mode[i], 
+                        mode: modeArr[i], 
                         directions: directionsArr[i],
                         distance: distanceArr[i],
                         route: routeArr[i],
                         hrefDirections: hrefDirectionsArr[i],
-                        duration: duration[i]
+                        duration: durationArr[i]
                     });
                 }
                 
@@ -73,7 +73,7 @@ export default function FRList() {
             }
         ])}
         // router.setParams({directions: directions, duration: duration, all: all, mode: mode, route: route})
-        router.push({pathname: './screens/routespage', 
+        router.push({pathname: './screens/map/routespage', 
         params: {
             origin: o,
             destination: d,

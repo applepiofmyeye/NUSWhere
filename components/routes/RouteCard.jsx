@@ -9,10 +9,8 @@ function secToMin(x) {
 
 
 
-export default function RouteCard({mode, directions, duration, route, all, handler}) { // directions will be an array
+export default function RouteCard({mode, directions, duration, route, all, handler, o, d}) { // directions will be an array
     
-    console.log(directions);
-    const temp = directions;
 
     const formattedDirections = !directions
     ? ""
@@ -20,11 +18,7 @@ export default function RouteCard({mode, directions, duration, route, all, handl
 
     const hrefDirections = !formattedDirections
     ? ""
-    : formattedDirections.replace(/\n/g, "%2F");
-
-    console.log(formattedDirections);
-    console.log(hrefDirections);
-    
+    : formattedDirections.replace(/\n/g, "%2F");    
 
 
     const displayedDirections = !directions           
@@ -38,7 +32,7 @@ export default function RouteCard({mode, directions, duration, route, all, handl
                            : "Route available. Total stops: " + directions.length + "\nBus Route: " + route.map(x => " " + x)
 
 
-    let formattedDuration = mode == "Outdoor" ? duration : duration + "s"
+    let formattedDuration = mode == "Outdoor" ? duration : duration == null ? duration : duration+ "s"
     
                         
         
@@ -49,8 +43,8 @@ export default function RouteCard({mode, directions, duration, route, all, handl
         <TouchableOpacity 
         style={styles.routeContainer}
         onPress={() => route == null 
-            ? handler(hrefDirections, formattedDuration, all, mode, "", 1)
-            : handler(hrefDirections, formattedDuration, all, mode, route, temp.length)} 
+            ? handler(hrefDirections, formattedDuration, all, mode, "", o, d) 
+            : handler(hrefDirections, formattedDuration, all, mode, route, o, d)}
         >
         <View style={{flexDirection: "row"}}>
             <View>

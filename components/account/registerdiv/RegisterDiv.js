@@ -79,25 +79,23 @@ export default function RegisterDiv() {
           setPasswordRepeatErrorMsg("Password should be min 8 char and max 20 char");
         }
        
-        if (errorFlag) {
-            console.log("errorFlag");
-        } else {
-          setLoading(true);
-          await auth
-            .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-              const user = userCredentials.user;
-              console.log('Registered with:', user.email);
-              user.updateProfile({
-                displayName: username
-              })
-              setModalSuccessVisible(true);
-            }).catch(error => {
-              setModalErrorVisible(true);
-              setErrorMsg(FirebaseError(error));
+        
+        setLoading(true);
+        await auth
+          .createUserWithEmailAndPassword(email, password)
+          .then(userCredentials => {
+            const user = userCredentials.user;
+            console.log('Registered with:', user.email);
+            user.updateProfile({
+              displayName: username
             })
-          setLoading(false);
-        }
+            setModalSuccessVisible(true);
+          }).catch(error => {
+            setModalErrorVisible(true);
+            setErrorMsg(FirebaseError(error));
+          })
+        setLoading(false);
+        
   }
 
   return (    
@@ -171,7 +169,7 @@ export default function RegisterDiv() {
         </View>
       </Modal>
 
-      <CustomButton text="REGISTER" onPress={handleSignUp} />
+      <CustomButton text="REGISTER" onPress={handleSignUp}/>
       {loading && <ActivityIndicator />}
     </View>
     /* </ScrollView> */
