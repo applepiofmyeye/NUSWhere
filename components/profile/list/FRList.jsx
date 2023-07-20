@@ -43,7 +43,7 @@ export default function FRList() {
                 durationArr = x[0].map(y => y.duration ? y.duration.stringValue : "")
 
 
-                for (let i = 0; i < length; i++) {
+                for (let i = length - 1; i > 0; i--) {
                     data.push({
                         id: i, 
                         origin: originArr[i], 
