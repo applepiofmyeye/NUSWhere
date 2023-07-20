@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 import { StyleSheet, View, Text, Image, Pressable, Dimensions } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { COLORS, FONT, SIZES } from "../../constants/theme";
+import { COLORS, FONT, SIZES } from "../../../constants";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addToFavourites, auth, removeFromFavourites, queryFR, photosStorage } from "../../firebase";

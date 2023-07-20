@@ -58,17 +58,6 @@ export default function MapPage() {
                 onPress: () => console.log("button pressed")
             }
         ])}
-
-        if (mode === "Sheltered" && directionsLength === 1) {
-            return Alert.alert("You have reached!", "You are in the building. Proceed to the floor of your destination.");
-        }
-
-        /*
-        console.log(mode + directionsLength);
-        if (mode === "Sheltered" && directionsLength === 1) {
-            return Alert.alert("You have reached!", "You are in the building. Proceed to the floor of your destination.");
-        }
-        */
         // router.setParams({directions: directions, duration: duration, all: all, mode: mode, route: route})
         
         router.push({pathname: "./screens/map/routespage", 
@@ -106,16 +95,6 @@ export default function MapPage() {
         (origin && destination) ? setScrollEnabled(true) : setScrollEnabled(false);
 
     };    
-
-    const handleErrenousInput = () => {
-        if (o === d) {
-            Alert.alert("Wait a minute...", "Your current location and destination is the same! Please verify again!");
-            setShowDirectionsBtn(false);
-        } else {
-            setShowRoute(true);
-            setShowDirectionsBtn(false);
-        }
-    }
 
     // Map-related constants
     const [mapRegion, setMapRegion] = useState({

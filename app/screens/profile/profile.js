@@ -9,14 +9,15 @@ add nav bar
 
 import React, { TouchableOpacity, View, Text, Alert, Pressable } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import { COLORS, FONT } from "../../constants/theme";
+import { COLORS, FONT } from "../../../constants";
 import {
     Greeting,
     FavouriteRoutesDiv
-} from "../../components";
-import { auth } from "../firebase";
-import { AuthStore } from "../../store";
+} from "../../../components";
+import { auth } from "../../firebase";
+import { AuthStore } from "../../../store";
 import { signOut } from "firebase/auth/react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Profile() {
     const router = useRouter();
@@ -35,8 +36,7 @@ export default function Profile() {
     
     return (
         
-            
-            <View style={[{flex: 8, backgroundColor: COLORS.background}]}>
+            <SafeAreaView style={[{flex: 8, backgroundColor: COLORS.background}]}>
             <Stack.Screen
                 options={{
                     headerShown: false                       
@@ -46,7 +46,7 @@ export default function Profile() {
                     onPress={async () => {
                         const resp = await appSignOut();
                         if (!resp?.error) {
-                        router.replace("../auth/login");
+                        router.replace("../../auth/login");
                         } else {
                         console.log(resp.error);
                         Alert.alert("Logout Error", resp.error?.message);
@@ -57,8 +57,8 @@ export default function Profile() {
                 
                 <Greeting mainText="Welcome, " subText={AuthStore.getRawState().user?.displayName}/>
                 <FavouriteRoutesDiv/>
-
-            </View>
+            </SafeAreaView>
+            
         
     )
 }
