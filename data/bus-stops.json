@@ -43,7 +43,7 @@
       ],
       "code": "BG-MRT",
       "routes": [
-        "BTC2"
+        "BTC"
       ],
       "neighbors": {
         "BTC": "Kent Ridge MRT"

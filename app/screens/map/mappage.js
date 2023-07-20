@@ -106,7 +106,8 @@ export default function MapPage() {
 
 
 
-    // NOT USED CURRENTLY, but would be good to track current user location
+    // NOT USED CURRENTLY IN THIS PAGE, but would be good to track current user location in the future. 
+    // This is used in the nearest bus stops page.
     // const userLocation = async () => {
     //     let {status} = await Location.requestForegroundPermissionsAsync();
     //     if (status !== 'granted') {
