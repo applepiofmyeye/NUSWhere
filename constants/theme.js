@@ -17,7 +17,7 @@ const COLORS = {
   busD2: "#6E1A6F",
   busA1: "#FE0000",
   busBTC: "#ED8038",
-  busA2: "#345A9A",
+  busA2: "#E0CE07",
   busK: "#345A9A",
   busE: "#02B34F",
   busL: "#BFBFBF"

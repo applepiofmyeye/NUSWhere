@@ -5,7 +5,7 @@ TODO:
 make this page.
 */
 
-import React, { SafeAreaView, View, ScrollView, Text, StyleSheet} from "react-native";
+import React, { SafeAreaView, View, ScrollView, Text, StyleSheet, Pressable} from "react-native";
 import { Stack, useRouter } from "expo-router";
 
 import { COLORS, FONT, SIZES } from "../../../constants";
@@ -58,6 +58,9 @@ export default function NearestStops() {
             longitude: x.longitude
         }
     })
+
+    const [showBuses, setShowBuses] = useState(new Array(busStopCoords.length).map(x => false))
+
 
     
     const [busStopOrderedData, setBusStopOrderedData] = useState([])
@@ -152,26 +155,54 @@ export default function NearestStops() {
 
     const renderItem = (item) => {
         return (
-        <View 
+        <Pressable 
             key={item.item.id}
-            style={styles.itemContainer}>
+            style={styles.itemContainer}
+            onPress={() => setShowBuses((prevSetting) => {
+                updatedState = [...prevSetting]
+                previousState = updatedState[item.item.id]
+                console.log(!previousState);
+                updatedState[item.item.id] = !previousState
+                return updatedState;
+            })}>
             <Text style={styles.nameStyle}>{item.item.name}</Text>
-            {/* {lat1 && <Text>{findDistanceBetween2(item.item.latitude, item.item.longitude)}</Text>} */}
-            <Text style={styles.busRoute}>
-            {item.item.routes.map((route, index) => (
-                <Text
-                key={index}
-                style={[
-                    styles.routeItem,
-                    { backgroundColor: getColorForRoute(route) },
-                ]}
-                >
-                <Text style={styles.routeText}>{route}</Text>{" "}
-                </Text>
-            ))}
-            </Text>
+            { showBuses[item.item.id] && 
+                
+                    
+                <View style={styles.busRoute}>
+                    {item.item.routes.map((route, index) => (
+                        <View
+                            key={index}
+                            style={[
+                            styles.routeItem,
+                            { borderColor: getColorForRoute(route), borderRadius: 18, borderWidth: 3},
+                            ]}
+                        >
+                            <Text style={styles.routeText}>{route}</Text>
+                            <View 
+                                style={{
+                                    backgroundColor: "black",
+                                    borderRadius: 5,
+                                    padding: 10
+                                    }}>
+                                <Text style={{color: "white"}}>NA</Text>
+                            </View>
+                        </View>
+                        
+                    ))}
+                </View>
+            
+            }            
 
-        </View>)
+        </Pressable>)
+    }
+
+    const Buses = () => {
+        return (
+            <View >
+                
+            </View>
+        )
     }
 
     
@@ -196,7 +227,7 @@ export default function NearestStops() {
 
             {loading && <Text>Loading..</Text>}
 
-            {busStopOrderedData.length === 0 && 
+            {busStopOrderedData.length === 0 && !loading &&
             <View>
                 <Text>No data available.</Text>
                 <CustomButton
@@ -219,22 +250,31 @@ const styles = StyleSheet.create({
         borderColor: COLORS.unpressedBtn,
         borderBottomWidth: 2,
         padding: 15,
+        paddingVertical: 20
     },
     nameStyle: {
         fontFamily: FONT.pSemiB,
-        fontSize: SIZES.medium,
+        fontSize: SIZES.medium + 1,
         color: COLORS.text
     },
     busRoute: {
         fontFamily: FONT.iSemiB,
-        color: COLORS.white
+        color: COLORS.white,
+        paddingTop: 20
     },
     routeItem: {
-        paddingVertical: 4, // Adjust the vertical padding as desired
-        paddingHorizontal: 8, // Adjust the horizontal padding as desired
-        borderRadius: 4, // Adjust the border radius as desired
-        marginRight: 4, // Adjust the margin between words as desired
+        paddingVertical: 8, 
+        paddingHorizontal: 8,
+        margin: 5,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
     },
+    routeText: {
+        fontFamily: FONT.iRegular,
+        color: COLORS.text,
+        fontSize: SIZES.medium + 1
+    }
 
 
 })
