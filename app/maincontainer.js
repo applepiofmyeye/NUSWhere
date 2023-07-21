@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Screens
 import MapPage from "./screens/map/mappage";
 import Profile from "./screens/profile/profile";
-import NearestStops from "./screens/neareststops";
+import NearestStops from "./screens/nearest-bus-stops/neareststops";
 import { COLORS, FONT, icons } from "../constants";
 import { Stack } from "expo-router";
 
