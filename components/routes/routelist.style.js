@@ -14,23 +14,19 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-
     routeMode: {
         fontFamily: FONT.iRegular,
         fontSize: SIZES.medium,
         color: COLORS.text,
     },
-
     title: {
         fontFamily: FONT.pSemiB,
         fontSize: SIZES.xLarge + 1,
         color: COLORS.text,
         margin: 10,
     },
-
     titleContainer: {
         backgroundColor: COLORS.background
-
     }
 })
 

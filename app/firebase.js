@@ -14,20 +14,10 @@ import {
     setDoc,
     arrayUnion,
     arrayRemove,
-    updateDoc,
     doc,
-    FieldValue,
-
  } from "firebase/firestore";
- import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
- 
+import { getStorage } from 'firebase/storage'
 
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyCi0nWW_ksUwL8I2VwSIty2GGi3BGcrKtw",
     authDomain: "nuswhere-e219d.firebaseapp.com",
@@ -53,73 +43,60 @@ const db = getFirestore();
 // Cloud Storage (for photos)
 const storage = getStorage(app);
 
-
-
-
 // LOAD FAVOURITE ROUTES INTO FIREBASE
 // store as key: value -- uid: [route hrefs]
 
-
 async function addToFavourites(uid, href) {
-
-  await setDoc(
-    doc(db, "favouriteRoutes", uid), 
-    { 
-      uid: uid,
-      routeHref: arrayUnion(href) 
-    },
-    {merge: true} ).then(console.log("Favourite route added to user ", uid))
-    
-
+    await setDoc(
+      doc(db, "favouriteRoutes", uid), 
+      { 
+        uid: uid,
+        routeHref: arrayUnion(href) 
+      },
+      {merge: true}).then(console.log("Favourite route added to user ", uid))
 }
 
 async function removeFromFavourites(uid, href) {
-
-  await setDoc(
-    doc(db, "favouriteRoutes", uid), 
-    { 
-      uid: uid,
-      routeHref: arrayRemove(href) 
-    },
-    {merge: true} ).then(console.log("Favourite route removed from user ", uid))
-    
-
+    await setDoc(
+      doc(db, "favouriteRoutes", uid), 
+      { 
+        uid: uid,
+        routeHref: arrayRemove(href) 
+      },
+      {merge: true}).then(console.log("Favourite route removed from user ", uid))
 }
 
 async function queryFR(params, uid) {
-  const q = query(
-    collection(db, 'favouriteRoutes'),
-    where('uid', '==', uid),
-    where('routeHref', 'array-contains', params)
-  );
+    const q = query(
+      collection(db, 'favouriteRoutes'),
+      where('uid', '==', uid),
+      where('routeHref', 'array-contains', params)
+    );
 
-  try {
-    const querySnapshot = await getDocs(q);
-    return querySnapshot;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+    try {
+      const querySnapshot = await getDocs(q);
+      return querySnapshot;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
 }
 
 async function getFavouriteRoutes(uid) {
-  console.log("in firebase::getFavouriteRoutes");
-  const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid));
-  const querySnapshot = await getDocs(q);
-  let hrefParams = [];
-  querySnapshot.docs.forEach(doc => {
-    if (doc._document.data.value.mapValue.fields.routeHref.arrayValue.values) {
-      hrefParams.push(doc._document.data.value.mapValue.fields.routeHref.arrayValue.values.map(x => x.mapValue.fields));
-    }
-  })
-  return hrefParams
+    console.log("in firebase::getFavouriteRoutes");
+    const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
+    let hrefParams = [];
+    querySnapshot.docs.forEach(doc => {
+      if (doc._document.data.value.mapValue.fields.routeHref.arrayValue.values) {
+        hrefParams.push(doc._document.data.value.mapValue.fields.routeHref.arrayValue.values.map(x => x.mapValue.fields));
+      }
+    })
+    return hrefParams
 }
-
 
 // GET PHOTOS FROM FIREBASE 
 const photosStorage = getStorage(app, "gs://photos-linkways")
-
-
 
 // LOAD BUS STOPS INTO FIREBASE -- ONLY NEED TO DO ONCE
 const busColRef = collection(db, "busStopNeighbors");
@@ -139,7 +116,7 @@ const loadBusStopData = async () => {
         const neighborArr = [];
 
         for (const neighbor in neighbors) {
-            neighborArr.push(neighbor.value);
+          neighborArr.push(neighbor.value);
         }
 
         neighborSet[busStopName] = [];
@@ -150,11 +127,8 @@ const loadBusStopData = async () => {
           coords: location,
           routes: routes,
           neighbors: neighbors
-      });
+        });
 
-  
-        
-  
         console.log("DONE LOADING BUS STOPS");
       }
      
@@ -168,8 +142,6 @@ const routesBusSet = {}
 
 // LOAD BUS STOPS FROM JSON -- temp solution
 for (let i = 0; i < busStopJson.length; i++) {
-
-
   const name = busStopJson[i]["name"];
   const neighbors = busStopJson[i]["neighbors"]
   
@@ -183,8 +155,6 @@ for (let i = 0; i < busStopJson.length; i++) {
     routesBusSet[name][value].push(key);
   });
 }
-
-
 
 // FIND SHORTEST BUS ROUTES 
 function findBestBusRoute(start, destination) {
@@ -246,7 +216,6 @@ function constructRoute(parent, parentRoute, start, destination) {
     busRoutes.push(parentRoute[to][from]);
 
   }
-
   console.log("Route: " + route);
   console.log("BusRoutes: " + busRoutes);
   return {
@@ -255,15 +224,11 @@ function constructRoute(parent, parentRoute, start, destination) {
   };
 }
 
-
 //LOAD VENUES
 const venuesJson = require("../data/venues.json")
 
-
 // LOAD BUILDINGS INTO FIREBASE
 const buildingsJson = require('../data/buildings.json')
-
-
 
 const buildingColRef = collection(db, "buildingNeighbors")
 
@@ -282,79 +247,56 @@ const loadBuildingData = async () => {
       // neighborBuildingSet[buildingName] = [];
 
       // routesBuildingSet[buildingName] = 
-
-
-      
-
       console.log("DONE LOADING BUILDINGS");
       await addDoc(buildingColRef, {
         name: buildingName,
         coords: location,
         neighbors: neighbours
       });
-
     }
   } catch (error) {
     console.error("Error loading building name data:", error);
   }
 };
 
-
-
-
 // //LOAD BUILDINGS FROM JSON -- temp solution
 const neighborBuildingSet = {};
 
 for (const key of Object.keys(buildingsJson)) {
-
-  const name = buildingsJson[key].name;
-  
+  const name = buildingsJson[key].name;  
   neighborBuildingSet[name] = buildingsJson[key].neighbours;
-
 }
-
 
 neighborBuildingSet ? console.log("neighborBuildingSet loaded") 
                     : console.log("neighborBuildingSet not loaded")
-
-
-
 
 // FIND SHORTEST PATH -- SHELTERED
 function findBestShelteredRoute(start, destination) {
   console.log("in findBestshelteredRoute")
   let startBuilding = null;
   let endBuilding = null;
-  for (const buildingKey in buildingsJson) {
-    
+  for (const buildingKey in buildingsJson) {   
     if (buildingKey === start) {
       startBuilding = buildingKey;
       break;
     }
-
   }
 
   for (const buildingKey in buildingsJson) {
-
     if (buildingKey === destination) {
       endBuilding = buildingKey;
       break;
     }
-
   }
 
   for (const venue in venuesJson) {
-
     if (venue === start) {
-      startBuilding = venuesJson[venue].building;
-      
+      startBuilding = venuesJson[venue].building; 
       break;
     } 
-
   }
 
   for (const venue in venuesJson) {
-
     if (venue === destination) {
       endBuilding = venuesJson[venue].building
       break;
@@ -363,8 +305,8 @@ function findBestShelteredRoute(start, destination) {
 
   if (!startBuilding && !endBuilding) {
     console.log("invalid input for sheltered route algo");
-    return 0}
-
+    return 0
+  }
 
   console.log("In findBestShelteredRoute")
   const visited = new Set();
@@ -386,6 +328,7 @@ function findBestShelteredRoute(start, destination) {
         }
     
         const currentNeighbors = neighborBuildingSet[currentNode];
+
         if (!currentNeighbors || currentNeighbors.length == 0) {
           console.log("No valid route found.")
           return 1;
@@ -402,7 +345,6 @@ function findBestShelteredRoute(start, destination) {
       }
     }
   }
-
   // No valid route found
   return 1;
 }
@@ -419,15 +361,8 @@ function constructShelteredRoute(parent, startBuilding, endBuilding) {
 
   route.unshift(startBuilding);
 
-
   return route
 }
-
-
-
-
-
-
 
 export { 
   auth, 

@@ -5,9 +5,8 @@ Login page. It contains mainly 2 components: LoginDiv and Welcome.
 
 import React, { Platform, SafeAreaView, StyleSheet } from "react-native";
 import { Stack } from "expo-router";
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
-import { COLORS } from "../../constants/theme";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { COLORS } from "../../constants";
 import {
     Welcome,
     LoginDiv

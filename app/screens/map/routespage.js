@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Stack, useRouter, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet, View, Text, Image, Pressable, Dimensions } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { COLORS, FONT, SIZES } from "../../../constants";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { addToFavourites, auth, removeFromFavourites, queryFR, photosStorage } from "../../firebase";
+import { addToFavourites, auth, removeFromFavourites, queryFR } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 import AnimatedDotsCarousel from 'react-native-animated-dots-carousel';
-
-
-
 
 export default function RoutesPage() {
     const navigation = useNavigation();
@@ -34,7 +30,7 @@ export default function RoutesPage() {
 
     // Image rendering (Sheltered Routes)
     const [url, setUrl] = useState([])
-    const [carouselIndex, setCarouselIndex] = useState(0)
+    // const [carouselIndex, setCarouselIndex] = useState(0) not used.
 
 
 
@@ -86,16 +82,8 @@ export default function RoutesPage() {
                     
                 })
 
-            }
-
-            
-            
-            
-
-                
-            // await getDownloadURL(photoRef).then(photoUrl => setUrl(photoUrl))
-           
-            
+            }               
+            // await getDownloadURL(photoRef).then(photoUrl => setUrl(photoUrl))           
         };
 
         const fetchFavouritesData = () => {
@@ -150,18 +138,11 @@ export default function RoutesPage() {
 
     }, []);
       
-
-    
-      
-
     const favContainerColor = {
         backgroundColor: isPressed ? COLORS.pressedBtn : COLORS.unpressedBtn
     }
 
     const favText = isPressed ? "Remove from Favourites" : "Add to Favourites";
-
-
-   
 
     const handleFav = useCallback(async () => {
         if (!isPressed) {
@@ -191,7 +172,7 @@ export default function RoutesPage() {
               }
         }, []);
 
-        formattedI = i.i
+        const formattedI = i.i
 
         return (
         <View style={{alignItems: "center"}}>
@@ -258,9 +239,6 @@ export default function RoutesPage() {
         
     }
 
-      
-      
-
     const FavouritesBtn = () => {
         if (loading) {
             return (
@@ -281,9 +259,6 @@ export default function RoutesPage() {
         )
     }
 
-
-
-
     // Direction Steps data
     let data = [];
     for (let i = 0; i < directionsArr.length; i ++) {
@@ -294,37 +269,33 @@ export default function RoutesPage() {
         }
     }
 
-    // Sheltered walkways photo data for flatlist
-    
-
-
+    // Sheltered walkways photo data for flatlist   
     const renderItem = ({item}) => (
 
         <View style={styles.container}>
 
-
             <View style={{flexDirection: 'row'}}>
                 <View style={styles.vertLine}/>
-                <View >
-                    <Text style={styles.textStyle}> </Text>
-                </View>
+                    <View >
+                        <Text style={styles.textStyle}> </Text>
+                    </View>
             </View>
 
 
             <View style={{flexDirection: 'row'}}>
                 <Ionicons name={item.icon} size={23} color={COLORS.accent}/> 
-                <View >
-                    <Text style={styles.textStyle}>{item.text}</Text>
-                </View>
+                    <View >
+                        <Text style={styles.textStyle}>{item.text}</Text>
+                    </View>
             </View>
 
 
 
             <View style={{flexDirection: 'row'}}>
                 <View style={styles.vertLine}/>
-                <View >
-                    <Text style={styles.textStyle}> </Text>
-                </View>
+                    <View >
+                        <Text style={styles.textStyle}> </Text>
+                    </View>
             </View>
 
             { mode == "Sheltered" && (
@@ -347,23 +318,14 @@ export default function RoutesPage() {
                                 paddingLeft: 10,
                             }}>No image available</Text> 
                         </View>
+                        )
                     )
-                )
-            )
+            )}
             
-            }
-
-            
-    </View>
+        </View>
         
 
     )
-
-
-   
-
-
-
 
     return (
         <SafeAreaView style={styles.container}>
@@ -413,8 +375,6 @@ export default function RoutesPage() {
             ListFooterComponent= {isPressed != null && FavouritesBtn}
             >
             </FlatList>
-
-
             
         </SafeAreaView>
 

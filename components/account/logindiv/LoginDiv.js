@@ -24,7 +24,6 @@ export default function LoginDiv() {
 
 
   const handleLogin = () => {
-    console.log('handleLogin function called'); 
     setEmailErrorMsg('');
     setPasswordErrorMsg('');
 
@@ -44,8 +43,6 @@ export default function LoginDiv() {
     }
 
     if (email.length > 0 && password.length > 0) {
-      console.log('Email:', email);
-      console.log('Password:', password);
       setLoading(true);
       auth
       .signInWithEmailAndPassword(email, password)
@@ -101,10 +98,8 @@ export default function LoginDiv() {
           {passwordErrorMsg !== "" && <Text style={styles.error}>{passwordErrorMsg}</Text>}
       </View>
 
-      
       <CustomButton text="LOGIN" onPress={handleLogin} testID="Login.button"/>
       
-
       <Modal
         transparent={true}
         visible={modalVisible}
@@ -121,7 +116,6 @@ export default function LoginDiv() {
         </View>
       </Modal>
 
-      
       <View style={styles.registerContainer}>
           <Text style={{color: COLORS.text}}>New to NUSWhere? </Text>
           <Text
@@ -129,7 +123,9 @@ export default function LoginDiv() {
           style={{fontFamily: FONT.iSemiB, color: COLORS.text}}
           >Register</Text>
       </View>
+
       {loading && <ActivityIndicator />}
+
     </View>
   )
 }

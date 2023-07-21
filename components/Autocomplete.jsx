@@ -2,13 +2,7 @@ import { Alert, Keyboard, View } from "react-native";
 import { Menu, TextInput } from "react-native-paper";
 import React, { useState } from "react";
 import { COLORS } from "../constants";
-
-// import hashmap of room codes-coords
 import { busStopCoords, roomCodeCoords, buildingCoords } from "../data/venues";
-
-
-
-
 
 const Autocomplete = ({
     value: origValue,
@@ -81,45 +75,31 @@ const Autocomplete = ({
                   onPress={() => {
                     // to allow for other uses: eg searching bus stops
                     if (usage === 'mappage') {
-  
-  
                       let location;
-  
                       if (roomCodeCoords.get(datum) != null) {
                         location = roomCodeCoords.get(datum)[2];
                         if (location != null) {
                           const markerLocation = {latitude: location.y, longitude: location.x}; 
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
-                        
                       } 
-                      
                       else if (busStopCoords.get(datum) != null) {
-
                         location = busStopCoords.get(datum); 
                         if (location != null) {
                           const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
-                        
-
                       } 
-  
                       else if (buildingCoords.get(datum) != null) {
                         location = buildingCoords.get(datum);
-                        
                         if (location != null) {
                           const markerLocation = {latitude: location.x, longitude: location.y}; 
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
-                        
                       } 
-                      
-  
                       setValue(datum);
                       setMenuVisible(false);
                       Keyboard.dismiss();
-                      
                     }
                   }}
                   title={datum}
@@ -129,17 +109,13 @@ const Autocomplete = ({
           )}
         </View>
       );
-
     } catch (error) {
       return Alert.alert("Location Unavailable", "Sorry! We currently don't have enough data for this venue.", [{
         text: "OK",
         onPress: () => {},
         style: 'cancel'                      
       }])
-
     }
   }
-    
-  
-  
-  export default Autocomplete;
+
+export default Autocomplete;

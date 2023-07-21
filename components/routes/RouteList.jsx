@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, ScrollView, Animated, Pressable} from "react-native";
-import styles from "./routelist.style";
+import { View, FlatList } from "react-native";
 import { findBestBusRoute, findBestShelteredRoute } from "../../app/firebase";
 import { COLORS } from "../../constants";
-import { TouchableHighlight } from "react-native-gesture-handler";
 import { googleDirections } from "../../data/googledirections";
 import RouteCard from "./RouteCard";
 import CustomButton from "../account/CustomButton/CustomButton";
-
 
 export default function RouteList({origin, destination, o, d, handler, handleBack}) {
     // hardcoded values for one bus stop to another duration
@@ -18,7 +15,6 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
     const [busDuration, setBusDuration] = useState(null);
     const [busRoute, setBusRoute] = useState(null)
 
-    
     const [outdoorDirections, setOutdoorDirections] = useState(null);
     const [outdoorDuration, setOutdoorDuration] = useState(null);
     const [outdoorDistance, setOutdoorDistance] = useState(null);
@@ -27,52 +23,46 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
     const [shelteredDirections, setShelteredDirections] = useState(null);
     const [shelteredDuration, setShelteredDuration] = useState(null);
 
-
-
     useEffect(() => {
 
             googleDirections(origin, destination).then((x) => {
                 if (x){
                     const outdoorArr = [x[0], x[1], x[2] + "m"];
-
                     setOutdoorDirections(outdoorArr[0]);
                     setOutdoorDuration(outdoorArr[1]);
                     setOutdoorDistance(outdoorArr[2]);
                     setOutdoorAll(outdoorArr[3])
 
+                }     
+            });
+      
+            const busShortestPath = findBestBusRoute(o, d);
+                if (
+                    busShortestPath != null && 
+                    busShortestPath != 1 && 
+                    busShortestPath != 0
+                    ) {
+                    setBusDirections(busShortestPath.route);
+                    setBusRoute(busShortestPath.busRoutes[0]);
+                    busShortestPath.busRoutes != null ? setBusDuration(busShortestPath.busRoutes.length * busOneStepDuration) : null
                 }
-                
-                
-              });
-      
-              const busShortestPath = findBestBusRoute(o, d);
-              if (
-                busShortestPath != null && 
-                busShortestPath != 1 && 
-                busShortestPath != 0) {
-                  setBusDirections(busShortestPath.route);
-                  setBusRoute(busShortestPath.busRoutes[0]);
-                  busShortestPath.busRoutes != null ? setBusDuration(busShortestPath.busRoutes.length * busOneStepDuration) : null
-              }
               
-              
-      
               const shelteredShortestPath = findBestShelteredRoute(o, d) 
               console.log('FindBestshelteredRoute:' + shelteredShortestPath)
               // currently only works for going from venue to venue not bus to bus
               if (
-                shelteredShortestPath != null && 
-                shelteredShortestPath != 1 && 
-                shelteredShortestPath != 0) {
-                  // 1 is for cant find route, 0 is for invalid input
-                  setShelteredDirections(shelteredShortestPath);
-                  console.log('ShelteredDirections:' + shelteredDirections);
-                  shelteredDirections != null ? setShelteredDuration(shelteredDirections.length * shelteredOneStepDuration) : null
-              // hardcoded duration for placeholder -- each step from one building to another assumed to be 3
+                    shelteredShortestPath != null && 
+                    shelteredShortestPath != 1 && 
+                    shelteredShortestPath != 0
+                    ) {
+                    // 1 is for cant find route, 0 is for invalid input
+                    setShelteredDirections(shelteredShortestPath);
+                    console.log('ShelteredDirections:' + shelteredDirections);
+                    shelteredDirections != null ? setShelteredDuration(shelteredDirections.length * shelteredOneStepDuration) : null
+                // hardcoded duration for placeholder -- each step from one building to another assumed to be 3
               }
-
     }, [origin, destination]);
-    
+
     const BackBtn = () => {
         return(
             <CustomButton 
@@ -81,12 +71,7 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
             ></CustomButton>
         )
     }
-
-
-
-        
-      
-        
+     
     const renderItem = ({ item }) => {
         if (item.mode === "Outdoor") {
             return (<RouteCard 
@@ -123,22 +108,13 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 o={o}
                 d={d}
                 ></RouteCard>);
-
-        }
-        
-            
+        }           
     }
     
-
-        
-    
-
-    
-
     const data = [ {id: 1, mode: "Outdoor"},
-                       {id: 2, mode: "Sheltered"},
-                       {id: 3, mode: "Bus"}
-                     ]
+                    {id: 2, mode: "Sheltered"},
+                    {id: 3, mode: "Bus"} ];
+
     return (    
         <View style={{flex: 2, backgroundColor: COLORS.background}}>
             {outdoorDirections && <FlatList
@@ -150,9 +126,7 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 style={{padding: 10}}
             />}
             
-        </View>
-        
-    )
-    
+        </View>        
+    )    
 }
     

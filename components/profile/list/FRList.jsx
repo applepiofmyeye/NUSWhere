@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList} from "react-native";
+import { View, Text, FlatList, Alert } from "react-native";
 import styles from "./frlist.style";
 import { getFavouriteRoutes, auth } from "../../../app/firebase";
-import RouteCard from "../../routes/RouteCard";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useRouter } from "expo-router";
 import { COLORS, FONT, SIZES } from "../../../constants";
@@ -12,20 +11,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function FRList() {
     const [refresh, setRefresh] = useState(false)
 
-    
     let originArr = [];
     let destinationArr = [];
     let data = [];
     let length = 0;
-    let mode = "";
     let directionsArr = [];
-    let duration = "";
     let routeArr =[];
 
     const router = useRouter();
-
-    
-    
 
     useEffect(() => {
         getFavouriteRoutes(auth.currentUser.uid).then(x => {
@@ -34,14 +27,12 @@ export default function FRList() {
                 destinationArr = x[0].map(y => y.destination.stringValue);
                 length = originArr.length;
 
-
-                modeArr = x[0].map(y => y.mode.stringValue);
-                hrefDirectionsArr = x[0].map(y => y.directions.stringValue);
+                let modeArr = x[0].map(y => y.mode.stringValue);
+                let hrefDirectionsArr = x[0].map(y => y.directions.stringValue);
                 directionsArr = x[0].map(y => y.directions.stringValue.split("/")); // 2d array or routes and dir
-                distanceArr = x[0].map(y => y.distance ? y.distance.stringValue : null)
+                let distanceArr = x[0].map(y => y.distance ? y.distance.stringValue : null)
                 routeArr = x[0].map(y => y.route ? y.route.stringValue : null);
-                durationArr = x[0].map(y => y.duration ? y.duration.stringValue : "")
-
+                let durationArr = x[0].map(y => y.duration ? y.duration.stringValue : "")
 
                 for (let i = length - 1; i >= 0; i--) {
                     data.push({
@@ -55,14 +46,9 @@ export default function FRList() {
                         hrefDirections: hrefDirectionsArr[i],
                         duration: durationArr[i]
                     });
-                }
-                
-            } 
-            
-            
+                }                
+            }                    
         }).then(setRefresh(false));
-        
-
     }, [refresh])
 
     const handler = (directions, duration, all, mode, route, o, d) => {
@@ -86,8 +72,6 @@ export default function FRList() {
         });
       };
 
-    
-
     const renderItem = ({ item }) => (
         <TouchableOpacity
         style={styles.routeContainer}
@@ -99,8 +83,6 @@ export default function FRList() {
             <Text style={styles.modeName}>{item.mode}</Text>
 
         </TouchableOpacity>
-        
-        
 
         // <RouteCard 
         // mode={item.mode}
@@ -115,8 +97,7 @@ export default function FRList() {
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>
                     Favourite Routes
-                </Text>
-                
+                </Text>     
             </View>
             <FlatList
                 data={data}
@@ -130,9 +111,7 @@ export default function FRList() {
                     }}>No favourites added.</Text>}
                 refreshing={refresh}
                 onRefresh={() => setRefresh(true)}
-            />
-            
-        </SafeAreaView>
-        
+            />  
+        </SafeAreaView>  
     )
 }

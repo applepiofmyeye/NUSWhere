@@ -1,11 +1,7 @@
 import { GOOGLE_API } from '../keys';
 import axios from 'axios';
 
-
-
-export async function googleDirections(origin, destination) {
-
-    
+export async function googleDirections(origin, destination) {   
     const data = {
         origin: {
           location: {
@@ -42,6 +38,7 @@ export async function googleDirections(origin, destination) {
     //   'X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline'
       'X-Goog-FieldMask': 'routes'
     };
+
     const instructions = (response) => response.routes[0].legs[0].steps.map((step) => step.navigationInstruction.instructions)
     const duration = (response) => response.routes[0].staticDuration
     const distance = (response) => response.routes[0].distanceMeters
@@ -65,7 +62,5 @@ export async function googleDirections(origin, destination) {
       console.log(error);
       return null;
     }
-      
-
 }
 

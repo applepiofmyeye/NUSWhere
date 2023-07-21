@@ -1,16 +1,12 @@
-import React, { useState } from "react";
-import { View, Text, FlatList, ScrollView, Animated, StyleSheet, TouchableOpacity} from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import { COLORS, FONT, SIZES } from "../../constants";
-import Ionicons from "react-native-vector-icons/Ionicons"
 
 function secToMin(x) {
     return x == null ? "No timing available" : x ;
 }
 
-
-
 export default function RouteCard({mode, directions, duration, route, all, handler, o, d}) { // directions will be an array
-    
 
     const formattedDirections = !directions
     ? ""
@@ -19,7 +15,6 @@ export default function RouteCard({mode, directions, duration, route, all, handl
     const hrefDirections = !formattedDirections
     ? ""
     : formattedDirections.replace(/\n/g, "%2F");    
-
 
     const displayedDirections = directions == null             
                            ? "No available route."
@@ -31,13 +26,7 @@ export default function RouteCard({mode, directions, duration, route, all, handl
                            ? "Total stops: " + directions.length + "\nBus Route: None" 
                            : "Total stops: " + directions.length + "\nBus Route:" + route.map(x => " " + x)
 
-
     let formattedDuration = mode == "Outdoor" ? duration : duration == null ? duration : duration+ "s"
-    
-                        
-        
-        
-    
     
     return (    
         <TouchableOpacity 
@@ -46,19 +35,16 @@ export default function RouteCard({mode, directions, duration, route, all, handl
             ? handler(hrefDirections, formattedDuration, all, mode, "", o, d) 
             : handler(hrefDirections, formattedDuration, all, mode, route, o, d)}
         >
-        <View style={{flexDirection: "row"}}>
-            <View>
-                <Text style={styles.routeMode}>{mode}</Text>
-                <Text style={[styles.displayedDirections, {fontFamily: directions ? FONT.iSemiB : FONT.iLight}]}>{displayedDirections}</Text>
+            <View style={{flexDirection: "row"}}>
+                <View>
+                    <Text style={styles.routeMode}>{mode}</Text>
+                    <Text style={[styles.displayedDirections, {fontFamily: directions ? FONT.iSemiB : FONT.iLight}]}>{displayedDirections}</Text>
+                </View>
             </View>
-        </View>
-        
+
           {/* <Text style={styles.routeDirections}>{formattedDirections}</Text> */}
 
-        
-     
-        </TouchableOpacity>
-        
+        </TouchableOpacity>  
     )
 }
 
@@ -82,7 +68,6 @@ const styles = StyleSheet.create({
         textAlign: "left",
         paddingLeft: 10
     },
-
     routeDirections: {
         fontFamily: FONT.iRegular,
         fontSize: SIZES.medium,
@@ -91,7 +76,6 @@ const styles = StyleSheet.create({
         paddingLeft: 10
 
     },
-
     title: {
         fontFamily: FONT.pSemiB,
         fontSize: SIZES.xLarge + 1,
@@ -108,10 +92,5 @@ const styles = StyleSheet.create({
             color: COLORS.text,
             textAlign: "left",
             paddingLeft: 10
-    }
-
-        
-        
-        
-    
+    }   
 })
