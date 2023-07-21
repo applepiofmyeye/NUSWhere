@@ -7,13 +7,10 @@ function secToMin(x) {
     return x == null ? "No timing available" : x ;
 }
 
-function hrefString(str) {
-    return str.reduce((a))
-}
 
-export default function RouteCard({mode, directions, duration, route, all, handler}) { // directions will be an array
+
+export default function RouteCard({mode, directions, duration, route, all, handler, o, d}) { // directions will be an array
     
-    console.log(directions);
 
     const formattedDirections = !directions
     ? ""
@@ -21,23 +18,21 @@ export default function RouteCard({mode, directions, duration, route, all, handl
 
     const hrefDirections = !formattedDirections
     ? ""
-    : formattedDirections.replace(/\n/g, "%2F");
-
-    console.log(formattedDirections);
-    console.log(hrefDirections);
-    
+    : formattedDirections.replace(/\n/g, "%2F");    
 
 
-    const displayedDirections = !directions             
+    const displayedDirections = directions == null             
                            ? "No available route."
                            : mode == "Outdoor" 
-                           ? "Route available. Total duration: " + secToMin(duration)
+                           ? "Total duration: " + secToMin(duration)
                            : mode == "Sheltered" 
-                           ? "Route available. Total duration: " + secToMin(duration) + "s"
-                           : "Route available. Total stops: " + directions.length + "\nBus Route: " + route.map(x => " " + x)
+                           ? "Total duration: " + secToMin(duration) + "s"
+                           : route == null
+                           ? "Total stops: " + directions.length + "\nBus Route: None" 
+                           : "Total stops: " + directions.length + "\nBus Route:" + route.map(x => " " + x)
 
 
-
+    let formattedDuration = mode == "Outdoor" ? duration : duration == null ? duration : duration+ "s"
     
                         
         
@@ -48,13 +43,13 @@ export default function RouteCard({mode, directions, duration, route, all, handl
         <TouchableOpacity 
         style={styles.routeContainer}
         onPress={() => route == null 
-            ? handler(hrefDirections, duration, all, mode, "") 
-            : handler(hrefDirections, duration, all, mode, route)}
+            ? handler(hrefDirections, formattedDuration, all, mode, "", o, d) 
+            : handler(hrefDirections, formattedDuration, all, mode, route, o, d)}
         >
         <View style={{flexDirection: "row"}}>
             <View>
                 <Text style={styles.routeMode}>{mode}</Text>
-                <Text style={styles.displayedDirections}>{displayedDirections}</Text>
+                <Text style={[styles.displayedDirections, {fontFamily: directions ? FONT.iSemiB : FONT.iLight}]}>{displayedDirections}</Text>
             </View>
         </View>
         
@@ -109,10 +104,14 @@ const styles = StyleSheet.create({
 
     },
     displayedDirections: {
-        fontFamily: FONT.iSemiB,
-        fontSize: SIZES.medium,
-        color: COLORS.text,
-        textAlign: "left",
-        paddingLeft: 10
+            fontSize: SIZES.medium,
+            color: COLORS.text,
+            textAlign: "left",
+            paddingLeft: 10
     }
+
+        
+        
+        
+    
 })

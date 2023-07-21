@@ -8,22 +8,23 @@ origin and destination is coordinates of bus stops
 */
 import React, { useState, useEffect, useRef } from "react";
 import { View, ScrollView, StyleSheet, Dimensions, Button, Platform, TextInput, Animated, Text, Alert } from "react-native";
-import Autocomplete from "../../components/Autocomplete";
+import Autocomplete from "../../../components/Autocomplete";
 import { Stack, useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from 'expo-location';
-import { roomCodes, busStops, buildings } from "../../data/venues";
+import { roomCodes, busStops, buildings } from "../../../data/venues";
 import MapViewDirections from 'react-native-maps-directions';
-import { GOOGLE_API } from "../../keys";
+import { GOOGLE_API } from "../../../keys";
 
 
 
 
-import { COLORS, SIZES } from "../../constants";
-import { CustomButton, RouteList } from "../../components";
+import { COLORS, SIZES } from "../../../constants";
+import { CustomButton, RouteList } from "../../../components";
 
 let o = null;
 let d = null;
+
 
 
 export default function MapPage() {
@@ -37,7 +38,6 @@ export default function MapPage() {
 
 
     const router = useRouter();
-    const navigation = useNavigation();
 
 
 
@@ -51,7 +51,7 @@ export default function MapPage() {
     // const handleCardPress = () => {
     //     router.push('./routespage')
     // }
-    const handler = (directions, duration, all, mode, route) => {
+    const handler = (directions, duration, all, mode, route, o, d) => {
         if (!directions) { return Alert.alert("No route", "Whoops! No available route currently.", [
             {
                 text: "OK",
@@ -59,7 +59,8 @@ export default function MapPage() {
             }
         ])}
         // router.setParams({directions: directions, duration: duration, all: all, mode: mode, route: route})
-        router.push({pathname: './screens/routespage', 
+        
+        router.push({pathname: "./screens/map/routespage", 
         params: {
             origin: o,
             destination: d,
@@ -68,9 +69,14 @@ export default function MapPage() {
             all: all,
             mode: mode, 
             route: route},
-            
         });
-      };
+    };
+    
+    const handleBack = () => {
+        setShowRoute(false);
+        setOrigin(null);
+        setDestination(null);
+    }
 
 
     const handleSelectMarker = (markerLocation, isDestination, name) => {
@@ -98,24 +104,22 @@ export default function MapPage() {
         longitudeDelta: 0.09,
     });
 
-    const userLocation = async () => {
-        let {status} = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied.')
-        }
-        let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
+
+
+    // NOT USED CURRENTLY, but would be good to track current user location
+    // const userLocation = async () => {
+    //     let {status} = await Location.requestForegroundPermissionsAsync();
+    //     if (status !== 'granted') {
+    //         setErrorMsg('Permission to access location was denied.')
+    //     }
+    //     let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
         
-        // !origin && location && setOrigin({
-        //     latitude: location.coords.latitude,
-        //     longitude: location.coords.longitude
-        // });
+    // }
 
-        console.log({location})
-    }
 
-    useEffect(() => {
-        userLocation();
-    },[])
+    // useEffect(() => {
+    //     userLocation();
+    // },[])
 
     
 
@@ -124,7 +128,7 @@ export default function MapPage() {
     return (
 
         <View style={styles.container}>
-            <Stack.Screen options={{ headerShown: false, }}/>
+            <Stack.Screen options={{ headerShown: false, headerBackButtonMenuEnabled: true}}/>
                 <Animated.ScrollView
                         // onScroll={e => console.log(e.nativeEvent.contentOffset.y)}
                         onScroll={handleCardDrag}
@@ -188,7 +192,7 @@ export default function MapPage() {
                             flex: 1
                         }}
                         label="Where are you?"
-                        data={roomCodes.concat(busStops)} // Set to the json
+                        data={roomCodes.concat(busStops).concat(buildings)} // Set to the json
                         menuStyle={{backgroundColor: COLORS.background}}
                         onChange={() => {setShowRoute(false)}}
                         usage='mappage'
@@ -210,12 +214,22 @@ export default function MapPage() {
                                 setShowRoute(true);
                                 setShowDirectionsButton(false)}}/>
                         )} */}
-                        {origin && destination && showDirectionsBtn && (
+                        {origin != destination && origin && destination && showDirectionsBtn && (
                             <CustomButton 
                             text="Routes" 
                             onPress={() => {
-                                setShowRoute(true);
-                                setShowDirectionsBtn(false);
+                                console.log(origin);
+                                console.log(destination);
+                                console.log(origin.latitude != destination.latitude && origin.longitude != destination.longitude);
+                                if (origin.latitude != destination.latitude && origin.longitude != destination.longitude){
+                                    setShowRoute(true);
+                                    setShowDirectionsBtn(false);
+                                } else {
+                                    return Alert.alert("Repeated venues", "Please enter different locations", [{
+                                        text: "OK",
+                                        onPress: () => console.log("button pressed")
+                                    }])
+                                }
                             }}/>
                         )}
                         
@@ -228,6 +242,7 @@ export default function MapPage() {
                 o={o} 
                 d={d} 
                 handler={handler}
+                handleBack={handleBack}
                 />}
                 
 

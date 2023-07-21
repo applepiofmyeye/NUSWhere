@@ -889,14 +889,14 @@
     },
     "Chua Thian Poh Hall": {
 	"name": "Chua Thian Poh Hall",
-	"neighbours": ["Cinnamon College", "College of Alice & Peter Tan"],
+	"neighbours": ["Cinnamon College", "College of Alice and Peter Tan"],
 	"location": {
             "x": 1.3070423052349553, 
             "y": 103.77330691358875   
       	}
     },
-    "College of Alice & Peter Tan": {
-	"name": "College of Alice & Peter Tan",
+    "College of Alice and Peter Tan": {
+	"name": "College of Alice and Peter Tan",
 	"neighbours": ["Chua Thian Poh Hall", "Residential College 4"],
 	"location": {
             "x": 1.3075821005541164, 
@@ -905,7 +905,7 @@
     },
     "Residential College 4": {
 	"name": "Residential College 4",
-	"neighbours": ["College of Alice & Peter Tan", "Yale-NUS College"],
+	"neighbours": ["College of Alice and Peter Tan", "Yale-NUS College"],
 	"location": {
             "x": 1.308246674299386, 
             "y": 103.77330461190921

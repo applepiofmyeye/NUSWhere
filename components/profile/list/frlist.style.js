@@ -13,16 +13,23 @@ const styles = StyleSheet.create({
     },
 
     routeName: {
-        fontFamily: FONT.iRegular,
+        fontFamily: FONT.pSemiB,
         fontSize: SIZES.medium,
         color: COLORS.text,
+    },
+
+    modeName: {
+        fontFamily: FONT.iLight,
+        fontSize: SIZES.medium,
+        color: COLORS.text,
+        textAlign: "left",
     },
 
     title: {
         fontFamily: FONT.pSemiB,
         fontSize: SIZES.xLarge + 1,
         color: COLORS.text,
-        margin: 10,
+        marginLeft: 10,
     },
 
     titleContainer: {

@@ -6,26 +6,13 @@ import { COLORS } from "../../constants";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { googleDirections } from "../../data/googledirections";
 import RouteCard from "./RouteCard";
+import CustomButton from "../account/CustomButton/CustomButton";
 
 
-export default function RouteList({origin, destination, o, d, handler}) {
+export default function RouteList({origin, destination, o, d, handler, handleBack}) {
     // hardcoded values for one bus stop to another duration
     const busOneStepDuration = 2 * 60 
     const shelteredOneStepDuration = 3 * 60
-
-    // const br = findBestBusRoute(o, d);
-
-
-    // const brStops = br == null ? null : br.busRoutes[0];
-    // const brRoute = br == null ? null : br.route;
-    // console.log("----------------------------------")
-    // console.log("BESTROUTE IN ROUTESLIST: ", br)
-    // console.log(brRoute);
-
-    // // Data preparation for outdoor walking + bus routes walking segments
-    // console.log("----------------------------------");
-    // console.log("Origin: ", origin)
-    // console.log("Destination: ", destination)
 
     const [busDirections, setBusDirections] = useState(null);
     const [busDuration, setBusDuration] = useState(null);
@@ -40,7 +27,6 @@ export default function RouteList({origin, destination, o, d, handler}) {
     const [shelteredDirections, setShelteredDirections] = useState(null);
     const [shelteredDuration, setShelteredDuration] = useState(null);
 
-    const [initialised, setInitialised] = useState(false)
 
 
     useEffect(() => {
@@ -54,15 +40,12 @@ export default function RouteList({origin, destination, o, d, handler}) {
                     setOutdoorDistance(outdoorArr[2]);
                     setOutdoorAll(outdoorArr[3])
 
-                    console.log("outdoorArr: ", outdoorArr);
-                    console.log("outdoorDirections: ", outdoorDirections);
                 }
                 
                 
               });
       
               const busShortestPath = findBestBusRoute(o, d);
-              console.log(busShortestPath)
               if (
                 busShortestPath != null && 
                 busShortestPath != 1 && 
@@ -88,6 +71,14 @@ export default function RouteList({origin, destination, o, d, handler}) {
 
     }, [origin, destination]);
     
+    const BackBtn = () => {
+        return(
+            <CustomButton 
+                onPress={handleBack}
+                text="Back"
+            ></CustomButton>
+        )
+    }
 
 
 
@@ -96,7 +87,6 @@ export default function RouteList({origin, destination, o, d, handler}) {
         
     const renderItem = ({ item }) => {
         if (item.mode === "Outdoor") {
-            console.log("outdoor card running")
             return (<RouteCard 
                 mode={item.mode} 
                 directions={outdoorDirections} // array of string instructions
@@ -104,9 +94,10 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 distance={outdoorDistance}
                 all={outdoorAll}
                 handler={handler}
+                o={o}
+                d={d}
                 ></RouteCard>);
         } else if (item.mode === "Sheltered") {
-            console.log("sheltered card running")
             return(<RouteCard 
                 mode={item.mode} 
                 directions={shelteredDirections} // array of buildings to walk through 
@@ -114,6 +105,8 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 distance={null}
                 handler={handler}
                 all={null}
+                o={o}
+                d={d}
                 ></RouteCard>);
         } else{
             return (<RouteCard 
@@ -124,6 +117,8 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 distance={null}
                 handler={handler}
                 all={null}
+                o={o}
+                d={d}
                 ></RouteCard>);
 
         }
@@ -147,6 +142,7 @@ export default function RouteList({origin, destination, o, d, handler}) {
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
+                ListHeaderComponent={BackBtn}
                 showsVerticalScrollIndicator={false}
                 style={{padding: 10}}
             />}
