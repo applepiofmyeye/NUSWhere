@@ -9,7 +9,7 @@ import CustomButton from "../account/CustomButton/CustomButton";
 export default function RouteList({origin, destination, o, d, handler, handleBack}) {
     // hardcoded values for one bus stop to another duration
     const busOneStepDuration = 2 * 60 
-    const shelteredOneStepDuration = 3 * 60
+    const shelteredOneStepDuration = 60
 
     const [busDirections, setBusDirections] = useState(null);
     const [busDuration, setBusDuration] = useState(null);
@@ -32,7 +32,6 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                     setOutdoorDuration(outdoorArr[1]);
                     setOutdoorDistance(outdoorArr[2]);
                     setOutdoorAll(outdoorArr[3])
-
                 }     
             });
       
@@ -43,12 +42,11 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                     busShortestPath != 0
                     ) {
                     setBusDirections(busShortestPath.route);
-                    setBusRoute(busShortestPath.busRoutes[0]);
-                    busShortestPath.busRoutes != null ? setBusDuration(busShortestPath.busRoutes.length * busOneStepDuration) : null
+                    setBusRoute(busShortestPath.busRoutes);
+                    setBusDuration((busShortestPath.route.length - 2) * busOneStepDuration);
                 }
               
               const shelteredShortestPath = findBestShelteredRoute(o, d) 
-              console.log('FindBestshelteredRoute:' + shelteredShortestPath)
               // currently only works for going from venue to venue not bus to bus
               if (
                     shelteredShortestPath != null && 
@@ -57,8 +55,7 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                     ) {
                     // 1 is for cant find route, 0 is for invalid input
                     setShelteredDirections(shelteredShortestPath);
-                    console.log('ShelteredDirections:' + shelteredDirections);
-                    shelteredDirections != null ? setShelteredDuration(shelteredDirections.length * shelteredOneStepDuration) : null
+                    setShelteredDuration(shelteredShortestPath.length * shelteredOneStepDuration);
                 // hardcoded duration for placeholder -- each step from one building to another assumed to be 3
               }
     }, [origin, destination]);
