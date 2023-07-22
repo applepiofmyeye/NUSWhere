@@ -11,7 +11,7 @@ import { View, StyleSheet, Dimensions,Platform, Animated, Alert } from "react-na
 import Autocomplete from "../../../components/Autocomplete";
 import { Stack, useRouter } from "expo-router";
 import MapView, { Marker } from "react-native-maps";
-import { roomCodes, busStops, buildings } from "../../../data/venues";
+import { roomCodes, buildings } from "../../../data/venues";
 import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_API } from "../../../keys";
 import { COLORS } from "../../../constants";
@@ -21,6 +21,9 @@ let o = null;
 let d = null;
 
 export default function MapPage() {
+    const venuesData = require("../../../data/venues.json");
+    const buildingData = require("../../../data/buildings.json");
+
     const scrollA = useRef(new Animated.Value(0)).current;
 
     const handleCardDrag = Animated.event(
@@ -37,12 +40,12 @@ export default function MapPage() {
     const [scrollEnabled, setScrollEnabled] = useState(false);
 
     const handler = (directions, duration, all, mode, route, o, d) => {
-        if (!directions) { return Alert.alert("No route", "Whoops! No available route currently.", [
+        if (!directions || (mode === 'Bus' && !route)) { return Alert.alert("No route", "Whoops! No available route currently.", [
             {
                 text: "OK",
                 onPress: () => console.log("button pressed")
             }
-        ])}
+        ])} 
         
         router.push({pathname: "./screens/map/routespage", 
         params: {
@@ -134,9 +137,9 @@ export default function MapPage() {
                             flex: 1
                         }}
                         label="Where do you wanna go?"
-                        data={roomCodes.concat(busStops).concat(buildings)} // Set to the json
+                        data={roomCodes.concat(buildings)} // Set to the json
                         menuStyle={{backgroundColor: COLORS.background}}
-                        onChange={() => {setShowRoute(false)}}
+                        onChange={() => {setShowDirectionsBtn(false)}}
                         usage='mappage'
                         selectedMarker={selectedMarker}
                         onSelectMarker={handleSelectMarker}
@@ -152,9 +155,9 @@ export default function MapPage() {
                             flex: 1
                         }}
                         label="Where are you?"
-                        data={roomCodes.concat(busStops).concat(buildings)} // Set to the json
+                        data={roomCodes.concat(buildings)} // Set to the json
                         menuStyle={{backgroundColor: COLORS.background}}
-                        onChange={() => {setShowRoute(false)}}
+                        onChange={() => {setShowDirectionsBtn(false)}}
                         usage='mappage'
                         selectedMarker={selectedMarker}
                         onSelectMarker={handleSelectMarker}
@@ -171,15 +174,36 @@ export default function MapPage() {
                             <CustomButton 
                             text="Routes" 
                             onPress={() => {
-                                if (origin.latitude != destination.latitude && origin.longitude != destination.longitude){
-                                    setShowRoute(true);
-                                    setShowDirectionsBtn(false);
-                                } else {
+                                if (origin.latitude != destination.latitude && origin.longitude != destination.longitude) {
+                                    let originBuilding = null;
+                                    let destinationBuilding = null;
+                                    if (venuesData[o] != null) {
+                                        originBuilding = venuesData[o].building;
+                                    }
+                                    if (buildingData[o] != null) {
+                                        originBuilding = buildingData[o].name;
+                                    }
+                                    if (venuesData[d] != null) {
+                                        destinationBuilding = venuesData[d].building;
+                                    }
+                                    if (buildingData[d] != null) {
+                                        destinationBuilding = buildingData[d].name;
+                                    }
+                                    console.log('originBuilding', originBuilding);
+                                    console.log('destinationbuilding', destinationBuilding);
+                                    if (originBuilding !== null && destinationBuilding !== null && originBuilding === destinationBuilding) {
+                                        setShowDirectionsBtn(false);
+                                        return Alert.alert("You have reached!", "You are in the building. Proceed to the floor of your destination, " + d);
+                                    } else {
+                                        setShowRoute(true);
+                                        setShowDirectionsBtn(false);
+                                    }
+                                } else if (origin.latitude === destination.latitude && origin.longitude === destination.longitude) {
                                     return Alert.alert("Repeated venues", "Please enter different locations", [{
                                         text: "OK",
                                         onPress: () => console.log("button pressed")
                                     }])
-                                }
+                                } 
                             }}/>
                         )}
                         
