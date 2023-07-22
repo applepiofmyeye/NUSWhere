@@ -29,7 +29,7 @@ export default function RouteCard({mode, directions, duration, route, all, handl
                            ? "No available route."
                            : "Total stops: " + (directions.length - 2) + "\nBuses to take: " + route + "\nTotal duration: " + secToMin(duration)
 
-    let formattedDuration = mode == "Outdoor" ? duration : duration == null ? duration : duration+ "s"
+    let formattedDuration = mode == "Outdoor" ? duration : duration == null ? duration : duration + "s"
     
     return (    
         <TouchableOpacity 
