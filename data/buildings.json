@@ -5,7 +5,8 @@
 	"location": {
             "x": 1.2948903220382768,
             "y": 103.77378095810657
-      	}
+    },
+    "busStop": "COM2"
     },
     "COM2": {
 	"name": "COM2",
@@ -13,7 +14,8 @@
 	"location": {
             "x": 1.2943219477845713, 
             "y": 103.77411407170536
-      	}
+    },
+    "busStop": "COM2"
     },
     "COM3": {
 	"name": "COM3",
@@ -21,7 +23,8 @@
 	"location": {
             "x": 1.2949222292208542, 
             "y": 103.77455378255516
-      	}
+    },
+    "busStop": "COM2"
     },
     "Hon Sui Sen Memorial Library": {
 	"name": "Hon Sui Sen Memorial Library",
@@ -29,7 +32,8 @@
 	"location": {
             "x": 1.2931335137255293, 
             "y": 103.77443248273022
-      	}
+    },
+    "busStop": "BIZ 2"
     },
     "BIZ1": {
 	"name": "BIZ1",
@@ -37,7 +41,8 @@
 	"location": {
             "x": 1.292496851980201,
             "y": 103.77408374585615 
-      	}
+    },
+    "busStop": "BIZ 2"
     },
     "BIZ2": {
 	"name": "BIZ2",
@@ -45,7 +50,8 @@
 	"location": {
             "x": 1.2934424785127683, 
             "y": 103.77511310292317
-      	}
+    },
+    "busStop": "BIZ 2"
     },
     "I3": {
 	"name": "I3",
@@ -53,7 +59,8 @@
 	"location": {
             "x": 1.2929210213148141, 
             "y": 103.77552855316338
-      	}
+    },
+    "busStop": "Opp HSSML"
     },
     "I4": {
 	"name": "I4",
@@ -61,7 +68,8 @@
 	"location": {
             "x": 1.2944651205026525, 
             "y": 103.77617743965936
-      	}
+    },
+    "busStop": "BIZ 2"
     },
     "Kent Ridge Hall": {
 	"name": "Kent Ridge Hall",
@@ -69,7 +77,8 @@
 	"location": {
             "x": 1.2918879680849846,  
             "y": 103.77478045622678 
-      	}
+    },
+    "busStop": "Opp HSSML"
     },
     "Sheares Hall": {
 	"name": "Sheares Hall",
@@ -77,7 +86,8 @@
 	"location": {
             "x": 1.2915393194639702,
             "y": 103.7756477509512   
-      	}
+    },
+    "busStop": "Opp HSSML"
     },
     "AS6": {
 	"name": "AS6",
@@ -85,7 +95,8 @@
 	"location": {
             "x": 1.2955727269054422,
             "y": 103.77324614051948  
-      	}
+    },
+    "busStop": "Central Library"
     },
     "AS8": {
 	"name": "AS8",
@@ -93,7 +104,8 @@
 	"location": {
             "x": 1.2960989453637741,
             "y": 103.77248528640412  
-      	}
+    },
+    "busStop": "Central Library"
     },
     "AS1": {
 	"name": "AS1",
@@ -101,7 +113,8 @@
 	"location": {
             "x": 1.295203316675941,
             "y": 103.77210441232205  
-      	}
+    },
+    "busStop": "Central Library"
     },
     "AS2": {
 	"name": "AS2",
@@ -109,7 +122,8 @@
 	"location": {
             "x": 1.2954071125808726,
             "y": 103.77118709660716
-      	}
+    },
+    "busStop": "Ventus"
     },
     "AS3": {
 	"name": "AS3",
@@ -117,7 +131,8 @@
 	"location": {
             "x": 1.294779635984649,
             "y": 103.77144458869358
-      	}
+    },
+    "busStop": "LT13"
     },
     "AS4": {
 	"name": "AS4",
@@ -125,7 +140,8 @@
 	"location": {
             "x": 1.2946562857748258,
             "y": 103.7718040047161
-      	}
+    },
+    "busStop": "AS5"
     },
     "AS5": {
 	"name": "AS5",
@@ -133,7 +149,8 @@
 	"location": {
             "x":1.2942535705736187, 
             "y": 103.77183647533423
-      	}
+    },
+    "busStop": "AS5"
     },
     "AS7": {
 	"name": "AS7",
@@ -141,7 +158,8 @@
 	"location": {
             "x": 1.294412718981773,
             "y": 103.77121532595655
-      	}
+    },
+    "busStop": "AS5"
     },
     "The Deck": {
 	"name": "The Deck",
@@ -149,7 +167,8 @@
 	"location": {
             "x": 1.294496973724799,
             "y": 103.77255438725938
-      	}
+    },
+    "busStop": "COM2"
     },
     "NUSS Kent Ridge Guild House": {
 	"name": "NUSS Kent Ridge Guild House",
@@ -157,7 +176,8 @@
 	"location": {
             "x": 1.2934883550718541,
             "y": 103.77312722373557
-      	}
+    },
+    "busStop": "Opp NUSS"
     },
     "Shaw Foundation Alumni House": {
 	"name": "Shaw Foundation Alumni House",
@@ -165,7 +185,8 @@
 	"location": {
             "x": 1.2934193670914846,
             "y": 103.77393960289012
-      	}
+    },
+    "busStop": "AS5"
     },
     "Ventus": {
 	"name": "Ventus",
@@ -173,7 +194,8 @@
 	"location": {
             "x": 1.2954001727665005, 
             "y": 103.77018039230353
-      	}
+    },
+    "busStop": "Ventus"
     },
     "Eusoff Hall": {
 	"name": "Eusoff Hall",
@@ -181,7 +203,8 @@
 	"location": {
             "x": 1.2938331092483417,
             "y": 103.77039983733505
-      	}
+    },
+    "busStop": "AS5"
     },
     "Temasek Hall": {
 	"name": "Temasek Hall",
@@ -189,7 +212,8 @@
 	"location": {
             "x": 1.2929331656924046, 
             "y": 103.77142988599336
-      	}
+    },
+    "busStop": "AS5"
     },
     "Institute of Systems Science": {
 	"name": "Institute of Systems Science",
@@ -197,7 +221,8 @@
 	"location": {
             "x": 1.2924229364640025, 
             "y": 103.77661072592679
-      	}
+    },
+    "busStop": "Opp HSSML"
     },    
     "Central Library": {
 	"name": "Central Library",
@@ -205,7 +230,8 @@
 	"location": {
             "x": 1.2967306421922211, 
             "y": 103.77354301573958
-      	}
+    },
+    "busStop": "Central Library"
     }, 
     "E5": {
 	"name": "E5",
@@ -213,7 +239,8 @@
 	"location": {
             "x": 1.2981612539259817, 
             "y": 103.77234131810269
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "NUS Information Technology": {
 	"name": "NUS Information Technology",
@@ -221,7 +248,8 @@
 	"location": {
             "x": 1.2976419533984924, 
             "y": 103.77273361767077
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "E4": {
 	"name": "E4",
@@ -229,7 +257,8 @@
 	"location": {
             "x": 1.2976419533984924, 
             "y": 103.77273361767077
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "E4A": {
 	"name": "E4A",
@@ -237,7 +266,8 @@
 	"location": {
             "x": 1.2986539620888853, 
             "y": 103.77260454052269
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "E8": {
 	"name": "E8",
@@ -245,7 +275,8 @@
 	"location": {
             "x": 1.2991275695778195, 
             "y": 103.77283896374652 
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "E3": {
 	"name": "E3",
@@ -253,7 +284,8 @@
 	"location": {
             "x": 1.2992203379771334,
             "y": 103.77130056461014
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "E2": {
 	"name": "E2",
@@ -261,7 +293,8 @@
 	"location": {
             "x": 1.2992370154502921,
             "y": 103.77134709758636
-      	}
+    },
+    "busStop": "EA"
     },
     "E2A": {
 	"name": "E2A",
@@ -269,7 +302,8 @@
 	"location": {
             "x": 1.2988366467525885,
             "y": 103.77137151644332
-      	}
+    },
+    "busStop": "SDE3"
     },
     "E1": {
 	"name": "E1",
@@ -277,7 +311,8 @@
 	"location": {
             "x": 1.2989635930404704,
             "y": 103.77109802344012
-      	}
+    },
+    "busStop": "SDE3"
     },
     "E1A": {
 	"name": "E1A",
@@ -285,7 +320,8 @@
 	"location": {
             "x": 1.2993883750797177,
             "y": 103.77081476262427
-      	}
+    },
+    "busStop": "SDE3"
     },
     "EW1": {
 	"name": "EW1",
@@ -293,7 +329,8 @@
 	"location": {
             "x": 1.2983565996081137, 
             "y": 103.77114139942664
-      	}
+    },
+    "busStop": "SDE3"
     },
     "EW1A": {
 	"name": "EW1A",
@@ -301,7 +338,8 @@
 	"location": {
             "x": 1.2993997112303939, 
             "y": 103.77035282981727
-      	}
+    },
+    "busStop": "SDE3"
     },
     "EA": {
 	"name": "EA",
@@ -309,7 +347,8 @@
 	"location": {
             "x": 1.300478424398456, 
             "y": 103.77064349492308 
-      	}
+    },
+    "busStop": "EA"
     },
     "E3A": {
 	"name": "E3A",
@@ -317,7 +356,8 @@
 	"location": {
             "x": 1.300333622340914, 
             "y": 103.77139987816079 
-      	}
+    },
+    "busStop": "EA"
     },
     "Techno Edge": {
 	"name": "Techno Edge",
@@ -325,7 +365,8 @@
 	"location": {
             "x": 1.2980409230968222, 
             "y": 103.7718558534839 
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "T-Lab": {
 	"name": "T-Lab",
@@ -333,7 +374,8 @@
 	"location": {
             "x": 1.2998375414749102, 
             "y": 103.77226623155678 
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "SDE1": {
 	"name": "SDE1",
@@ -341,7 +383,8 @@
 	"location": {
             "x": 1.2974795368983307, 
             "y": 103.77063058448309 
-      	}
+    },
+    "busStop": "SDE3"
     },
     "SDE2": {
 	"name": "SDE2",
@@ -349,7 +392,8 @@
 	"location": {
             "x": 1.297452672829959,
             "y": 103.77111873781563 
-      	}
+    },
+    "busStop": "SDE3"
     },
     "SDE3": {
 	"name": "SDE3",
@@ -357,7 +401,8 @@
 	"location": {
             "x": 1.297714596150673, 
             "y": 103.77063730221201
-      	}
+    },
+    "busStop": "SDE3"
     },
     "SDE4": {
 	"name": "SDE4",
@@ -365,7 +410,8 @@
 	"location": {
             "x": 1.2969374199174417,
             "y": 103.77034455132913 
-      	}
+    },
+    "busStop": "SDE3"
     },
     "CELC": {
 	"name": "CELC",
@@ -373,7 +419,8 @@
 	"location": {
             "x": 1.297066482166153, 
             "y": 103.77145129057699
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "Raffles Hall": {
 	"name": "Raffles Hall",
@@ -381,7 +428,8 @@
 	"location": {
             "x": 1.3001314585543082, 
             "y": 103.7741328624474
-      	}
+    },
+    "busStop": "Raffles Hall"
     },   
     "Kuok Foundation House": {
 	"name": "Kuok Foundation House",
@@ -389,7 +437,8 @@
 	"location": {
             "x": 1.300420013933161,
             "y": 103.7738057488293
-      	}
+    },
+    "busStop": "Raffles Hall"
     },
     "Runme Shaw CFA Studio": {
 	"name": "Runme Shaw CFA Studio",
@@ -397,7 +446,8 @@
 	"location": {
             "x": 1.2991836370959553, 
             "y": 103.77390656233186
-      	}
+    },
+    "busStop": "Raffles Hall"
     },
     "Yusof Ishak House": {
 	"name": "Yusof Ishak House",
@@ -405,7 +455,8 @@
 	"location": {
             "x": 1.2985208145887956,
             "y": 103.7750823237249
-      	}
+    },
+    "busStop": "YIH"
     },    
     "Ridge View Residential College": {
 	"name": "Ridge View Residential College",
@@ -413,7 +464,8 @@
 	"location": {
             "x": 1.297551268506784, 
             "y": 103.77709503271245
-      	}
+    },
+    "busStop": "Opp University Health Centre"
     },  
     "University Sports Centre": {
 	"name": "University Sports Centre",
@@ -421,7 +473,8 @@
 	"location": {
             "x": 1.2999128737444483, 
             "y": 103.77540477271441 
-      	}
+    },
+    "busStop": "University Health Centre"
     },
     "University Health Centre": {
 	"name": "University Health Centre",
@@ -429,7 +482,8 @@
 	"location": {
             "x": 1.2991301104103874, 
             "y": 103.77650066749554 
-      	}
+    },
+    "busStop": "University Health Centre"
     },
     "MPSH6": {
 	"name": "MPSH6",
@@ -437,7 +491,8 @@
 	"location": {
             "x": 1.3001937098498004, 
             "y": 103.77567939033008  
-      	}
+    },
+    "busStop": "University Health Centre"
     },
     "MPSH5": {
 	"name": "MPSH5",
@@ -445,7 +500,8 @@
 	"location": {
             "x": 1.3003247466315628, 
             "y": 103.7763760642867  
-      	}
+    },
+    "busStop": "University Health Centre"
     },
     "MPSH4": {
 	"name": "MPSH4",
@@ -453,7 +509,8 @@
 	"location": {
             "x": 1.30081991564688, 
             "y": 103.77606759035135  
-      	}
+    },
+    "busStop": "University Health Centre"
     },
     "Singapore Wind Tunnel Facility": {
 	"name": "Singapore Wind Tunnel Facility",
@@ -461,7 +518,8 @@
 	"location": {
             "x": 1.3008312150551047,
             "y": 103.77538264724707 
-      	}
+    },
+    "busStop": "University Health Centre"
     },
     "University Cultural Centre": {
 	"name": "University Cultural Centre",
@@ -469,7 +527,8 @@
 	"location": {
             "x": 1.3016324570547275, 
             "y": 103.77218204831472
-      	}
+    },
+    "busStop": "Museum"
     },
     "NUS Museum": {
 	"name": "NUS Museum",
@@ -477,7 +536,8 @@
 	"location": {
             "x": 1.301398809033632, 
             "y": 103.77271482402705 
-      	}
+    },
+    "busStop": "Museum"
     },
     "Yong Siew Toh Conservatory of Music": {
 	"name": "Yong Siew Toh Conservatory of Music",
@@ -485,7 +545,8 @@
 	"location": {
             "x": 1.3024989562109177, 
             "y": 103.77239650051601  
-      	}
+    },
+    "busStop": "Museum"
     },
     "Lee Kong Chian Natural History Museum": {
 	"name": "Lee Kong Chian Natural History Museum",
@@ -493,7 +554,8 @@
 	"location": {
             "x": 1.301726212833011, 
             "y": 103.77364684927231  
-      	}
+    },
+    "busStop": "Museum"
     },
     "University Hall": {
 	"name": "University Hall",
@@ -501,7 +563,8 @@
 	"location": {
             "x": 1.2972719445359893,
             "y": 103.77795498631293 
-      	}
+    },
+    "busStop": "University Hall"
     },
     "S12": {
 	"name": "S12",
@@ -509,7 +572,8 @@
 	"location": {
             "x": 1.2969827822039215, 
             "y": 103.77885432034832
-      	}
+    },
+    "busStop": "University Hall"
     },
     "S11": {
 	"name": "S11",
@@ -517,7 +581,8 @@
 	"location": {
             "x": 1.2966883224199215,
             "y": 103.77879109430559
-      	}
+    },
+    "busStop": "University Hall"
     }, 
     "S7": {
 	"name": "S7",
@@ -525,7 +590,8 @@
 	"location": {
             "x": 1.2963893073240014, 
             "y": 103.77880378857408
-      	}
+    },
+    "busStop": "University Hall"
     }, 
     "S8": {
 	"name": "S8",
@@ -533,7 +599,8 @@
 	"location": {
             "x": 1.296069024029309, 
             "y": 103.77927485972967
-      	}
+    },
+    "busStop": "University Hall"
     }, 
     "S9": {
 	"name": "S9",
@@ -541,7 +608,8 @@
 	"location": {
             "x": 1.295928860920285, 
             "y": 103.78021289749316
-      	}
+    },
+    "busStop": "LT27"
     }, 
     "S13": {
 	"name": "S13",
@@ -549,7 +617,8 @@
 	"location": {
             "x": 1.296935774065296, 
             "y": 103.77903318147351 
-      	}
+    },
+    "busStop": "University Hall"
     }, 
     "S14": {
 	"name": "S14",
@@ -557,7 +626,8 @@
 	"location": {
             "x": 1.2967937443014805, 
             "y": 103.77976625945868 
-      	}
+    },
+    "busStop": "LT27"
     }, 
     "S15": {
 	"name": "S15",
@@ -565,7 +635,8 @@
 	"location": {
             "x": 1.297085525145072, 
             "y": 103.78000990689662
-      	}
+    },
+    "busStop": "LT27"
     }, 
     "S16": {
 	"name": "S16",
@@ -573,7 +644,8 @@
 	"location": {
             "x": 1.2967609212336564, 
             "y": 103.78030931941854 
-      	}
+    },
+    "busStop": "LT27"
     }, 
     "Frontier": {
 	"name": "Frontier",
@@ -581,7 +653,8 @@
 	"location": {
             "x": 1.2964408221566914, 
             "y": 103.78046817660754
-      	}
+    },
+    "busStop": "Information Technology"
     },
     "S1A": {
 	"name": "S1A",
@@ -589,7 +662,8 @@
 	"location": {
             "x": 1.296355587290227, 
             "y": 103.77830478224361 
-      	}
+    },
+    "busStop": "University Hall"
     }, 
     "S1": {
 	"name": "S1",
@@ -597,7 +671,8 @@
 	"location": {
             "x": 1.2957780557828993, 
             "y": 103.77802033706917 
-      	}
+    },
+    "busStop": "University Hall"
     }, 
     "S2": {
 	"name": "S2",
@@ -605,7 +680,8 @@
 	"location": {
             "x": 1.2955415130867576, 
             "y": 103.77826606623161
-      	}
+    },
+    "busStop": "University Hall"
     },
     "S3": {
 	"name": "S3",
@@ -613,7 +689,8 @@
 	"location": {
             "x": 1.2956063382875047, 
             "y": 103.77869256800828 
-      	}
+    },
+    "busStop": "University Hall"
     },
     "S4": {
 	"name": "S4",
@@ -621,7 +698,8 @@
 	"location": {
             "x": 1.2956375842916872, 
             "y": 103.77909775924002
-      	}
+    },
+    "busStop": "University Hall"
     },
     "S4A": {
 	"name": "S4A",
@@ -629,7 +707,8 @@
 	"location": {
             "x": 1.2958210736788525, 
             "y": 103.7791473637601
-      	}
+    },
+    "busStop": "University Hall"
     },
     "S5": {
 	"name": "S5",
@@ -637,7 +716,8 @@
 	"location": {
             "x": 1.295537558995467, 
             "y": 103.77968212746677
-      	}
+    },
+    "busStop": "LT27"
     },
     "S6": {
 	"name": "S6",
@@ -645,7 +725,8 @@
 	"location": {
             "x": 1.2951356043849402,
             "y": 103.78032779594467 
-      	}
+    },
+    "busStop": "LT27"
     },
     "S17": {
 	"name": "S17",
@@ -653,7 +734,8 @@
 	"location": {
             "x": 1.2977736546990652, 
             "y": 103.78060719153312
-      	}
+    },
+    "busStop": "S17"
     },
     "Brenner Centre for Molecular Medicine": {
 	"name": "Brenner Centre for Molecular Medicine",
@@ -661,7 +743,8 @@
 	"location": {
             "x": 1.2947513972920088, 
             "y": 103.78080057008518 
-      	}
+    },
+    "busStop": "LT27"
     },
     "MD1": {
 	"name": "MD1",
@@ -669,7 +752,8 @@
 	"location": {
             "x": 1.2955651157176276, 
             "y": 103.780599938733
-      	}
+    },
+    "busStop": "LT27"
     },
     "MD2": {
 	"name": "MD2",
@@ -677,7 +761,8 @@
 	"location": {
             "x": 1.2950161992110876, 
             "y": 103.78115925891194 
-      	}
+    },
+    "busStop": "LT27"
     },
     "MD3": {
 	"name": "MD3",
@@ -685,7 +770,8 @@
 	"location": {
             "x": 1.2954435256098376, 
             "y": 103.78123234010079
-      	}
+    },
+    "busStop": "LT27"
     },
     "MD4": {
 	"name": "MD4",
@@ -693,7 +779,8 @@
 	"location": {
             "x": 1.2957297989187067,
             "y": 103.78095813947904 
-      	}
+    },
+    "busStop": "LT27"
     },
     "MD6": {
 	"name": "MD6",
@@ -701,7 +788,8 @@
 	"location": {
             "x": 1.295405991330804, 
             "y": 103.78169638738802
-      	}
+    },
+    "busStop": "LT27"
     },
     "MD7": {
 	"name": "MD7",
@@ -709,7 +797,8 @@
 	"location": {
             "x": 1.2960880134685093, 
             "y": 103.78120768346669 
-      	}
+    },
+    "busStop": "LT27"
     },
     "MD9": {
 	"name": "MD9",
@@ -717,7 +806,8 @@
 	"location": {
             "x": 1.2967707909782782, 
             "y": 103.78127499142008  
-      	}
+    },
+    "busStop": "LT27"
     },
     "MD10": {
 	"name": "MD10",
@@ -725,7 +815,8 @@
 	"location": {
             "x": 1.2964440783249447, 
             "y": 103.7818149157588   
-      	}
+    },
+    "busStop": "LT27"
     },
     "MD11": {
 	"name": "MD11",
@@ -733,7 +824,8 @@
 	"location": {
             "x": 1.2959457755432104, 
             "y": 103.78194549065846
-      	}
+    },
+    "busStop": "LT27"
     },
     "DSO Kent Ridge": {
 	"name": "DSO Kent Ridge",
@@ -741,7 +833,8 @@
 	"location": {
             "x": 1.2962601030225283,
             "y": 103.78137750696565 
-      	}
+    },
+    "busStop": "LT27"
     },
     "NUH Service Block": {
 	"name": "NUH Service Block",
@@ -749,7 +842,8 @@
 	"location": {
             "x": 1.296405475610604,
             "y": 103.78264475045982 
-      	}
+    },
+    "busStop": "LT27"
     },
     "National University Centre of Oral Health": {
 	"name": "National University Centre of Oral Health",
@@ -757,7 +851,8 @@
 	"location": {
             "x": 1.296122287135813,
             "y": 103.7832112741614
-      	}
+    },
+    "busStop": "LT27"
     },
     "NUH Main Building": {
 	"name": "NUH Main Building",
@@ -765,7 +860,8 @@
 	"location": {
             "x": 1.2947345033546471, 
             "y": 103.78312216836898
-      	}
+    },
+    "busStop": "Kent Ridge MRT"
     },
     "NUH Kent Ridge Wing": {
 	"name": "NUH Kent Ridge Wing",
@@ -773,7 +869,8 @@
 	"location": {
             "x": 1.2932251835871513,
             "y": 103.78353648738239
-      	}
+    },
+    "busStop": "Kent Ridge MRT"
     },
     "NUH Medical Centre": {
 	"name": "NUH Medical Centre",
@@ -781,7 +878,8 @@
 	"location": {
             "x": 1.2935172155544814, 
             "y": 103.7841440246631
-      	}
+    },
+    "busStop": "Kent Ridge MRT"
     },
     "NUHS Tower Block": {
 	"name": "NUHS Tower Block",
@@ -789,7 +887,8 @@
 	"location": {
             "x": 1.2923973293542095, 
             "y": 103.78337227660752
-      	}
+    },
+    "busStop": "Kent Ridge MRT"
     },
     "Technology Centre for Offshore and Marine, Singapore": {
 	"name": "Technology Centre for Offshore and Marine, Singapore",
@@ -797,7 +896,8 @@
 	"location": {
             "x": 1.2935541487937694, 
             "y": 103.77691741819642 
-      	}
+    },
+    "busStop": "TCOMS"
     },
     "Temasek Life Sciences Laboratory": {
 	"name": "Temasek Life Sciences Laboratory",
@@ -805,7 +905,8 @@
 	"location": {
             "x": 1.2942835563994735, 
             "y": 103.77676091320977 
-      	}
+    },
+    "busStop": "Opp TCOMS"
     },
     "King Edward VII Hall": {
 	"name": "King Edward VII Hall",
@@ -813,7 +914,8 @@
 	"location": {
             "x": 1.292481045849006, 
             "y": 103.78105606378516 
-      	}
+    },
+    "busStop": "Opp PGP"
     },
     "Prince George's Park Residences": {
 	"name": "Prince George's Park Residences",
@@ -821,7 +923,8 @@
 	"location": {
             "x": 1.2908286663829778, 
             "y": 103.78108565295223
-      	}
+    },
+    "busStop": "PGP Residences"
     },
     "Institute of Mathematical Sciences": {
 	"name": "Institute of Mathematical Sciences",
@@ -829,7 +932,8 @@
 	"location": {
             "x": 1.2928444852872272, 
             "y": 103.77976256829119
-      	}
+    },
+    "busStop": "Opp TCOMS"
     },
     "Office of Campus Security HQ": {
 	"name": "Office of Campus Security HQ",
@@ -837,7 +941,8 @@
 	"location": {
             "x": 1.292396525583254, 
             "y": 103.77933140242246 
-      	}
+    },
+    "busStop": "TCOMS"
     },
     "CREATE": {
 	"name": "CREATE",
@@ -845,7 +950,8 @@
 	"location": {
             "x": 1.3037511721898916, 
             "y": 103.77388362138667  
-      	}
+    },
+    "busStop": "University Town"
     },
     "Stephen Riady Centre": {
 	"name": "Stephen Riady Centre",
@@ -853,7 +959,8 @@
 	"location": {
             "x": 1.3046215079154204, 
             "y": 103.77248035299189  
-      	}
+    },
+    "busStop": "University Town"
     },
     "Education Resource Centre": {
 	"name": "Education Resource Centre",
@@ -861,7 +968,8 @@
 	"location": {
             "x": 1.3057823601449507,  
             "y": 103.77272477888157 
-      	}
+    },
+    "busStop": "University Town"
     },
     "Tembusu College": {
 	"name": "Tembusu College",
@@ -869,7 +977,8 @@
 	"location": {
             "x": 1.3061804783631257, 
             "y": 103.77376285337381  
-      	}
+    },
+    "busStop": "University Town"
     },
     "Utown Residence": {
 	"name": "Utown Residence",
@@ -877,7 +986,8 @@
 	"location": {
             "x": 1.3051971232342636,  
             "y": 103.77391742920383  
-      	}
+    },
+    "busStop": "University Town"
     },
     "Cinnamon College": {
 	"name": "Cinnamon College",
@@ -885,7 +995,8 @@
 	"location": {
             "x": 1.306689498086747,
             "y": 103.77353276888957   
-      	}
+    },
+    "busStop": "University Town"
     },
     "Chua Thian Poh Hall": {
 	"name": "Chua Thian Poh Hall",
@@ -893,7 +1004,8 @@
 	"location": {
             "x": 1.3070423052349553, 
             "y": 103.77330691358875   
-      	}
+    },
+    "busStop": "University Town"
     },
     "College of Alice and Peter Tan": {
 	"name": "College of Alice and Peter Tan",
@@ -901,7 +1013,8 @@
 	"location": {
             "x": 1.3075821005541164, 
             "y": 103.77320810179201  
-      	}
+    },
+    "busStop": "University Town"
     },
     "Residential College 4": {
 	"name": "Residential College 4",
@@ -909,7 +1022,8 @@
 	"location": {
             "x": 1.308246674299386, 
             "y": 103.77330461190921
-      	}
+    },
+    "busStop": "University Town"
     },
     "Yale-NUS College": {
 	"name": "Yale-NUS College",
@@ -917,6 +1031,7 @@
 	"location": {
             "x": 1.3069746834160414, 
             "y": 103.77199705523944
-      	}
+    },
+    "busStop": "University Town"
     }
 }
