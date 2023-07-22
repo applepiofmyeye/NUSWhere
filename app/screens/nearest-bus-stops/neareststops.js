@@ -44,7 +44,7 @@ export default function NearestStops() {
         try {
             const location = await Promise.race([
                 locationPromise,
-                new Promise((resolve, reject) => setTimeout(() => reject(new Error('Unable to retrieve location. Please refresh.')), 10000))
+                new Promise((resolve, reject) => setTimeout(() => reject(new Error('Unable to retrieve location. Please refresh.')), 5000))
             ]);
             console.log('Location:', location);
             return location;
@@ -52,6 +52,7 @@ export default function NearestStops() {
             // Handle the error if the location couldn't be obtained within the specified timeout
             Alert.alert("Request timeout", error.message);
             setLoading(false);
+            setBusStopOrderedData(busStopData);
         }
       }
     
@@ -177,18 +178,18 @@ export default function NearestStops() {
                     renderItem={renderItem}
                     keyExtractor={(item, index) => `${item.id}-${index}`}
             />}
-
+            
             {loading && <Text>Loading..</Text>}
 
             {busStopOrderedData.length === 0 && !loading &&
                 <View>
                     <Text>No data available.</Text>
-                    <CustomButton
-                        text={"REFRESH"}
-                        onPress={() => onRefresh()}></CustomButton>
-
                 </View>
             }
+
+            <CustomButton
+                    text={"REFRESH"}
+                    onPress={() => onRefresh()}></CustomButton>
 
         </SafeAreaView>
     )
