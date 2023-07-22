@@ -83,7 +83,7 @@ async function queryFR(params, uid) {
 }
 
 async function getFavouriteRoutes(uid) {
-    console.log("in firebase::getFavouriteRoutes");
+    //console.log("in firebase::getFavouriteRoutes");
     const q = query(collection(db, "favouriteRoutes"), where("uid", "==", uid));
     const querySnapshot = await getDocs(q);
     let hrefParams = [];
@@ -101,7 +101,14 @@ const photosStorage = getStorage(app, "gs://photos-linkways")
 // LOAD BUS STOPS INTO FIREBASE -- ONLY NEED TO DO ONCE
 const busColRef = collection(db, "busStopNeighbors");
 
+// LOAD BUSSTOPS
 const busStopJson = require('../data/bus-stops.json');
+
+// LOAD VENUES
+const venuesJson = require("../data/venues.json")
+
+// LOAD BUILDINGS INTO FIREBASE
+const buildingsJson = require('../data/buildings.json')
 
 const loadBusStopData = async () => {
     try {
@@ -163,18 +170,72 @@ function findBestBusRoute(start, destination) {
   const parent = {};
   const parentRoute = {};
 
-  queue.push(start);
-  visited.add(start);
+  let startBusStop = null;
+  let startIsBusStop = true;
+  let endBusStop = null;
+  let endIsBusStop = true;
 
+  for (const key of Object.keys(buildingsJson)) {   
+    if (buildingsJson[key].name === start) {
+      startBusStop = buildingsJson[key].busStop;
+      startIsBusStop = false;
+      break;
+    }
+  }
 
+  for (const key of Object.keys(buildingsJson)) {
+    if (buildingsJson[key].name === destination) {
+      endBusStop = buildingsJson[key].busStop;
+      endIsBusStop = false;
+      break;
+    }
+  }
+
+  for (const key of Object.keys(venuesJson)) {
+    if (key === start) {
+      startBusStop = venuesJson[key].busStop; 
+      startIsBusStop = false;
+      break;
+    } 
+  }
+
+  for (const key of Object.keys(venuesJson)) {
+    if (key === destination) {
+      endBusStop = venuesJson[key].busStop;
+      endIsBusStop = false;
+      break;
+    }
+  }
+
+  if (startBusStop === null) {
+    queue.push(start);
+    visited.add(start);
+  } else {
+    queue.push(startBusStop);
+    visited.add(startBusStop);
+  }
+
+  console.log("startBusStop", startBusStop);
+  console.log("endBusStop", endBusStop)
   while (queue.length > 0) {
     const currentNode = queue.shift();
+    console.log('Current node: ', currentNode);
 
-    if (currentNode === destination) {
-      // Destination reached, construct and return the route
-      return constructRoute(parent, parentRoute, start, destination);
+    if (startIsBusStop && endIsBusStop) {
+      if (currentNode === destination) {
+        return constructRoute(parent, parentRoute, start, destination, destination);
+      }
+    } else if (startIsBusStop && !endIsBusStop) {
+      if (currentNode === endBusStop) {
+        return constructRoute(parent, parentRoute, start, endBusStop, destination);
+      }
+    } else if (!startIsBusStop && !endIsBusStop) {
+      if (currentNode === endBusStop) {
+        return constructRoute(parent, parentRoute, startBusStop, endBusStop, destination);
+      }
     }
 
+    console.log('neighborBusSet: ', neighborBusSet);
     const currentNeighbors = neighborBusSet[currentNode];
     if (currentNeighbors == undefined) {
       console.log("No valid route found.")
@@ -183,12 +244,17 @@ function findBestBusRoute(start, destination) {
 
     for (const n of currentNeighbors) {
       if (!visited.has(n)) {
-        console.log("")
+        console.log("in queue ", n)
         queue.push(n);
         visited.add(n);
         parent[n] = currentNode;
-        parentRoute[n] = routesBusSet[currentNode] || {};
-        parentRoute[n][currentNode] = routesBusSet[currentNode][n];
+        parentRoute[currentNode] = routesBusSet[currentNode]; // || {};
+        /*
+        console.log(routesBusSet[currentNode]);
+        console.log(parentRoute[currentNode]);
+        parentRoute[currentNode][n] = routesBusSet[currentNode][n];
+        console.log(parentRoute[currentNode][n]);
+        */
       }
     }
   }
@@ -197,38 +263,60 @@ function findBestBusRoute(start, destination) {
   return null;
 }
 
-function constructRoute(parent, parentRoute, start, destination) {
+function constructRoute(parent, parentRoute, startBusStop, endBusStop, destination) {
   console.log('Constructing Route')
+  console.log('Parent route: ', parentRoute);
+  console.log('Parent ', parent);
   const route = [];
-  let current = destination;
 
-  while (current !== start) {
+  let current = endBusStop;
+
+  while (current !== startBusStop) {
     route.unshift(current);
     current = parent[current];
   }
 
-  route.unshift(start);
+  route.unshift(startBusStop);
 
+
+  console.log('route ', route);
+  const newRoute = []
   const busRoutes = [];
+  const buses = [];
   for (let i = 0; i < route.length - 1; i++) {
     const from = route[i];
     const to = route[i + 1];
-    busRoutes.push(parentRoute[to][from]);
-
+    console.log(i + ' ' + from);
+    console.log(i + ' ' + to);
+    newRoute[i + 1] = route[i + 1] + ". To reach, take bus:" + parentRoute[from][to].map(x => " " + x);
+    busRoutes.push(parentRoute[from][to]);
   }
-  console.log("Route: " + route);
-  console.log("BusRoutes: " + busRoutes);
+  newRoute[0] = "Walk to Bus Stop: " + route[0];
+  newRoute.push("Walk to " + destination);
+  function inArray(element, array) {
+    let bool = false;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] === element) {
+        bool = true;
+      }
+    }
+    return bool;
+  }
+  for (let i = 0; i < busRoutes.length; i++) {
+    const curr = busRoutes[i];
+    for (let j = 0; j < curr.length; j++) {
+      if (!inArray(curr[j], buses)) {
+        buses.push(curr[j]);
+      }
+    }
+  }
+  console.log("Route: " , newRoute);
+  console.log("BusRoutes: " , buses);
   return {
-    route: route,
-    busRoutes: busRoutes,
+    route: newRoute,
+    busRoutes: buses,
   };
 }
-
-//LOAD VENUES
-const venuesJson = require("../data/venues.json")
-
-// LOAD BUILDINGS INTO FIREBASE
-const buildingsJson = require('../data/buildings.json')
 
 const buildingColRef = collection(db, "buildingNeighbors")
 
