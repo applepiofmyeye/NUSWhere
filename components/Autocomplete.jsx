@@ -47,12 +47,25 @@ const Autocomplete = ({
             style={style}
             onChangeText={(text) => {
               origOnChange(text);
-              if (text && text.length > 0) {
-                setFilteredData(filterData(text));
-              } else if (text && text.length === 0) {
-                setFilteredData(data);
+              if (text.length > 0) {
+                console.log('text', text);
+                if (filterData(text).length === 0 && filterData.length === 0) {
+                  console.log("in here");
+                  setFilteredData([]);
+                  setMenuVisible(false);
+                } else if (filterData(text).length === 0) {
+                  console.log('Check here', text)
+                  setFilteredData(['No such venue.']);
+                  setMenuVisible(true);
+                } else {
+                  setFilteredData(filterData(text));
+                  setMenuVisible(true);
+                }
+              } else if (text.length === 0) {
+                setFilteredData([]);
+                setMenuVisible(false);
               }
-              setMenuVisible(true);
+              //setMenuVisible(true);
               setValue(text);
             }}
             value={value}
@@ -74,30 +87,39 @@ const Autocomplete = ({
                   icon={icon}
                   onPress={() => {
                     // to allow for other uses: eg searching bus stops
+                    if (datum === 'No such venue.') {
+                      setValue('');
+                      setFilteredData([]);
+                      Alert.alert('No venue', 'Please re-enter another venue.')
+                    }
                     if (usage === 'mappage') {
                       let location;
                       if (roomCodeCoords.get(datum) != null) {
                         location = roomCodeCoords.get(datum)[2];
                         if (location != null) {
+                          setValue(datum);
                           const markerLocation = {latitude: location.y, longitude: location.x}; 
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
                       } 
+                      /*
                       else if (busStopCoords.get(datum) != null) {
                         location = busStopCoords.get(datum); 
                         if (location != null) {
+                          setValue(datum);
                           const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
                       } 
+                      */
                       else if (buildingCoords.get(datum) != null) {
                         location = buildingCoords.get(datum);
                         if (location != null) {
+                          setValue(datum);
                           const markerLocation = {latitude: location.x, longitude: location.y}; 
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
                       } 
-                      setValue(datum);
                       setMenuVisible(false);
                       Keyboard.dismiss();
                     }
