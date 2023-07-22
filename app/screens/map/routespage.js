@@ -27,16 +27,9 @@ export default function RoutesPage() {
     const [isLoading, setIsLoading] = useState(false)
     const [loading, setLoading] = useState(true)
 
-
     // Image rendering (Sheltered Routes)
     const [url, setUrl] = useState([])
     // const [carouselIndex, setCarouselIndex] = useState(0) not used.
-
-
-
-
-
-
 
     useEffect(() => {
         
@@ -129,8 +122,6 @@ export default function RoutesPage() {
 
         // }
         
-    
-
         fetchPhotoData();
         fetchFavouritesData();
         // setPhotoData();
@@ -175,7 +166,7 @@ export default function RoutesPage() {
         const formattedI = i.i
 
         return (
-        <View style={{alignItems: "center"}}>
+            <View style={{alignItems: "center"}}>
                 <FlatList
                     // onMomentumScrollEnd={onScrollEnd}
                     onViewableItemsChanged={onViewableItemsChanged}
@@ -198,46 +189,42 @@ export default function RoutesPage() {
                                         style={[styles.image]}
                                     /> 
                                 </View>
-                            )
-                            
-                        }
-                    
+                            )                           
+                        }                    
                     }
                 />
         
 
-            {url[formattedI].length > 1 && <AnimatedDotsCarousel
-            length={url[formattedI].length}
-            currentIndex={visibleIndex}
-            maxIndicators={5}
-            interpolateOpacityAndColor={true}
-            activeIndicatorConfig={{
-                color: COLORS.pressedBtn,
-                margin: 3,
-                opacity: 1,
-                size: 8,
-            }}
-            inactiveIndicatorConfig={{
-                color: COLORS.unpressedBtn,
-                margin: 3,
-                opacity: 0.5,
-                size: 8,
-            }}
-            decreasingDots={[{
-                config: { color: COLORS.unpressedBtn, margin: 3, opacity: 0.5, size: 6 },
-                quantity: 1,
-            },
-            {
-                config: { color: COLORS.unpressedBtn, margin: 3, opacity: 0.5, size: 4 },
-                quantity: 1,
-            },
-            ]}
-            
-            />}
+                { url[formattedI].length > 1 && <AnimatedDotsCarousel
+                    length={url[formattedI].length}
+                    currentIndex={visibleIndex}
+                    maxIndicators={5}
+                    interpolateOpacityAndColor={true}
+                    activeIndicatorConfig={{
+                        color: COLORS.pressedBtn,
+                        margin: 3,
+                        opacity: 1,
+                        size: 8,
+                    }}
+                    inactiveIndicatorConfig={{
+                        color: COLORS.unpressedBtn,
+                        margin: 3,
+                        opacity: 0.5,
+                        size: 8,
+                    }}
+                    decreasingDots={[{
+                        config: { color: COLORS.unpressedBtn, margin: 3, opacity: 0.5, size: 6 },
+                        quantity: 1,
+                    },
+                    {   config: { color: COLORS.unpressedBtn, margin: 3, opacity: 0.5, size: 4 },
+                        quantity: 1,
+                    },
+                    ]}
+                
+                />}
 
-        </View>)
-        
-    }
+            </View>
+        )}
 
     const FavouritesBtn = () => {
         if (loading) {
@@ -351,7 +338,7 @@ export default function RoutesPage() {
             }}>
                 {mode} Route
             </Text>
-
+            
             {mode == "Bus" && (
                 <Text style={{
                     fontFamily: FONT.iLight,
