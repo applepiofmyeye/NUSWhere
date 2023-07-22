@@ -6,6 +6,7 @@ import styles from "./registerdiv.style";
 import { auth } from '../../../app/firebase';
 import { useRouter } from "expo-router";
 import { FirebaseError } from '../Error/FirebaseError';
+import { AuthStore } from "../../../store";
 
 
 export default function RegisterDiv() {  
@@ -23,8 +24,8 @@ export default function RegisterDiv() {
   const [modalErrorVisible, setModalErrorVisible] = useState(false)
 
   const router = useRouter()
-  const login = () => {
-    router.replace("../../../auth/login");
+  const profile = () => {
+    router.replace("../../../screens");
   }
 
   const validator = require('validator');
@@ -71,7 +72,11 @@ export default function RegisterDiv() {
             console.log('Registered with:', user.email);
             user.updateProfile({
               displayName: username
-            })
+            });
+            AuthStore.update((s) => {
+              s.isLoggedIn = true;
+              s.user = user;
+            });
             setModalSuccessVisible(true);
           }).catch(error => {
             setModalErrorVisible(true);
@@ -127,8 +132,8 @@ export default function RegisterDiv() {
             <Text style={styles.modalText}>You have successfully registered an account with us!</Text>
             <Pressable
               style={styles.modalButton}
-              onPress={login}>
-              <Text style={styles.buttonTextStyle}>Return to login page</Text>
+              onPress={profile}>
+              <Text style={styles.buttonTextStyle}>Go to profile page</Text>
             </Pressable>
           </View>
         </View>
