@@ -1,6 +1,6 @@
 ![alt_text](images/image1.png "image_tooltip")
 
-**NUSWhere?**
+# **NUSWhere?**
 
 National University of Singapore
 
@@ -15,8 +15,16 @@ Proposed Level of Achievement: Apollo
 Year: 2023
 
 Content
-
-[TOC]
+[Getting Started](https://github.com/applepiofmyeye/NUSWhere#getting-started)
+[Project Overview](https://github.com/applepiofmyeye/NUSWhere#project-overview)
+[Features](https://github.com/applepiofmyeye/NUSWhere#features)
+[Complex Features](https://github.com/applepiofmyeye/NUSWhere#complex-features)
+[Known Issues](https://github.com/applepiofmyeye/NUSWhere#known-issues-problems-encountered)
+[Software Engineering Practices](https://github.com/applepiofmyeye/NUSWhere#software-engineering-practices)
+[Testing](https://github.com/applepiofmyeye/NUSWhere#testing-1)
+[Tech Stack](https://github.com/applepiofmyeye/NUSWhere#tech-stack)
+[Development Plan](https://github.com/applepiofmyeye/NUSWhere#development-plan)
+[Project Links](https://github.com/applepiofmyeye/NUSWhere#project-links)
 
 ##
 
@@ -155,7 +163,7 @@ Furthermore, there are currently some venues that are absent in our JSON files, 
 
 Upon clicking the menu items, markers will then indicate the user’s current location and the selected destination venue. The button “Routes” will then appear at the bottom of the screen, taking users to the Routes Screen.
 
-![alt_text](images/image7.jpg "image_tooltip")
+![alt_text](images/image7.png "image_tooltip")
 
 Image: Indicators on map and route button appear on screen
 
