@@ -74,6 +74,7 @@ export default function NearestStops() {
                     'Allow location access in your phone settings for better functionality.'
                 );
                 setBusStopOrderedData(busStopData);
+                setLoading(false);
             } else {
                 getLocationAsyncWithTimeout().then(loc => {
                     const orderedData = geolib.orderByDistance(
