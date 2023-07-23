@@ -647,15 +647,6 @@
     },
     "busStop": "LT27"
     }, 
-    "Frontier": {
-	"name": "Frontier",
-	"neighbours": ["S9", "S13"],
-	"location": {
-            "x": 1.2964408221566914, 
-            "y": 103.78046817660754
-    },
-    "busStop": "Information Technology"
-    },
     "S1A": {
 	"name": "S1A",
 	"neighbours": [],
