@@ -26,7 +26,10 @@ export default function MapPage() {
 
     const scrollA = useRef(new Animated.Value(0)).current;
 
-
+    const handleCardDrag = Animated.event(
+        [{ nativeEvent: { contentOffset: { y: scrollA } } }],
+        { useNativeDriver: true }
+    );
 
     const router = useRouter();
     const [selectedMarker, setSelectedMarker] = useState(null);
@@ -34,6 +37,7 @@ export default function MapPage() {
     const [origin, setOrigin] = useState(null);
     const [destination, setDestination] = useState(null);
     const [showRoute, setShowRoute] = useState(false);
+    const [scrollEnabled, setScrollEnabled] = useState(false);
 
     const handler = (directions, duration, all, mode, route, o, d) => {
         if (!directions || (mode === 'Bus' && !route)) { return Alert.alert("No route", "Whoops! No available route currently.", [
@@ -88,20 +92,20 @@ export default function MapPage() {
 
         <View style={styles.container}>
             <Stack.Screen options={{ headerShown: false, headerBackButtonMenuEnabled: true}}/>
-                {/* <Animated.ScrollView
+                 <Animated.ScrollView
                         onScroll={handleCardDrag}
                         scrollEventThrottle={16}
                         style={styles.scrollableCard}
                         scrollEnabled={scrollEnabled}
 
-                    > */}
+                    > 
             
-                {/* <Animated.View
+                 <Animated.View
                     style={[
                     styles.bannerContainer,
                     { transform: [{ translateY: scrollA }], },
                     ]}
-                > */}
+                > 
                     
                     <MapView style={styles.map} region = {mapRegion}>
 
@@ -121,7 +125,7 @@ export default function MapPage() {
 
                     
                     
-                {/* </Animated.View> */}
+                </Animated.View> 
                     
                     {!showRoute && 
                     <Autocomplete
@@ -162,7 +166,7 @@ export default function MapPage() {
                     {showRoute && <View style={{flex: 5}}></View>}
 
                     
-                {/* </Animated.ScrollView> */}
+                </Animated.ScrollView>
                  
                 <View style={{position: "absolute", bottom: 20}}>
                         {origin != destination && origin && destination && showDirectionsBtn && (
