@@ -11,6 +11,7 @@ import { CustomButton } from "../../../components";
 export default function NearestStops() {
     console.log("in Neareststops");
     const [loading, setLoading] = useState(true);
+    const [refreshVisible, setRefreshVisible] = useState(false);
 
     const busStopJson = require("../../../data/bus-stops.json")
     const busStopData = [];
@@ -44,15 +45,21 @@ export default function NearestStops() {
         try {
             const location = await Promise.race([
                 locationPromise,
-                new Promise((resolve, reject) => setTimeout(() => reject(new Error('Unable to retrieve location. Please refresh.')), 5000))
+                new Promise((resolve, reject) => {
+                    setTimeout(() => reject(new Error('Unable to retrieve location. Please refresh.')), 10000);
+                }
+                )
             ]);
             console.log('Location:', location);
+            setLoading(false)
             return location;
         } catch (error) {
             // Handle the error if the location couldn't be obtained within the specified timeout
             Alert.alert("Request timeout", error.message);
             setLoading(false);
             setBusStopOrderedData(busStopData);
+            setRefreshVisible(true);
+
         }
       }
     
@@ -68,7 +75,6 @@ export default function NearestStops() {
                     'Allow location access in your phone settings for better functionality.'
                 );
                 setBusStopOrderedData(busStopData);
-                setLoading(false);
             } else {
                 getLocationAsyncWithTimeout().then(loc => {
                     const orderedData = geolib.orderByDistance(
@@ -92,6 +98,7 @@ export default function NearestStops() {
 
     const onRefresh = () => {
         setLoading(true);
+        setRefreshVisible(false)
         findUserLocation();
     }
 
@@ -181,15 +188,22 @@ export default function NearestStops() {
             
             {loading && <Text>Loading..</Text>}
 
-            {busStopOrderedData.length === 0 && !loading &&
+            {!loading && refreshVisible && (
                 <View>
-                    <Text>No data available.</Text>
-                </View>
-            }
-
-            <CustomButton
+                    <CustomButton
                     text={"REFRESH"}
                     onPress={() => onRefresh()}></CustomButton>
+                </View>
+            )}
+
+            
+            
+        
+
+
+            
+
+            
 
         </SafeAreaView>
     )
