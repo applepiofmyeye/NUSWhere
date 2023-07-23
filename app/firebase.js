@@ -18,6 +18,7 @@ import {
  } from "firebase/firestore";
 import { getStorage } from 'firebase/storage'
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyCi0nWW_ksUwL8I2VwSIty2GGi3BGcrKtw",
     authDomain: "nuswhere-e219d.firebaseapp.com",
@@ -163,13 +164,14 @@ for (let i = 0; i < busStopJson.length; i++) {
   });
 }
 
-// FIND SHORTEST BUS ROUTES 
+// Find shortest bus route
 function findBestBusRoute(start, destination) {
-  const queue = [];
-  const visited = new Set();
-  const parent = {};
-  const parentRoute = {};
+  const queue = []; // Stores bus stops to visit.
+  const visited = new Set(); // Stores bus stops already visited.
+  const parent = {}; // Stores bus stop that is previously visited before visiting the current bus stop.
+  const parentRoute = {}; // Stores relevant bus stop information of the parent.
 
+  // Variables to check if start and destination provided is a venue/building name.
   let startBusStop = null;
   let startIsBusStop = true;
   let endBusStop = null;
@@ -215,11 +217,9 @@ function findBestBusRoute(start, destination) {
     visited.add(startBusStop);
   }
 
-  console.log("startBusStop", startBusStop);
-  console.log("endBusStop", endBusStop)
+  // BFS algorithm
   while (queue.length > 0) {
     const currentNode = queue.shift();
-    console.log('Current node: ', currentNode);
 
     if (startIsBusStop && endIsBusStop) {
       if (currentNode === destination) {
@@ -235,42 +235,27 @@ function findBestBusRoute(start, destination) {
       }
     }
 
-    console.log('neighborBusSet: ', neighborBusSet);
     const currentNeighbors = neighborBusSet[currentNode];
-    if (currentNeighbors == undefined) {
-      console.log("No valid route found.")
-      return null;
-    }
 
     for (const n of currentNeighbors) {
       if (!visited.has(n)) {
-        console.log("in queue ", n)
         queue.push(n);
         visited.add(n);
         parent[n] = currentNode;
-        parentRoute[currentNode] = routesBusSet[currentNode]; // || {};
-        /*
-        console.log(routesBusSet[currentNode]);
-        console.log(parentRoute[currentNode]);
-        parentRoute[currentNode][n] = routesBusSet[currentNode][n];
-        console.log(parentRoute[currentNode][n]);
-        */
+        parentRoute[currentNode] = routesBusSet[currentNode]; 
       }
     }
   }
-
   // No valid route found
   return null;
 }
 
 function constructRoute(parent, parentRoute, startBusStop, endBusStop, destination) {
-  console.log('Constructing Route')
-  console.log('Parent route: ', parentRoute);
-  console.log('Parent ', parent);
   const route = [];
 
   let current = endBusStop;
 
+  // Retracing bus route
   while (current !== startBusStop) {
     route.unshift(current);
     current = parent[current];
@@ -278,11 +263,9 @@ function constructRoute(parent, parentRoute, startBusStop, endBusStop, destinati
 
   route.unshift(startBusStop);
 
-
-  console.log('route ', route);
-  const newRoute = []
-  const busRoutes = [];
-  const buses = [];
+  const newRoute = []; // What will be displayed in the routes page, elements are direction step.
+  const busRoutes = []; // Stores the buses to take from one stop to another.
+  const buses = []; // Store all buses that users may need to take.
   for (let i = 0; i < route.length - 1; i++) {
     const from = route[i];
     const to = route[i + 1];
@@ -293,6 +276,7 @@ function constructRoute(parent, parentRoute, startBusStop, endBusStop, destinati
   }
   newRoute[0] = "Walk to Bus Stop: " + route[0];
   newRoute.push("Walk to " + destination);
+
   function inArray(element, array) {
     let bool = false;
     for (let i = 0; i < array.length; i++) {
@@ -302,6 +286,7 @@ function constructRoute(parent, parentRoute, startBusStop, endBusStop, destinati
     }
     return bool;
   }
+
   for (let i = 0; i < busRoutes.length; i++) {
     const curr = busRoutes[i];
     for (let j = 0; j < curr.length; j++) {
@@ -310,8 +295,7 @@ function constructRoute(parent, parentRoute, startBusStop, endBusStop, destinati
       }
     }
   }
-  console.log("Route: " , newRoute);
-  console.log("BusRoutes: " , buses);
+
   return {
     route: newRoute,
     busRoutes: buses,
