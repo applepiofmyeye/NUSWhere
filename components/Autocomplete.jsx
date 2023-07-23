@@ -1,4 +1,4 @@
-import { Alert, Keyboard, View } from "react-native";
+import { Alert, Keyboard, View, ScrollView } from "react-native";
 import { Menu, TextInput } from "react-native-paper";
 import React, { useState } from "react";
 import { COLORS } from "../constants";
@@ -71,7 +71,7 @@ const Autocomplete = ({
             value={value}
           />
           {menuVisible && filteredData && (
-            <View
+            <ScrollView
               style={{
                 flex: 1,
                 backgroundColor: COLORS.background,
@@ -127,7 +127,7 @@ const Autocomplete = ({
                   title={datum}
                 />
               ))}
-            </View>
+            </ScrollView>
           )}
         </View>
       );
