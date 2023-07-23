@@ -98,14 +98,13 @@ export default function NearestStops() {
             if (lat1 !== null) {
                 try {
                     const orderedData = geolib.orderByDistance(
-                    { latitude: lat1, longitude: long1 },
-                  busStopCoords
-                ).map((x) => {
-                    return busStopData.find(
-                        (busStop) =>
-                        x.latitude === busStop.latitude && x.longitude === busStop.longitude
-                    );
-                });
+                        { latitude: lat1, longitude: long1 }, busStopCoords
+                        )
+                    .map((x) => {
+                        return busStopData.find(
+                            (busStop) =>
+                            x.latitude === busStop.latitude && x.longitude === busStop.longitude);
+                        });
           
                 setBusStopOrderedData(orderedData);
                 } catch (error) {
@@ -223,9 +222,15 @@ export default function NearestStops() {
                 data={busStopOrderedData}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => `${item.id}-${index}`}
+                refreshing={loading}
+                onRefresh={() => {
+                    setLoading(true)
+                    setLat1(null); 
+                    setLong1(null);
+                }}
             />}
 
-            {loading && <Text>Loading..</Text>}
+            {loading && !lat1 && <Text>Loading..</Text>}
 
             {busStopOrderedData.length === 0 && !loading &&
             <View>

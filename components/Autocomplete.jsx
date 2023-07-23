@@ -113,7 +113,13 @@ const Autocomplete = ({
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
                         
-                      } 
+                      } else {
+                        return Alert.alert("Location Unavailable", "Sorry! We currently don't have enough data for this venue.", [{
+                          text: "OK",
+                          onPress: () => {},
+                          style: 'cancel'                      
+                        }])
+                      }
                       
   
                       setValue(datum);
