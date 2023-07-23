@@ -171,6 +171,10 @@ function findBestBusRoute(start, destination) {
   const parent = {}; // Stores bus stop that is previously visited before visiting the current bus stop.
   const parentRoute = {}; // Stores relevant bus stop information of the parent.
 
+  if (start === destination) {
+    return null;
+  }
+
   // Variables to check if start and destination provided is a venue/building name.
   let startBusStop = null;
   let startIsBusStop = true;
@@ -209,14 +213,13 @@ function findBestBusRoute(start, destination) {
     }
   }
 
-  if (startBusStop === null) {
-    queue.push(start);
-    visited.add(start);
-  } else {
-    queue.push(startBusStop);
-    visited.add(startBusStop);
+  if (startBusStop == endBusStop) {
+    return null;
   }
 
+  queue.push(startBusStop);
+  visited.add(startBusStop);
+  
   // BFS algorithm
   while (queue.length > 0) {
     const currentNode = queue.shift();
