@@ -2,7 +2,7 @@ import { Alert, Keyboard, View, ScrollView } from "react-native";
 import { Menu, TextInput } from "react-native-paper";
 import React, { useState } from "react";
 import { COLORS } from "../constants";
-import { busStopCoords, roomCodeCoords, buildingCoords } from "../data/venues";
+import { roomCodeCoords, buildingCoords } from "../data/venues";
 
 const Autocomplete = ({
     value: origValue,
@@ -40,7 +40,6 @@ const Autocomplete = ({
                 setMenuVisible(true);
               }
             }}
-            // onBlur={() => setMenuVisible(false)}
             placeholder={label}
             right={right}
             left={left}
@@ -48,13 +47,10 @@ const Autocomplete = ({
             onChangeText={(text) => {
               origOnChange(text);
               if (text.length > 0) {
-                console.log('text', text);
                 if (filterData(text).length === 0 && filterData.length === 0) {
-                  console.log("in here");
                   setFilteredData([]);
                   setMenuVisible(false);
                 } else if (filterData(text).length === 0) {
-                  console.log('Check here', text)
                   setFilteredData(['No such venue.']);
                   setMenuVisible(true);
                 } else {
@@ -65,7 +61,6 @@ const Autocomplete = ({
                 setFilteredData([]);
                 setMenuVisible(false);
               }
-              //setMenuVisible(true);
               setValue(text);
             }}
             value={value}
@@ -86,7 +81,6 @@ const Autocomplete = ({
                   style={[{ width: '100%' }, menuStyle]}
                   icon={icon}
                   onPress={() => {
-                    // to allow for other uses: eg searching bus stops
                     if (datum === 'No such venue.') {
                       setValue('');
                       setFilteredData([]);
@@ -102,16 +96,6 @@ const Autocomplete = ({
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
                       } 
-                      /*
-                      else if (busStopCoords.get(datum) != null) {
-                        location = busStopCoords.get(datum); 
-                        if (location != null) {
-                          setValue(datum);
-                          const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
-                          onSelectMarker(markerLocation, isDestination, datum);
-                        }
-                      } 
-                      */
                       else if (buildingCoords.get(datum) != null) {
                         location = buildingCoords.get(datum);
                         if (location != null) {
