@@ -59,7 +59,6 @@ export default function NearestStops() {
             setLoading(false);
             setBusStopOrderedData(busStopData);
             setRefreshVisible(true);
-
         }
       }
     
@@ -188,22 +187,9 @@ export default function NearestStops() {
             
             {loading && <Text>Loading..</Text>}
 
-            {!loading && refreshVisible && (
-                <View>
-                    <CustomButton
+            <CustomButton
                     text={"REFRESH"}
                     onPress={() => onRefresh()}></CustomButton>
-                </View>
-            )}
-
-            
-            
-        
-
-
-            
-
-            
 
         </SafeAreaView>
     )
