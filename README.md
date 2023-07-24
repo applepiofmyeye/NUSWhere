@@ -1814,8 +1814,4 @@ Link to Github Repo:
 
 ## Notes
 
-<<<<<<< HEAD
 [^1]: (2023, March 12). _NUS Open House: More than 7.7M Visitors Drawn to Action-Packed Showcase over 10 Days_. NUS. Retrieved from https://fass.nus.edu.sg/news/2023/03/12/nus-open-house-more-than-7-7m-visitors-drawn-to-action-packed-showcase-over-10-days/#:~:text=campus%20Open%20House.-,NUS%20Open%20House%202023%20saw%20a%20strong%20showing%20by%20visitors,and%20staff%2C%20students%20and%20alumni.
-=======
-[^1]: (2023, March 12). _NUS Open House: More than 7.7M Visitors Drawn to Action-Packed Showcase over 10 Days_. NUS. Retrieved from https://fass.nus.edu.sg/news/2023/03/12/nus-open-house-more-than-7-7m-visitors-drawn-to-action-packed-showcase-over-10-days/#:~:text=campus%20Open%20House.-,NUS%20Open%20House%202023%20saw%20a%20strong%20showing%20by%20visitors,and%20staff%2C%20students%20and%20alumni.
->>>>>>> dcccebee5274002150a62c20ab43d87bdcbfdca3
