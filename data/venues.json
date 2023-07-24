@@ -5615,5 +5615,124 @@
       },
       "building": "MD6",
       "busStop": "LT27"
+    },
+    "Opp Kent Ridge MRT": {
+      "location": {
+       "x": 1.2949889884722228,
+       "y": 103.78460705280305
+      },
+      "busStop": "Opp Kent Ridge MRT"        
+    },
+    "Kent Ridge MRT": {
+      "location": {
+       "x": 1.2948120078852723,
+       "y": 103.78438711166382
+      },
+      "busStop": "Kent Ridge MRT"        
+    },
+    "Botanic Gardens MRT": {
+      "location": {
+       "x": 1.3226192595887374,
+       "y": 103.8159030675888
+      },
+      "busStop": "Botanic Gardens MRT"        
+    },
+    "College Green": {
+      "location": {
+       "x": 1.323335218492123,
+       "y": 103.81627857685089
+      },
+      "busStop": "College Green"        
+    },
+    "COM3": {
+      "location": {
+       "x": 1.2932406342533864,
+       "y": 103.77507448196413
+      },
+      "busStop": "COM3"        
+    },
+    "Kent Ridge Bus Terminal": {
+      "location": {
+       "x": 1.2942864290996847,
+       "y": 103.76965105533601
+      },
+      "busStop": "Kent Ridge Bus Terminal"        
+    },
+    "Kent Vale": {
+      "location": {
+       "x": 1.3018268653075227,
+       "y": 103.7696135044098
+      },
+      "busStop": "Kent Vale"        
+    },
+    "Oei Tiong Ham Building": {
+      "location": {
+       "x": 1.3198090518600787,
+       "y": 103.81776988506319
+      },
+      "busStop": "Oei Tiong Ham Building"        
+    },
+    "The Japanese Primary School": {
+      "location": {
+       "x": 1.3007596214360164,
+       "y": 103.76990854740144
+      },
+      "busStop": "The Japanese Primary School"        
+    },
+    "Opp University Health Centre": {
+      "location": {
+       "x": 1.2987431192208145,
+       "y": 103.77566456794739
+      },
+      "busStop": "Opp University Health Centre"        
+    },
+    "Opp University Hall": {
+      "location": {
+       "x": 1.2975686131995663,
+       "y": 103.7780946493149
+      },
+      "busStop": "Opp University Hall"        
+    },
+    "Opp YIH": {
+      "location": {
+       "x": 1.2989040104141159,
+       "y": 103.77412497997285
+      },
+      "busStop": "Opp YIH"        
+    },
+    "Opp PGP": {
+      "location": {
+       "x": 1.29181942518183,
+       "y": 103.78042280673982
+      },
+      "busStop": "Opp PGP"        
+    },
+    "Opp SDE3": {
+      "location": {
+       "x": 1.2979213287983704, 
+       "y": 103.76956748798277
+      },
+      "busStop": "Opp SDE3"        
+    },
+    "Opp NUSS": {
+      "location": {
+       "x": 1.2932620864596833,
+       "y": 103.7723869085312
+      },
+      "busStop": "Opp NUSS"        
+    },
+    "Opp TCOMS": {
+      "location": {
+       "x":  1.2937179458008194,
+       "y": 103.77702713012695
+      },
+      "busStop": "Opp TCOMS"        
+    },
+    "University Town": {
+      "location": {
+       "x":  1.303543035409685,
+       "y": 103.77443075180055
+      },
+      "busStop": "University Town"        
     }
 }
