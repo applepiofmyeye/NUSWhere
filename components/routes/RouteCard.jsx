@@ -9,15 +9,7 @@ function secToMin(x) {
 const screenWidth = Dimensions.get('window').width;
 const buttonWidth = screenWidth * 0.9;
 
-<<<<<<< HEAD
-
-export default function RouteCard({mode, directions, duration, route, all, handler}) { // directions will be an array
-    
-    //console.log(directions);
-    const temp = directions;
-=======
 export default function RouteCard({mode, directions, duration, route, all, handler, o, d}) { // directions will be an array
->>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
 
     const formattedDirections = !directions
     ? ""
@@ -27,18 +19,7 @@ export default function RouteCard({mode, directions, duration, route, all, handl
     ? ""
     : formattedDirections.replace(/\n/g, "%2F");    
 
-<<<<<<< HEAD
-    //console.log(formattedDirections);
-    //console.log(hrefDirections);
-    
-
-
-    const displayedDirections = !directions           
-                           ? "No available route."
-                           : mode == "Sheltered" && temp.length === 1
-=======
     const displayedDirections = directions == null             
->>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
                            ? "No available route."
                            : mode == "Outdoor" 
                            ? "Total duration: " + duration

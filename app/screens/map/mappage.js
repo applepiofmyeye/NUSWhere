@@ -21,12 +21,8 @@ let o = null;
 let d = null;
 
 export default function MapPage() {
-<<<<<<< HEAD:app/screens/mappage.js
-    //console.log("in MapPage");
-=======
     const venuesData = require("../../../data/venues.json");
     const buildingData = require("../../../data/buildings.json");
->>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef:app/screens/map/mappage.js
 
     const scrollA = useRef(new Animated.Value(0)).current;
 

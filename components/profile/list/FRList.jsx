@@ -91,13 +91,6 @@ export default function FRList() {
             <Text style={styles.modeName}>{item.mode}</Text>
 
         </TouchableOpacity>
-
-        // <RouteCard 
-        // mode={item.mode}
-        // directions={directions}
-        // duration={duration.slice(0, str.length - 1)}
-        // distance={distance}
-        // handler={handler}/>
     );
 
     return (      
