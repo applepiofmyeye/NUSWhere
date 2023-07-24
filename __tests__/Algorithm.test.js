@@ -6,7 +6,7 @@ describe('findBestBusRoute', () => {
         const destination = 'Opp University Health Centre';
         const expectedRoute = ["Kent Ridge MRT", "LT27", "University Hall", "Opp University Health Centre"]
     
-        const result = findBestBusRoute(start, destination).route;
+        const result = findBestBusRoute(start, destination).oldroute;
     
         expect(result).toEqual(expectedRoute);
     });
@@ -16,7 +16,7 @@ describe('findBestBusRoute', () => {
         const destination = 'COM2';
         const expectedRoute = ["Opp Kent Ridge MRT", "PGP Residences", "TCOMS", "Opp HSSML", "Opp NUSS", "COM2"]
     
-        const result = findBestBusRoute(start, destination).route;
+        const result = findBestBusRoute(start, destination).oldroute;
     
         expect(result).toEqual(expectedRoute);
     });
@@ -26,7 +26,7 @@ describe('findBestBusRoute', () => {
       const destination = 'COM2';
       const expectedRoute = ["University Town", "YIH", "Central Library", "LT13", "AS5", "COM2"]
   
-      const result = findBestBusRoute(start, destination).route;
+      const result = findBestBusRoute(start, destination).oldroute;
   
       expect(result).toEqual(expectedRoute);
     });
@@ -36,7 +36,7 @@ describe('findBestBusRoute', () => {
         const destination = 'LT27';
         const expectedRoute = ["COM3", "Opp HSSML", "Opp NUSS", "COM2", "BIZ 2", "Opp PGP", "Kent Ridge MRT", "LT27"]
     
-        const result = findBestBusRoute(start, destination).route;
+        const result = findBestBusRoute(start, destination).oldroute;
     
         expect(result).toEqual(expectedRoute);
     });

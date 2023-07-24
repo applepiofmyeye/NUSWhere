@@ -164,15 +164,11 @@ for (let i = 0; i < busStopJson.length; i++) {
 
 // Find shortest bus route
 function findBestBusRoute(start, destination) {
-<<<<<<< HEAD
-  //console.log("In findBestBusRoute")
-=======
   const queue = []; // Stores bus stops to visit.
   const visited = new Set(); // Stores bus stops already visited.
   const parent = {}; // Stores bus stop that is previously visited before visiting the current bus stop.
   const parentRoute = {}; // Stores relevant bus stop information of the parent.
 
->>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
   if (start === destination) {
     return null;
   }
@@ -302,6 +298,7 @@ function constructRoute(parent, parentRoute, startBusStop, endBusStop, destinati
   }
 
   return {
+    oldroute: route,
     route: newRoute,
     busRoutes: buses,
   };
