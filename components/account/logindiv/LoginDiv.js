@@ -9,9 +9,6 @@ import { auth } from '../../../app/firebase';
 import { FirebaseError } from '../Error/FirebaseError';
 import { AuthStore } from "../../../store";
 
-
-
-
 export default function LoginDiv() {  
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -24,10 +21,6 @@ export default function LoginDiv() {
 
 
   const handleLogin = () => {
-<<<<<<< HEAD
-    //console.log('handleLogin function called'); 
-=======
->>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
     setEmailErrorMsg('');
     setPasswordErrorMsg('');
 
@@ -47,11 +40,6 @@ export default function LoginDiv() {
     }
 
     if (email.length > 0 && password.length > 0) {
-<<<<<<< HEAD
-      //console.log('Email:', email);
-      //console.log('Password:', password);
-=======
->>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
       setLoading(true);
       auth
       .signInWithEmailAndPassword(email, password)
@@ -65,7 +53,6 @@ export default function LoginDiv() {
         router.replace("../../../screens");
       })
       .catch(error => {
-        //console.log('Authentication error:', error);
         setModalVisible(true);
         setErrorMsg(FirebaseError(error));
       })
