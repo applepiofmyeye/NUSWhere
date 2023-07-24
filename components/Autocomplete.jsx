@@ -1,14 +1,8 @@
-import { Alert, Keyboard, View } from "react-native";
+import { Alert, Keyboard, View, ScrollView } from "react-native";
 import { Menu, TextInput } from "react-native-paper";
 import React, { useState } from "react";
 import { COLORS } from "../constants";
-
-// import hashmap of room codes-coords
-import { busStopCoords, roomCodeCoords, buildingCoords } from "../data/venues";
-
-
-
-
+import { roomCodeCoords, buildingCoords } from "../data/venues";
 
 const Autocomplete = ({
     value: origValue,
@@ -46,25 +40,33 @@ const Autocomplete = ({
                 setMenuVisible(true);
               }
             }}
-            // onBlur={() => setMenuVisible(false)}
             placeholder={label}
             right={right}
             left={left}
             style={style}
             onChangeText={(text) => {
               origOnChange(text);
-              if (text && text.length > 0) {
-                setFilteredData(filterData(text));
-              } else if (text && text.length === 0) {
-                setFilteredData(data);
+              if (text.length > 0) {
+                if (filterData(text).length === 0 && filterData.length === 0) {
+                  setFilteredData([]);
+                  setMenuVisible(false);
+                } else if (filterData(text).length === 0) {
+                  setFilteredData(['No such venue.']);
+                  setMenuVisible(true);
+                } else {
+                  setFilteredData(filterData(text));
+                  setMenuVisible(true);
+                }
+              } else if (text.length === 0) {
+                setFilteredData([]);
+                setMenuVisible(false);
               }
-              setMenuVisible(true);
               setValue(text);
             }}
             value={value}
           />
           {menuVisible && filteredData && (
-            <View
+            <ScrollView
               style={{
                 flex: 1,
                 backgroundColor: COLORS.background,
@@ -79,70 +81,47 @@ const Autocomplete = ({
                   style={[{ width: '100%' }, menuStyle]}
                   icon={icon}
                   onPress={() => {
-                    // to allow for other uses: eg searching bus stops
+                    if (datum === 'No such venue.') {
+                      setValue('');
+                      setFilteredData([]);
+                      Alert.alert('No venue', 'Please re-enter another venue.')
+                    }
                     if (usage === 'mappage') {
-  
-  
                       let location;
-  
                       if (roomCodeCoords.get(datum) != null) {
                         location = roomCodeCoords.get(datum)[2];
                         if (location != null) {
+                          setValue(datum);
                           const markerLocation = {latitude: location.y, longitude: location.x}; 
-                          console.log(markerLocation)
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
-                        
                       } 
-                      
-                      else if (busStopCoords.get(datum) != null) {
-
-                        location = busStopCoords.get(datum); 
-                        if (location != null) {
-                          const markerLocation = {latitude: location.latitude, longitude: location.longitude}; 
-                          console.log(markerLocation)
-                          onSelectMarker(markerLocation, isDestination, datum);
-                        }
-                        
-
-                      } 
-  
                       else if (buildingCoords.get(datum) != null) {
                         location = buildingCoords.get(datum);
-                        
                         if (location != null) {
+                          setValue(datum);
                           const markerLocation = {latitude: location.x, longitude: location.y}; 
-                          console.log(markerLocation)
                           onSelectMarker(markerLocation, isDestination, datum);
                         }
-                        
                       } 
-                      
-  
-                      setValue(datum);
                       setMenuVisible(false);
                       Keyboard.dismiss();
-                      
                     }
                   }}
                   title={datum}
                 />
               ))}
-            </View>
+            </ScrollView>
           )}
         </View>
       );
-
     } catch (error) {
       return Alert.alert("Location Unavailable", "Sorry! We currently don't have enough data for this venue.", [{
         text: "OK",
         onPress: () => {},
         style: 'cancel'                      
       }])
-
     }
   }
-    
-  
-  
-  export default Autocomplete;
+
+export default Autocomplete;

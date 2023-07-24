@@ -1,39 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, ScrollView, Animated, Pressable} from "react-native";
-import styles from "./routelist.style";
+import { View, FlatList } from "react-native";
 import { findBestBusRoute, findBestShelteredRoute } from "../../app/firebase";
 import { COLORS } from "../../constants";
-import { TouchableHighlight } from "react-native-gesture-handler";
 import { googleDirections } from "../../data/googledirections";
 import RouteCard from "./RouteCard";
 import CustomButton from "../account/CustomButton/CustomButton";
 
-
 export default function RouteList({origin, destination, o, d, handler, handleBack}) {
-    console.log("In RouteList: " + o + " , " + d);
     // hardcoded values for one bus stop to another duration
     const busOneStepDuration = 2 * 60 
-    const shelteredOneStepDuration = 3 * 60
-
-    // const br = findBestBusRoute(o, d);
-
-
-    // const brStops = br == null ? null : br.busRoutes[0];
-    // const brRoute = br == null ? null : br.route;
-    // console.log("----------------------------------")
-    // console.log("BESTROUTE IN ROUTESLIST: ", br)
-    // console.log(brRoute);
-
-    // // Data preparation for outdoor walking + bus routes walking segments
-    // console.log("----------------------------------");
-    // console.log("Origin: ", origin)
-    // console.log("Destination: ", destination)
+    const shelteredOneStepDuration = 60
 
     const [busDirections, setBusDirections] = useState(null);
     const [busDuration, setBusDuration] = useState(null);
     const [busRoute, setBusRoute] = useState(null)
 
-    
     const [outdoorDirections, setOutdoorDirections] = useState(null);
     const [outdoorDuration, setOutdoorDuration] = useState(null);
     const [outdoorDistance, setOutdoorDistance] = useState(null);
@@ -42,19 +23,16 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
     const [shelteredDirections, setShelteredDirections] = useState(null);
     const [shelteredDuration, setShelteredDuration] = useState(null);
 
-    const [initialised, setInitialised] = useState(false)
-
-
     useEffect(() => {
 
             googleDirections(origin, destination).then((x) => {
                 if (x){
                     const outdoorArr = [x[0], x[1], x[2] + "m"];
-
                     setOutdoorDirections(outdoorArr[0]);
                     setOutdoorDuration(outdoorArr[1]);
                     setOutdoorDistance(outdoorArr[2]);
                     setOutdoorAll(outdoorArr[3])
+<<<<<<< HEAD
 
                     //console.log("outdoorArr: ", outdoorArr);
                     //console.log("outdoorDirections: ", outdoorDirections);
@@ -73,10 +51,24 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                   setBusRoute(busShortestPath.busRoutes[0]);
                   busShortestPath.busRoutes != null ? setBusDuration(busShortestPath.busRoutes.length * busOneStepDuration) : null
               }
-              
-              
+=======
+                }     
+            });
       
+            const busShortestPath = findBestBusRoute(o, d);
+                if (
+                    busShortestPath != null && 
+                    busShortestPath != 1 && 
+                    busShortestPath != 0
+                    ) {
+                    setBusDirections(busShortestPath.route);
+                    setBusRoute(busShortestPath.busRoutes);
+                    setBusDuration((busShortestPath.route.length - 2) * busOneStepDuration);
+                }
+>>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
+              
               const shelteredShortestPath = findBestShelteredRoute(o, d) 
+<<<<<<< HEAD
               //console.log('FindBestshelteredRoute:' + shelteredShortestPath)
               // currently only works for going from venue to venue not bus to bus
               if (
@@ -88,10 +80,21 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                   //console.log('ShelteredDirections:' + shelteredDirections);
                   shelteredDirections != null ? setShelteredDuration(shelteredDirections.length * shelteredOneStepDuration) : null
               // hardcoded duration for placeholder -- each step from one building to another assumed to be 3
+=======
+              // currently only works for going from venue to venue not bus to bus
+              if (
+                    shelteredShortestPath != null && 
+                    shelteredShortestPath != 1 && 
+                    shelteredShortestPath != 0
+                    ) {
+                    // 1 is for cant find route, 0 is for invalid input
+                    setShelteredDirections(shelteredShortestPath);
+                    setShelteredDuration(shelteredShortestPath.length * shelteredOneStepDuration);
+                // hardcoded duration for placeholder -- each step from one building to another assumed to be 3
+>>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
               }
-
     }, [origin, destination]);
-    
+
     const BackBtn = () => {
         return(
             <CustomButton 
@@ -100,15 +103,13 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
             ></CustomButton>
         )
     }
-
-
-
-        
-      
-        
+     
     const renderItem = ({ item }) => {
         if (item.mode === "Outdoor") {
+<<<<<<< HEAD
             //console.log("outdoor card running")
+=======
+>>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
             return (<RouteCard 
                 mode={item.mode} 
                 directions={outdoorDirections} // array of string instructions
@@ -116,9 +117,14 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 distance={outdoorDistance}
                 all={outdoorAll}
                 handler={handler}
+                o={o}
+                d={d}
                 ></RouteCard>);
         } else if (item.mode === "Sheltered") {
+<<<<<<< HEAD
             //console.log("sheltered card running")
+=======
+>>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
             return(<RouteCard 
                 mode={item.mode} 
                 directions={shelteredDirections} // array of buildings to walk through 
@@ -126,6 +132,8 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 distance={null}
                 handler={handler}
                 all={null}
+                o={o}
+                d={d}
                 ></RouteCard>);
         } else{
             //console.log("bus card running")
@@ -137,23 +145,16 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 distance={null}
                 handler={handler}
                 all={null}
+                o={o}
+                d={d}
                 ></RouteCard>);
-
-        }
-        
-            
+        }           
     }
     
-
-        
-    
-
-    
-
     const data = [ {id: 1, mode: "Outdoor"},
-                       {id: 2, mode: "Sheltered"},
-                       {id: 3, mode: "Bus"}
-                     ]
+                    {id: 2, mode: "Sheltered"},
+                    {id: 3, mode: "Bus"} ];
+
     return (    
         <View style={{flex: 2, backgroundColor: COLORS.background}}>
             {outdoorDirections && <FlatList
@@ -165,9 +166,7 @@ export default function RouteList({origin, destination, o, d, handler, handleBac
                 style={{padding: 10}}
             />}
             
-        </View>
-        
-    )
-    
+        </View>        
+    )    
 }
     

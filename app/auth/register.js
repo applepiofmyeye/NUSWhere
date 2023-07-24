@@ -5,9 +5,8 @@ Contains 2 components, the Welcome and the RegisterDiv component.
 
 import React, { SafeAreaView, StyleSheet, Platform } from "react-native";
 import { Stack } from "expo-router";
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
-import { COLORS } from "../../constants/theme";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { COLORS } from "../../constants";
 import {
     Welcome,
     RegisterDiv

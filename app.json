@@ -5,6 +5,7 @@
       "bundler": "metro"
     },
     "name": "NUSWhere",
-    "slug": "NUSWhere"
+    "slug": "NUSWhere",
+    "owner": "iosusers"
   }
 }

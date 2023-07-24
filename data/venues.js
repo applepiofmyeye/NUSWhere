@@ -17,6 +17,7 @@ const roomCodeCoords = new Map();
     //roomCodes ? console.log("roomCodes loaded") : console.log("roomCodes not loaded");
     //roomCodeCoords ? console.log("roomCodeCoords loaded") : console.log("roomCodeCoords not loaded");
 
+
 const busStops = [];
 const busStopCoords = new Map();
     // Access the JSON data
@@ -32,6 +33,7 @@ const busStopCoords = new Map();
     }
     //busStopCoords ? console.log("busStopCoords loaded") : console.log("busStopCoords not loaded");
     //busStops ? console.log("busStops loaded") : console.log("busStops not loaded");
+
 
 const buildings = [];
 const buildingCoords = new Map();

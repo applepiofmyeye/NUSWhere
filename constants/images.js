@@ -1,3 +1,3 @@
-import logo from "../assets/NUSWhereLogo.png";
+import logo from "../assets/images/NUSWhereLogo.png";
 
 export {logo}; 

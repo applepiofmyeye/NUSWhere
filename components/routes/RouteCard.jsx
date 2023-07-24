@@ -1,18 +1,23 @@
-import React, { useState } from "react";
-import { View, Text, FlatList, ScrollView, Animated, StyleSheet, TouchableOpacity} from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions} from "react-native";
 import { COLORS, FONT, SIZES } from "../../constants";
-import Ionicons from "react-native-vector-icons/Ionicons"
 
 function secToMin(x) {
-    return x == null ? "No timing available" : x ;
+    return x == null ? "No timing available" : x + 's';
 }
 
+const screenWidth = Dimensions.get('window').width;
+const buttonWidth = screenWidth * 0.9;
 
+<<<<<<< HEAD
 
 export default function RouteCard({mode, directions, duration, route, all, handler}) { // directions will be an array
     
     //console.log(directions);
     const temp = directions;
+=======
+export default function RouteCard({mode, directions, duration, route, all, handler, o, d}) { // directions will be an array
+>>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
 
     const formattedDirections = !directions
     ? ""
@@ -20,8 +25,9 @@ export default function RouteCard({mode, directions, duration, route, all, handl
 
     const hrefDirections = !formattedDirections
     ? ""
-    : formattedDirections.replace(/\n/g, "%2F");
+    : formattedDirections.replace(/\n/g, "%2F");    
 
+<<<<<<< HEAD
     //console.log(formattedDirections);
     //console.log(hrefDirections);
     
@@ -30,41 +36,37 @@ export default function RouteCard({mode, directions, duration, route, all, handl
     const displayedDirections = !directions           
                            ? "No available route."
                            : mode == "Sheltered" && temp.length === 1
+=======
+    const displayedDirections = directions == null             
+>>>>>>> 6b3634d025aa81b66efc7ffdddac92a2506181ef
                            ? "No available route."
                            : mode == "Outdoor" 
-                           ? "Route available. Total duration: " + secToMin(duration)
-                           : mode == "Sheltered"
-                           ? "Route available. Total duration: " + secToMin(duration) + "s"
-                           : "Route available. Total stops: " + directions.length + "\nBus Route: " + route.map(x => " " + x)
+                           ? "Total duration: " + duration
+                           : mode == "Sheltered" 
+                           ? "Total duration: " + secToMin(duration) 
+                           : route.length == 0
+                           ? "No available route."
+                           : "Total stops: " + (directions.length - 2) + "\nBuses to take: " + route + "\nTotal duration: " + secToMin(duration)
 
-
-    let formattedDuration = mode == "Outdoor" ? duration : duration + "s"
-    
-                        
-        
-        
-    
+    let formattedDuration = mode == "Outdoor" ? duration : duration == null ? duration : duration + "s"
     
     return (    
         <TouchableOpacity 
         style={styles.routeContainer}
-        onPress={() => route == null 
-            ? handler(hrefDirections, formattedDuration, all, mode, "", 1)
-            : handler(hrefDirections, formattedDuration, all, mode, route, temp.length)} 
+        onPress={() => route == null || route.length == 0
+            ? handler(hrefDirections, formattedDuration, all, mode, "", o, d) 
+            : handler(hrefDirections, formattedDuration, all, mode, route, o, d)}
         >
-        <View style={{flexDirection: "row"}}>
-            <View>
-                <Text style={styles.routeMode}>{mode}</Text>
-                <Text style={styles.displayedDirections}>{displayedDirections}</Text>
+            <View style={{flexDirection: "row"}}>
+                <View>
+                    <Text style={styles.routeMode}>{mode}</Text>
+                    <Text style={[styles.displayedDirections, {fontFamily: FONT.iSemiB }]}>{displayedDirections}</Text>
+                </View>
             </View>
-        </View>
-        
+
           {/* <Text style={styles.routeDirections}>{formattedDirections}</Text> */}
 
-        
-     
-        </TouchableOpacity>
-        
+        </TouchableOpacity>  
     )
 }
 
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
         borderColor: COLORS.accent,
         borderWidth: 1,
         margin: 5,
-        width: 380,
+        width: buttonWidth,
         height: 150,
         justifyContent: "center",
 
@@ -88,7 +90,6 @@ const styles = StyleSheet.create({
         textAlign: "left",
         paddingLeft: 10
     },
-
     routeDirections: {
         fontFamily: FONT.iRegular,
         fontSize: SIZES.medium,
@@ -97,7 +98,6 @@ const styles = StyleSheet.create({
         paddingLeft: 10
 
     },
-
     title: {
         fontFamily: FONT.pSemiB,
         fontSize: SIZES.xLarge + 1,
@@ -110,10 +110,9 @@ const styles = StyleSheet.create({
 
     },
     displayedDirections: {
-        fontFamily: FONT.iSemiB,
-        fontSize: SIZES.medium,
-        color: COLORS.text,
-        textAlign: "left",
-        paddingLeft: 10
-    }
+            fontSize: SIZES.medium,
+            color: COLORS.text,
+            textAlign: "left",
+            paddingLeft: 10
+    }   
 })

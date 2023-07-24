@@ -1,14 +1,12 @@
-import React, { View, Text } from 'react-native';
-
-import { NavigationContainer } from "@react-navigation/native";
+import React, { View } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
-import MapPage from "./mappage";
-import Profile from "./profile";
-import NearestStops from "./neareststops";
-import { COLORS, FONT, icons } from "../../constants/theme";
+import MapPage from "./map/mappage";
+import Profile from "./profile/profile";
+import NearestStops from "./nearest-bus-stops/neareststops";
+import { COLORS, FONT } from "../../constants";
 import { Stack } from "expo-router";
 
 // Screen names
@@ -25,6 +23,7 @@ export default function Index() {
             options={{
                 headerShown: false
             }}/>
+
             <Tab.Navigator
             initialRouteName={profileName}
             screenOptions={({route}) => ({
@@ -47,29 +46,26 @@ export default function Index() {
                 tabBarStyle: {height: 90, backgroundColor: COLORS.background,},
             })}
             >
+ 
+                <Tab.Screen 
+                name={mapName} 
+                component={MapPage} 
+                />
 
-            
-            <Tab.Screen 
-            name={mapName} 
-            component={MapPage} 
-            />
+                <Tab.Screen 
+                name={nearestName} 
+                component={NearestStops} 
+                options={({ route }) => ({
+                    tabBarVisible: route.state && route.state.index === 0,
+                })}
+                />
 
-            <Tab.Screen 
-            name={nearestName} 
-            component={NearestStops} 
-            options={({ route }) => ({
-                tabBarVisible: route.state && route.state.index === 0,
-              })}
-            />
-
-            <Tab.Screen 
-            name={profileName} 
-            component={Profile} 
-            />
+                <Tab.Screen 
+                name={profileName} 
+                component={Profile} 
+                />
 
             </Tab.Navigator>
-
-
 
         </View>
     )

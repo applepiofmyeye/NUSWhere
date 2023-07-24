@@ -1,9 +1,6 @@
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import React from "react-native";
-// import * as SplashScreen from "expo-splash-screen";
-
-// SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
   // Ensure any route can link back to `/`
