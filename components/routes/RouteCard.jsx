@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import { View, Text, FlatList, ScrollView, Animated, StyleSheet, TouchableOpacity} from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions} from "react-native";
 import { COLORS, FONT, SIZES } from "../../constants";
-import Ionicons from "react-native-vector-icons/Ionicons"
 
 function secToMin(x) {
-    return x == null ? "No timing available" : x ;
+    return x == null ? "No timing available" : x + 's';
 }
 
-
+const screenWidth = Dimensions.get('window').width;
+const buttonWidth = screenWidth * 0.9;
 
 export default function RouteCard({mode, directions, duration, route, all, handler, o, d}) { // directions will be an array
-    
 
     const formattedDirections = !directions
     ? ""
@@ -20,45 +19,35 @@ export default function RouteCard({mode, directions, duration, route, all, handl
     ? ""
     : formattedDirections.replace(/\n/g, "%2F");    
 
-
     const displayedDirections = directions == null             
                            ? "No available route."
                            : mode == "Outdoor" 
-                           ? "Total duration: " + secToMin(duration)
+                           ? "Total duration: " + duration
                            : mode == "Sheltered" 
-                           ? "Total duration: " + secToMin(duration) + "s"
-                           : route == null
-                           ? "Total stops: " + directions.length + "\nBus Route: None" 
-                           : "Total stops: " + directions.length + "\nBus Route:" + route.map(x => " " + x)
+                           ? "Total duration: " + secToMin(duration) 
+                           : route.length == 0
+                           ? "No available route."
+                           : "Total stops: " + (directions.length - 2) + "\nBuses to take: " + route + "\nTotal duration: " + secToMin(duration)
 
-
-    let formattedDuration = mode == "Outdoor" ? duration : duration == null ? duration : duration+ "s"
-    
-                        
-        
-        
-    
+    let formattedDuration = mode == "Outdoor" ? duration : duration == null ? duration : duration + "s"
     
     return (    
         <TouchableOpacity 
         style={styles.routeContainer}
-        onPress={() => route == null 
+        onPress={() => route == null || route.length == 0
             ? handler(hrefDirections, formattedDuration, all, mode, "", o, d) 
             : handler(hrefDirections, formattedDuration, all, mode, route, o, d)}
         >
-        <View style={{flexDirection: "row"}}>
-            <View>
-                <Text style={styles.routeMode}>{mode}</Text>
-                <Text style={[styles.displayedDirections, {fontFamily: directions ? FONT.iSemiB : FONT.iLight}]}>{displayedDirections}</Text>
+            <View style={{flexDirection: "row"}}>
+                <View>
+                    <Text style={styles.routeMode}>{mode}</Text>
+                    <Text style={[styles.displayedDirections, {fontFamily: FONT.iSemiB }]}>{displayedDirections}</Text>
+                </View>
             </View>
-        </View>
-        
+
           {/* <Text style={styles.routeDirections}>{formattedDirections}</Text> */}
 
-        
-     
-        </TouchableOpacity>
-        
+        </TouchableOpacity>  
     )
 }
 
@@ -70,7 +59,7 @@ const styles = StyleSheet.create({
         borderColor: COLORS.accent,
         borderWidth: 1,
         margin: 5,
-        width: 380,
+        width: buttonWidth,
         height: 150,
         justifyContent: "center",
 
@@ -82,7 +71,6 @@ const styles = StyleSheet.create({
         textAlign: "left",
         paddingLeft: 10
     },
-
     routeDirections: {
         fontFamily: FONT.iRegular,
         fontSize: SIZES.medium,
@@ -91,7 +79,6 @@ const styles = StyleSheet.create({
         paddingLeft: 10
 
     },
-
     title: {
         fontFamily: FONT.pSemiB,
         fontSize: SIZES.xLarge + 1,
@@ -108,10 +95,5 @@ const styles = StyleSheet.create({
             color: COLORS.text,
             textAlign: "left",
             paddingLeft: 10
-    }
-
-        
-        
-        
-    
+    }   
 })

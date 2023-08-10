@@ -1,14 +1,12 @@
-import React, { View, Text } from 'react-native';
-
-import { NavigationContainer } from "@react-navigation/native";
+import React, { View } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
-import MapPage from "./screens/map/mappage";
-import Profile from "./screens/profile/profile";
-import NearestStops from "./screens/nearest-bus-stops/neareststops";
-import { COLORS, FONT, icons } from "../constants";
+import MapPage from "./map/mappage";
+import Profile from "./profile/profile";
+import NearestStops from "./nearest-bus-stops/neareststops";
+import { COLORS, FONT } from "../../constants";
 import { Stack } from "expo-router";
 
 // Screen names
@@ -18,15 +16,14 @@ const mapName = 'Map';
 
 const Tab = createBottomTabNavigator();
 
-export default function MainContainer() {
+export default function Index() {
     return (
         <View style={{flex: 1}}>
             <Stack.Screen 
             options={{
-                headerShown: false,
-                gestureEnabled: false
-                
+                headerShown: false
             }}/>
+
             <Tab.Navigator
             initialRouteName={profileName}
             screenOptions={({route}) => ({
@@ -49,29 +46,26 @@ export default function MainContainer() {
                 tabBarStyle: {height: 90, backgroundColor: COLORS.background,},
             })}
             >
+ 
+                <Tab.Screen 
+                name={mapName} 
+                component={MapPage} 
+                />
 
-            
-            <Tab.Screen 
-            name={mapName} 
-            component={MapPage} 
-            />
+                <Tab.Screen 
+                name={nearestName} 
+                component={NearestStops} 
+                options={({ route }) => ({
+                    tabBarVisible: route.state && route.state.index === 0,
+                })}
+                />
 
-            <Tab.Screen 
-            name={nearestName} 
-            component={NearestStops} 
-            options={({ route }) => ({
-                tabBarVisible: route.state && route.state.index === 0,
-              })}
-            />
-
-            <Tab.Screen 
-            name={profileName} 
-            component={Profile} 
-            />
+                <Tab.Screen 
+                name={profileName} 
+                component={Profile} 
+                />
 
             </Tab.Navigator>
-
-
 
         </View>
     )

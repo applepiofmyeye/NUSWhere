@@ -6,41 +6,32 @@ o and d is for name of bus stops
 origin and destination is coordinates of bus stops
 
 */
-import React, { useState, useEffect, useRef } from "react";
-import { View, ScrollView, StyleSheet, Dimensions, Button, Platform, TextInput, Animated, Text, Alert } from "react-native";
+import React, { useState, useRef } from "react";
+import { View, StyleSheet, Dimensions,Platform, Animated, Alert } from "react-native";
 import Autocomplete from "../../../components/Autocomplete";
-import { Stack, useLocalSearchParams, useRouter, useNavigation } from "expo-router";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import * as Location from 'expo-location';
-import { roomCodes, busStops, buildings } from "../../../data/venues";
+import { Stack, useRouter } from "expo-router";
+import MapView, { Marker } from "react-native-maps";
+import { roomCodes, buildings } from "../../../data/venues";
 import MapViewDirections from 'react-native-maps-directions';
 import { GOOGLE_API } from "../../../keys";
-
-
-
-
-import { COLORS, SIZES } from "../../../constants";
+import { COLORS } from "../../../constants";
 import { CustomButton, RouteList } from "../../../components";
 
 let o = null;
 let d = null;
 
-
-
 export default function MapPage() {
-    console.log("in MapPage");
+    const venuesData = require("../../../data/venues.json");
+    const buildingData = require("../../../data/buildings.json");
 
     const scrollA = useRef(new Animated.Value(0)).current;
+
     const handleCardDrag = Animated.event(
         [{ nativeEvent: { contentOffset: { y: scrollA } } }],
         { useNativeDriver: true }
-      );
-
+    );
 
     const router = useRouter();
-
-
-
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [showDirectionsBtn, setShowDirectionsBtn] = useState(true);
     const [origin, setOrigin] = useState(null);
@@ -48,17 +39,13 @@ export default function MapPage() {
     const [showRoute, setShowRoute] = useState(false);
     const [scrollEnabled, setScrollEnabled] = useState(false);
 
-    // const handleCardPress = () => {
-    //     router.push('./routespage')
-    // }
     const handler = (directions, duration, all, mode, route, o, d) => {
-        if (!directions) { return Alert.alert("No route", "Whoops! No available route currently.", [
+        if (!directions || (mode === 'Bus' && !route)) { return Alert.alert("No route", "Whoops! No available route currently.", [
             {
                 text: "OK",
                 onPress: () => console.log("button pressed")
             }
-        ])}
-        // router.setParams({directions: directions, duration: duration, all: all, mode: mode, route: route})
+        ])} 
         
         router.push({pathname: "./screens/map/routespage", 
         params: {
@@ -85,14 +72,11 @@ export default function MapPage() {
             setDestination(markerLocation);
             d = name;
         } else {
-
             setOrigin(markerLocation);
             o = name;
-
         }
         setSelectedMarker(markerLocation);
         setShowDirectionsBtn(true);
-        (origin && destination) ? setScrollEnabled(true) : setScrollEnabled(false);
 
     };    
 
@@ -104,47 +88,24 @@ export default function MapPage() {
         longitudeDelta: 0.09,
     });
 
-
-
-    // NOT USED CURRENTLY IN THIS PAGE, but would be good to track current user location in the future. 
-    // This is used in the nearest bus stops page.
-    // const userLocation = async () => {
-    //     let {status} = await Location.requestForegroundPermissionsAsync();
-    //     if (status !== 'granted') {
-    //         setErrorMsg('Permission to access location was denied.')
-    //     }
-    //     let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
-        
-    // }
-
-
-    // useEffect(() => {
-    //     userLocation();
-    // },[])
-
-    
-
-
-
     return (
 
         <View style={styles.container}>
             <Stack.Screen options={{ headerShown: false, headerBackButtonMenuEnabled: true}}/>
-                <Animated.ScrollView
-                        // onScroll={e => console.log(e.nativeEvent.contentOffset.y)}
+                 <Animated.ScrollView
                         onScroll={handleCardDrag}
                         scrollEventThrottle={16}
                         style={styles.scrollableCard}
                         scrollEnabled={scrollEnabled}
 
-                    >
+                    > 
             
-                <Animated.View
+                 <Animated.View
                     style={[
                     styles.bannerContainer,
                     { transform: [{ translateY: scrollA }], },
                     ]}
-                >
+                > 
                     
                     <MapView style={styles.map} region = {mapRegion}>
 
@@ -164,7 +125,7 @@ export default function MapPage() {
 
                     
                     
-                </Animated.View>
+                </Animated.View> 
                     
                     {!showRoute && 
                     <Autocomplete
@@ -175,9 +136,9 @@ export default function MapPage() {
                             flex: 1
                         }}
                         label="Where do you wanna go?"
-                        data={roomCodes.concat(busStops).concat(buildings)} // Set to the json
+                        data={roomCodes.concat(buildings)} // Set to the json
                         menuStyle={{backgroundColor: COLORS.background}}
-                        onChange={() => {setShowRoute(false)}}
+                        onChange={() => {setShowDirectionsBtn(false)}}
                         usage='mappage'
                         selectedMarker={selectedMarker}
                         onSelectMarker={handleSelectMarker}
@@ -193,9 +154,9 @@ export default function MapPage() {
                             flex: 1
                         }}
                         label="Where are you?"
-                        data={roomCodes.concat(busStops).concat(buildings)} // Set to the json
+                        data={roomCodes.concat(buildings)} // Set to the json
                         menuStyle={{backgroundColor: COLORS.background}}
-                        onChange={() => {setShowRoute(false)}}
+                        onChange={() => {setShowDirectionsBtn(false)}}
                         usage='mappage'
                         selectedMarker={selectedMarker}
                         onSelectMarker={handleSelectMarker}
@@ -208,29 +169,40 @@ export default function MapPage() {
                 </Animated.ScrollView>
                  
                 <View style={{position: "absolute", bottom: 20}}>
-                        {/* 
-                        button to show directions:
-                        {selectedMarker && showDirectionsButton && (
-                            <CustomButton text="DIRECTIONS" onPress={() => {
-                                setShowRoute(true);
-                                setShowDirectionsButton(false)}}/>
-                        )} */}
                         {origin != destination && origin && destination && showDirectionsBtn && (
                             <CustomButton 
                             text="Routes" 
                             onPress={() => {
-                                console.log(origin);
-                                console.log(destination);
-                                console.log(origin.latitude != destination.latitude && origin.longitude != destination.longitude);
-                                if (origin.latitude != destination.latitude && origin.longitude != destination.longitude){
-                                    setShowRoute(true);
-                                    setShowDirectionsBtn(false);
-                                } else {
+                                if (origin.latitude != destination.latitude && origin.longitude != destination.longitude) {
+                                    let originBuilding = null;
+                                    let destinationBuilding = null;
+                                    if (venuesData[o] != null) {
+                                        originBuilding = venuesData[o].building;
+                                    }
+                                    if (buildingData[o] != null) {
+                                        originBuilding = buildingData[o].name;
+                                    }
+                                    if (venuesData[d] != null) {
+                                        destinationBuilding = venuesData[d].building;
+                                    }
+                                    if (buildingData[d] != null) {
+                                        destinationBuilding = buildingData[d].name;
+                                    }
+                                    console.log('originBuilding', originBuilding);
+                                    console.log('destinationbuilding', destinationBuilding);
+                                    if (originBuilding !== null && destinationBuilding !== null && originBuilding === destinationBuilding) {
+                                        setShowDirectionsBtn(false);
+                                        return Alert.alert("You have reached!", "You are in the building. Proceed to the floor of your destination, " + d);
+                                    } else {
+                                        setShowRoute(true);
+                                        setShowDirectionsBtn(false);
+                                    }
+                                } else if (origin.latitude === destination.latitude && origin.longitude === destination.longitude) {
                                     return Alert.alert("Repeated venues", "Please enter different locations", [{
                                         text: "OK",
                                         onPress: () => console.log("button pressed")
                                     }])
-                                }
+                                } 
                             }}/>
                         )}
                         
@@ -238,24 +210,17 @@ export default function MapPage() {
                 </View>
 
                 {showRoute && <RouteList 
-                origin={origin} 
-                destination={destination} 
-                o={o} 
-                d={d} 
-                handler={handler}
-                handleBack={handleBack}
+                    origin={origin} 
+                    destination={destination} 
+                    o={o} 
+                    d={d} 
+                    handler={handler}
+                    handleBack={handleBack}
                 />}
-                
-
-
-
-
-                
-            
-            
+                   
         </View>
     )
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -299,6 +264,3 @@ const styles = StyleSheet.create({
         height: 50
     }
 });
-
-
-

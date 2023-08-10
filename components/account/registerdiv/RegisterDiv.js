@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, ActivityIndicator, Modal, Pressable, /* RefreshControl, ScrollView */} from "react-native";
+import { View, Text, ActivityIndicator, Modal, Pressable } from "react-native";
 import InputBox from "../InputBox/InputBox"
 import CustomButton from "../CustomButton/CustomButton";
 import styles from "./registerdiv.style";
 import { auth } from '../../../app/firebase';
 import { useRouter } from "expo-router";
 import { FirebaseError } from '../Error/FirebaseError';
+import { AuthStore } from "../../../store";
 
 
 export default function RegisterDiv() {  
@@ -21,24 +22,15 @@ export default function RegisterDiv() {
   const [errorMsg, setErrorMsg] = useState('')
   const [modalSuccessVisible, setModalSuccessVisible] = useState(false)
   const [modalErrorVisible, setModalErrorVisible] = useState(false)
-  /* const [refreshing, setRefreshing] = React.useState(false) */
 
   const router = useRouter()
-  const login = () => {
-    router.push("./login");
+  const profile = () => {
+    router.replace("../../../screens");
   }
-
-  /* const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []); */
 
   const validator = require('validator');
 
   const handleSignUp = async () => {
-        let errorFlag = false;
         setUsernameErrorMsg('');
         setEmailErrorMsg('');
         setPasswordErrorMsg('');
@@ -47,11 +39,9 @@ export default function RegisterDiv() {
         
         // input validation
         if (username.length == 0) {
-          errorFlag = true;
           setUsernameErrorMsg("Username is required field");
         }
         if (email.length == 0) {
-          errorFlag = true;
           setEmailErrorMsg("Email is required field");
         } else {
           const isValid = validator.isEmail(email); 
@@ -61,46 +51,42 @@ export default function RegisterDiv() {
         }  
 
         if (password.length == 0) {
-          errorFlag = true;
           setPasswordErrorMsg("Password is required field");
         } else if (password.length < 8 ||  password.length > 20) {
-          errorFlag = true;
           setPasswordErrorMsg("Password should be min 8 char and max 20 char");
         } else if (password !==  passwordRepeat) {
-          errorFlag = true;
           setPasswordErrorMsg("Password and confirm password should be same");
         }
         
         if (passwordRepeat.length == 0) {
-          errorFlag = true;
           setPasswordRepeatErrorMsg("Confirm Password is required field");
         } else if (passwordRepeat.length < 8 ||  passwordRepeat.length > 20) {
-          errorFlag = true;
           setPasswordRepeatErrorMsg("Password should be min 8 char and max 20 char");
         }
-       
-        if (!errorFlag) {
-          setLoading(true);
-          await auth
-            .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-              const user = userCredentials.user;
-              console.log('Registered with:', user.email);
-              user.updateProfile({
-                displayName: username
-              })
-              setModalSuccessVisible(true);
-            }).catch(error => {
-              setModalErrorVisible(true);
-              setErrorMsg(FirebaseError(error));
-            })
-          setLoading(false);
-        }
+            
+        setLoading(true);
+        await auth
+          .createUserWithEmailAndPassword(email, password)
+          .then(userCredentials => {
+            const user = userCredentials.user;
+            console.log('Registered with:', user.email);
+            user.updateProfile({
+              displayName: username
+            });
+            AuthStore.update((s) => {
+              s.isLoggedIn = true;
+              s.user = user;
+            });
+            setModalSuccessVisible(true);
+          }).catch(error => {
+            setModalErrorVisible(true);
+            setErrorMsg(FirebaseError(error));
+          })
+        setLoading(false);
+        
   }
 
   return (    
-    /* {<ScrollView refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />  }> } */
     <View style={{flex: 8}}>
       
       <View style={styles.registerContainer}>
@@ -146,8 +132,8 @@ export default function RegisterDiv() {
             <Text style={styles.modalText}>You have successfully registered an account with us!</Text>
             <Pressable
               style={styles.modalButton}
-              onPress={login}>
-              <Text style={styles.buttonTextStyle}>Return to login page</Text>
+              onPress={profile}>
+              <Text style={styles.buttonTextStyle}>Go to profile page</Text>
             </Pressable>
           </View>
         </View>
@@ -169,9 +155,10 @@ export default function RegisterDiv() {
         </View>
       </Modal>
 
-      <CustomButton text="REGISTER" onPress={handleSignUp} />
+      <CustomButton text="REGISTER" onPress={handleSignUp}/>
+      
       {loading && <ActivityIndicator />}
+
     </View>
-    /* </ScrollView> */
   );
 }

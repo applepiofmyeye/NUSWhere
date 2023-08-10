@@ -9,7 +9,7 @@ export function FirebaseError(errorResponse) {
         case 'auth/email-already-in-use':
             return 'This email is already registered. You can proceed to login or register using another account.'
         case 'auth/invalid-email':
-            return '';
+            return 'The email address is badly formatted. Please try again.';
         default:
             return '';
     }
