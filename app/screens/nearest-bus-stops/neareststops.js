@@ -46,7 +46,7 @@ export default function NearestStops() {
             const location = await Promise.race([
                 locationPromise,
                 new Promise((resolve, reject) => {
-                    setTimeout(() => reject(new Error('Unable to retrieve location. Please refresh.')), 10000);
+                    setTimeout(() => reject(new Error('Unable to retrieve location. Please refresh.')), 30000);
                 }
                 )
             ]);

@@ -35,48 +35,23 @@ export default function RoutesPage() {
         
         const fetchPhotoData = async () => {
             const storage = getStorage();
-            for (let i = 0; i < directionsArr.length - 1; i ++) {
-                var j = 0;
-                console.log(directionsArr);
+            const allSegmentUrls = [];
+
+            for (let i = 0; i < directionsArr.length - 1; i++) {
                 const photoRef = ref(storage, `${directionsArr[i]}/${directionsArr[i + 1]}`);
-                await listAll(photoRef)
-                .then((result) => {
-                    const promises = result.items.map(x => {
-                        getDownloadURL(x).then(photoUrl => {
-                            setUrl((prevUrl) => {
-                                const updatedUrl = [...prevUrl];
-                                if (updatedUrl[i]) {
-                                    updatedUrl[i][j] = {
-                                        i: i,
-                                        j: j,
-                                        uri: photoUrl
-                                    };
-                                } else {
-                                    updatedUrl[i] = [];
-                                    updatedUrl[i][j] = {
-                                        i: i,
-                                        j: j,
-                                        uri: photoUrl
-                                    };
-                                }
-                                return updatedUrl;
-                            })
-                            j++;
+                const result = await listAll(photoRef);
 
-                        })
-                    })
-                    if (promises.length > 0) {
-                        Promise.all(promises)
-                            .then(() => setIsLoading(false))
-                            .catch((error) => console.log(error));
-                    } else {
-                        setIsLoading(false);
-                    }
-                    
-                })
+                // Fetch all URLs for this segment in parallel, preserving insertion order via index
+                const segmentUrls = await Promise.all(
+                    result.items.map((item, j) =>
+                        getDownloadURL(item).then(uri => ({ i, j, uri }))
+                    )
+                );
+                allSegmentUrls.push(segmentUrls);
+            }
 
-            }               
-            // await getDownloadURL(photoRef).then(photoUrl => setUrl(photoUrl))           
+            setUrl(allSegmentUrls);
+            setIsLoading(false);
         };
 
         const fetchFavouritesData = () => {
