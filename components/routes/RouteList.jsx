@@ -7,9 +7,9 @@ import RouteCard from "./RouteCard";
 import CustomButton from "../account/CustomButton/CustomButton";
 
 export default function RouteList({origin, destination, o, d, handler, handleBack}) {
-    // hardcoded values for one bus stop to another duration
-    const busOneStepDuration = 2 * 60 
-    const shelteredOneStepDuration = 60
+    // Rough duration estimates: ~2 min per bus stop, ~1 min per sheltered building hop
+    const busOneStepDuration = 2 * 60;
+    const shelteredOneStepDuration = 60;
 
     const [busDirections, setBusDirections] = useState(null);
     const [busDuration, setBusDuration] = useState(null);

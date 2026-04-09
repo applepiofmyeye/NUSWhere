@@ -21,7 +21,7 @@ export async function googleDirections(origin, destination) {
         },
         travelMode: 'DRIVE',
         routingPreference: 'TRAFFIC_AWARE',
-        departureTime: '2023-10-15T15:01:23.045123456Z',
+        departureTime: new Date().toISOString(),
         computeAlternativeRoutes: false,
         routeModifiers: {
           avoidTolls: false,

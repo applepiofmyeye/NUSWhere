@@ -17,14 +17,13 @@ import { GOOGLE_API } from "../../../keys";
 import { COLORS } from "../../../constants";
 import { CustomButton, RouteList } from "../../../components";
 
-let o = null;
-let d = null;
-
 export default function MapPage() {
     const venuesData = require("../../../data/venues.json");
     const buildingData = require("../../../data/buildings.json");
 
     const scrollA = useRef(new Animated.Value(0)).current;
+    const oRef = useRef(null);
+    const dRef = useRef(null);
 
     const handleCardDrag = Animated.event(
         [{ nativeEvent: { contentOffset: { y: scrollA } } }],
@@ -70,10 +69,10 @@ export default function MapPage() {
         setMapRegion(markerLocation);
         if (isDestination) {
             setDestination(markerLocation);
-            d = name;
+            dRef.current = name;
         } else {
             setOrigin(markerLocation);
-            o = name;
+            oRef.current = name;
         }
         setSelectedMarker(markerLocation);
         setShowDirectionsBtn(true);
@@ -176,23 +175,21 @@ export default function MapPage() {
                                 if (origin.latitude != destination.latitude && origin.longitude != destination.longitude) {
                                     let originBuilding = null;
                                     let destinationBuilding = null;
-                                    if (venuesData[o] != null) {
-                                        originBuilding = venuesData[o].building;
+                                    if (venuesData[oRef.current] != null) {
+                                        originBuilding = venuesData[oRef.current].building;
                                     }
-                                    if (buildingData[o] != null) {
-                                        originBuilding = buildingData[o].name;
+                                    if (buildingData[oRef.current] != null) {
+                                        originBuilding = buildingData[oRef.current].name;
                                     }
-                                    if (venuesData[d] != null) {
-                                        destinationBuilding = venuesData[d].building;
+                                    if (venuesData[dRef.current] != null) {
+                                        destinationBuilding = venuesData[dRef.current].building;
                                     }
-                                    if (buildingData[d] != null) {
-                                        destinationBuilding = buildingData[d].name;
+                                    if (buildingData[dRef.current] != null) {
+                                        destinationBuilding = buildingData[dRef.current].name;
                                     }
-                                    console.log('originBuilding', originBuilding);
-                                    console.log('destinationbuilding', destinationBuilding);
                                     if (originBuilding !== null && destinationBuilding !== null && originBuilding === destinationBuilding) {
                                         setShowDirectionsBtn(false);
-                                        return Alert.alert("You have reached!", "You are in the building. Proceed to the floor of your destination, " + d);
+                                        return Alert.alert("You have reached!", "You are in the building. Proceed to the floor of your destination, " + dRef.current);
                                     } else {
                                         setShowRoute(true);
                                         setShowDirectionsBtn(false);
@@ -209,11 +206,11 @@ export default function MapPage() {
                         
                 </View>
 
-                {showRoute && <RouteList 
-                    origin={origin} 
-                    destination={destination} 
-                    o={o} 
-                    d={d} 
+                {showRoute && <RouteList
+                    origin={origin}
+                    destination={destination}
+                    o={oRef.current}
+                    d={dRef.current}
                     handler={handler}
                     handleBack={handleBack}
                 />}

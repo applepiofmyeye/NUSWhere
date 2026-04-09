@@ -394,7 +394,7 @@ function findBestShelteredRoute(start, destination) {
       queue.push(startBuilding);
       visited.add(startBuilding);
     
-      while (queue) {
+      while (queue.length > 0) {
         const currentNode = queue.shift();
 
         if (currentNode === endBuilding) {
