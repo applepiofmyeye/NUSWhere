@@ -68,12 +68,14 @@ const Autocomplete = ({
           {menuVisible && filteredData && (
             <ScrollView
               style={{
-                flex: 1,
+                maxHeight: 200,
                 backgroundColor: COLORS.background,
                 borderWidth: 1,
                 flexDirection: 'column',
                 borderColor: COLORS.text,
               }}
+              nestedScrollEnabled={true}
+              keyboardShouldPersistTaps="handled"
             >
               {filteredData.map((datum, i) => (
                 <Menu.Item
